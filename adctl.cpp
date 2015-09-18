@@ -5,165 +5,209 @@
 #include <QDebug>
 #include <QTimer>
 
-#ifdef __ANDROID__
-#include <android/api-level.h>
-#endif
+#if (__ANDROID_API__ >= 9)
 
-#ifdef __ANDROID_API__
+#include <android/api-level.h>
 #include <QAndroidJniObject>
 #include <QPA/QPlatformNativeInterface.h>
 #include <QApplication>
+
 #endif
 
-AdMobCtl::AdMobCtl(QObject *parent) : QObject(parent)
+AdCtl::AdCtl(QObject *parent) : QObject(parent)
 {
-    m_Banner = CreateQtAdMobBanner();
-    m_Interstitial = CreateQtAdMobInterstitial();
+    m_AdMobBanner = CreateQtAdMobBanner();
+    m_AdMobInterstitial = CreateQtAdMobInterstitial();
 
-    #ifdef __ANDROID_API__
+#if (__ANDROID_API__ >= 9)
+
     QPlatformNativeInterface* interface = QApplication::platformNativeInterface();
     jobject activity = (jobject)interface->nativeResourceForIntegration("QtActivity");
     if (activity)
     {
         m_Activity = new QAndroidJniObject(activity);
     }
-    #endif
+
+#endif
 }
 
-AdMobCtl::~AdMobCtl()
+AdCtl::~AdCtl()
 {
-    delete m_Banner;
-    delete m_Interstitial;
+    delete m_AdMobBanner;
+    delete m_AdMobInterstitial;
+    delete m_Activity;
 }
 
-void AdMobCtl::init()
+void AdCtl::init()
 {
-    if (!m_initialized) {
-        qDebug() << "Start AdMob initialization!";
-        #ifdef __ANDROID_API__
-        QAndroidJniObject param1 = QAndroidJniObject::fromString(m_sadId);
-        m_Activity->callMethod<void>("SetSAdBannerUnitId", "(Ljava/lang/String;)V", param1.object<jstring>());
-        #endif
-        m_Banner->Initialize();
-        m_Banner->SetSize(IQtAdMobBanner::Banner);
+    if (!m_AdInitialized) { qDebug() << "AdMob alredy initialized!"; return; }
 
-        m_Banner->SetUnitId(m_unitId);
-        m_Interstitial->LoadWithUnitId(m_unitId);
+#if (__ANDROID_API__ >= 9)
 
-        showedTimer = new QTimer(this);
-        connect(showedTimer, SIGNAL(timeout()), this, SLOT(showedTimerSlot()));
-        showedTimer->start(500);
+    QAndroidJniObject param1 = QAndroidJniObject::fromString(m_StartAdId);
+    m_Activity->callMethod<void>("SetSAdBannerUnitId", "(Ljava/lang/String;)V", param1.object<jstring>());
 
-        m_initialized = true;
+#endif
 
-        qDebug() << "Finish AdMob initialization! Show...";
-
-        //        m_Banner->SetPosition(m_position);
-        //        //m_Banner->AddTestDevice("DCE0DB737EC089D97AB4EFCBA2F9B322");
-        //        if (m_bannerVisible) {
-        //            m_Banner->Show();
-        //        }
-
-        //        if (m_interstitialEnabled)  {
-        //            //m_Interstitial->AddTestDevice("DCE0DB737EC089D97AB4EFCBA2F9B322");
-        //            m_Interstitial->Show();
-        //        }
-
-        //show();
-    } else {
-        qDebug() << "AdMob alredy initialized!";
+    if (m_AdMobBannerEnabled) {
+        m_AdMobBanner->Initialize();
+        m_AdMobBanner->SetSize(IQtAdMobBanner::Banner);
+        m_AdMobBanner->SetUnitId(m_AdMobId);
+        m_AdMobBanner->Show();
     }
+
+    if (m_AdMobInterstitialEnabled) {
+        m_AdMobInterstitial->LoadWithUnitId(m_AdMobId);
+    }
+
+    adctlTimer = new QTimer(this);
+    connect(adctlTimer, SIGNAL(timeout()), this, SLOT(adctlTimerSlot()));
+    adctlTimer->start(500);
+
+    m_AdInitialized = true;
 }
 
-void AdMobCtl::setUnitId(const QString &unitId)
+void AdCtl::adctlTimerSlot()
 {
-    qDebug() << "set unitId" << unitId << m_bannerVisible << m_interstitialEnabled;
-    if (!m_setunitId) {
-        m_unitId = unitId;
-        m_setunitId = true;
-    } else {
-        qDebug() << "AdMob alredy set unit id!";
+    //signals AdMob
+    if (cacheAdMobBannerHeight != AdMobBannerHeight()) {
+        cacheAdMobBannerHeight = AdMobBannerHeight();
+        emit AdMobBannerHeightChanged(AdMobBannerHeight());
     }
-}
-
-void AdMobCtl::setSadUnitId(const QString &unitId)
-{
-    m_sadId = unitId;
-}
-
-//void AdMobCtl::setAdMode(AdMobCtl::AdMode mode)
-//{
-//    m_adMode = mode;
-//}
-
-void AdMobCtl::showedTimerSlot()
-{
-    if (cachedBannerHeight != bannerHeight()) {
-        cachedBannerHeight = bannerHeight();
-        emit bannerHeightChanged(bannerHeight());
+    if (cacheAdMobBannerWidth != AdMobBannerWidth()) {
+        cacheAdMobBannerWidth = AdMobBannerWidth();
+        emit AdMobBannerWidthChanged(AdMobBannerWidth());
     }
-    if (cachedBannerWidth != bannerWidth()) {
-        cachedBannerWidth = bannerWidth();
-        emit bannerWidthChanged(bannerWidth());
+
+    //signals StartAd
+    if (cacheStartAdBannerHeight != StartAdBannerHeight()) {
+        cacheStartAdBannerHeight = StartAdBannerHeight();
+        emit StartAdBannerHeightChanged(StartAdBannerHeight());
     }
-    if (m_Banner->IsShow() && (showedTimer->interval() == 500)) {
+    if (cacheStartAdBannerWidth != StartAdBannerWidth()) {
+        cacheStartAdBannerWidth = StartAdBannerWidth();
+        emit StartAdBannerWidthChanged(StartAdBannerWidth());
+    }
+
+    if ((AdMobBannerWidth() > 0 || StartAdBannerHeight() > 0) && (adctlTimer->interval() == 500)) {
         emit showed();
-        showedTimer->stop();
-        showedTimer->start(2000);
+        adctlTimer->stop();
+        adctlTimer->start(2000);
     }
 }
 
-void AdMobCtl::setBannerVisible(const bool visible)
+//AdMob banner enabled
+bool AdCtl::AdMobBannerEnabled() const
 {
-    m_bannerVisible = visible;
-    if (m_bannerVisible) {
-        if (m_initialized) m_Banner->Show();
-    } else {
-        if (m_initialized) m_Banner->Hide();
-    }
+    return m_AdMobBannerEnabled;
 }
 
-bool AdMobCtl::bannerVisible() const
+void AdCtl::setAdMobBannerEnabled(const bool AdMobBannerEnabled)
 {
-    return m_bannerVisible;
+    m_AdMobBannerEnabled = AdMobBannerEnabled;
 }
 
-void AdMobCtl::setBannerPosition(const QPoint position)
+//AdMob interstitial enabled
+bool AdCtl::AdMobIinterstitialEnabled() const
 {
-    m_position = position;
-    if (m_initialized) m_Banner->SetPosition(m_position);
+    return m_AdMobInterstitialEnabled;
 }
 
-QPoint AdMobCtl::bannerPosition() const
+void AdCtl::setAdMobIinterstitialEnabled(bool AdMobIinterstitialEnabled)
 {
-    return m_position;
+    m_AdMobInterstitialEnabled = AdMobIinterstitialEnabled;
 }
 
-int AdMobCtl::bannerWidth() const
+//StartAd banner enabled
+bool AdCtl::StartAdBannerEnabled() const
 {
-    if (m_initialized) {
-        return m_Banner->GetSizeInPixels().width();
-    } else {
-        return 0;
-    }
+    return m_StartAdBannerEnabled;
 }
 
-int AdMobCtl::bannerHeight() const
+void AdCtl::setStartAdBannerEnabled(bool StartAdBannerEnabled)
 {
-    if (m_initialized) {
-        return m_Banner->GetSizeInPixels().height();
-    } else {
-        return 0;
-    }
+    m_StartAdBannerEnabled = StartAdBannerEnabled;
 }
 
-bool AdMobCtl::interstitialEnabled() const
+//AdMob width and height
+int AdCtl::AdMobBannerWidth() const
 {
-    return m_interstitialEnabled;
+    if (!m_AdInitialized  || !m_AdMobBannerEnabled) { return 0; }
+    return m_AdMobBanner->GetSizeInPixels().width();
 }
 
-void AdMobCtl::setInterstitialEnabled(bool interstitialEnabled)
+int AdCtl::AdMobBannerHeight() const
 {
-    //qDebug() << "set m_interstitialEnabled" << interstitialEnabled;
-    m_interstitialEnabled = interstitialEnabled;
+    if (!m_AdInitialized || !m_AdMobBannerEnabled) { return 0; }
+    return m_AdMobBanner->GetSizeInPixels().height();
+}
+
+//StartAd width and height
+int AdCtl::StartAdBannerWidth() const
+{
+    if (!m_AdInitialized || !m_StartAdBannerEnabled) { return 0; }
+    //TODO StartAdHeight
+    //return m_AdMobBanner->GetSizeInPixels().width();
+}
+
+int AdCtl::StartAdBannerHeight() const
+{
+    if (!m_AdInitialized || !m_StartAdBannerEnabled) { return 0; }
+    //TODO StartAdWidth
+    //return m_AdMobBanner->GetSizeInPixels().height();
+}
+
+//AdMob banner position
+QPoint AdCtl::AdMobBannerPosition() const
+{
+    return m_AdMobBannerPosition;
+}
+
+void AdCtl::setAdMobBannerPosition(const QPoint position)
+{
+    m_AdMobBannerPosition = position;
+    if (!m_AdInitialized || !m_AdMobBannerEnabled) { return; }
+    m_AdMobBanner->SetPosition(m_AdMobBannerPosition);
+}
+
+//StartAd banner position
+QPoint AdCtl::StartAdBannerPosition() const
+{
+    return m_StartAdBannerPosition;
+}
+
+void AdCtl::setStartAdBannerPosition(const QPoint position)
+{
+    m_StartAdBannerPosition = position;
+    if (!m_AdInitialized || !m_StartAdBannerEnabled) { return; }
+    //TODO set StartAdBannerPosition
+    //m_AdMobBanner->SetPosition(m_AdMobBannerPosition);
+}
+
+//set ids
+void AdCtl::setAdMobId(const QString &AdMobId)
+{
+    if (!m_AdMobId.isEmpty()) { qDebug() << "AdMob ID alredy set!"; return; }
+    m_AdMobId = AdMobId;
+}
+
+void AdCtl::setStartAdId(const QString &StartAdId)
+{
+    if (!m_StartAdId.isEmpty()) { qDebug() << "StartAd ID alredy set!"; return; }
+    m_StartAdId = StartAdId;
+}
+
+void AdCtl::showAdMobBanner()
+{
+    m_AdMobBanner->Show();
+}
+
+void AdCtl::hideAdMobBanner()
+{
+    m_AdMobBanner->Hide();
+}
+
+void AdCtl::showAdMobInterstitial()
+{
+    m_AdMobInterstitial->Show();
 }
