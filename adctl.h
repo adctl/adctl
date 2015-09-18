@@ -20,15 +20,7 @@ class AdMobCtl : public QObject
     Q_PROPERTY(int bannerWidth READ bannerWidth NOTIFY bannerHeightChanged)
     Q_PROPERTY(QString unitId WRITE setUnitId)
     Q_PROPERTY(QString sadUnitId WRITE setSadUnitId)
-    //Q_PROPERTY(QString adMode WRITE setAdMode)
 
-//    enum AdMode
-//    {
-//        AdMob = 0,
-//        SADView
-//    };
-
-     //Q_ENUMS(AdMode)
 public:
     explicit AdMobCtl(QObject *parent = 0);
     ~AdMobCtl();
@@ -56,7 +48,6 @@ public slots:
 
     void setUnitId(const QString &unitId);
     void setSadUnitId(const QString &unitId);
-    //void setAdMode (AdMode mode);
     void init();
 
 private:
