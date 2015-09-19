@@ -6,11 +6,14 @@ QT += qml quick widgets
 HEADERS += $$PWD/adctl.h
 SOURCES += $$PWD/adctl.cpp
 
+INCLUDEPATH += $$PWD/3rd/QtAdMob/QtAdMob
+
+OTHER_FILES += README.md
+
 android {
   #ANDROID_PACKAGE_SOURCE_DIR = $$PWD/3rd/GATutorial-QML/android_data
   QT += androidextras gui-private
-  OTHER_FILES += \
-    $$PWD/platform/android/src/ru/forsk/AdCtl/AdCtlActivity.java
+  OTHER_FILES += $$PWD/platform/android/src/ru/forsk/AdCtl/AdCtlActivity.java
   #AdMob
   DISTFILES += $$PWD/3rd/QtAdMob/QtAdMob/platform/android/src/org/dreamdev/QtAdMob/QtAdMobActivity.java \
     $$PWD/3rd/GATutorial-QML/android_data/src/com/lasconic/QGoogleAnalytics.java
@@ -28,13 +31,9 @@ android {
 }
 
 ios {
-  QMAKE_LFLAGS += -framework SystemConfiguration -framework CoreData -framework AdSupport -ObjC
-  LIBS += -L$$PWD/ios/libs -lGoogleAnalyticsServices -lAdIdAccess -lsqlite3.0
-  OBJECTIVE_SOURCES += $$PWD/3rd/GATutorial-QML/ios/iosanalytics.mm
   QMAKE_CXXFLAGS += -fobjc-arc
   QMAKE_LFLAGS += -ObjC
   QT += gui_private
-  OBJECTIVE_SOURCES += google/ios/iosanalytics.mm
   LIBS += -F $$PWD/QtAdMob/platform/ios/GoogleMobileAds \
     -framework GoogleMobileAds \
     -framework AVFoundation \
@@ -47,12 +46,6 @@ ios {
     -framework StoreKit \
     -framework EventKit \
     -framework EventKitUI \
-    -framework CoreMedia \
-    L$$PWD/google/ios/libs -lGoogleAnalyticsServices -lAdIdAccess -lsqlite3.0
+    -framework CoreMedia
 }
-
-RESOURCES += $$PWD/3rd/GATutorial-QML/qml.qrc
-
-INCLUDEPATH += $$PWD/3rd/GATutorial-QML/ \
-                $$PWD/3rd/QtAdMob/QtAdMob
 
