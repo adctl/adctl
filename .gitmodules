@@ -7,3 +7,6 @@
 [submodule "3rd/SDK-Android"]
 	path = 3rd/SDK-Android
 	url = https://github.com/StartAD/SDK-Android.git
+[submodule "3rd/qt-google-analytics"]
+	path = 3rd/qt-google-analytics
+	url = https://github.com/HSAnet/qt-google-analytics.git
