@@ -3,51 +3,61 @@
 
 #include <QObject>
 #include <QPoint>
+#include <QVariant>
 
 class IQtAdMobBanner;
 class IQtAdMobInterstitial;
 class QTimer;
 class QAndroidJniObject;
+class GAnalytics;
 
 class AdCtl : public QObject
 {
     Q_OBJECT
     //enabled properties
-    Q_PROPERTY(bool AdMobBannerEnabled READ AdMobBannerEnabled WRITE setAdMobBannerEnabled)
-    Q_PROPERTY(bool AdMobIinterstitialEnabled READ AdMobIinterstitialEnabled WRITE setAdMobIinterstitialEnabled)
-    Q_PROPERTY(bool StartAdBannerEnabled READ StartAdBannerEnabled WRITE setStartAdBannerEnabled)
+    Q_PROPERTY(bool adMobBannerEnabled READ AdMobBannerEnabled WRITE setAdMobBannerEnabled)
+    Q_PROPERTY(bool adMobIinterstitialEnabled READ AdMobIinterstitialEnabled WRITE setAdMobIinterstitialEnabled)
+    Q_PROPERTY(bool startAdBannerEnabled READ StartAdBannerEnabled WRITE setStartAdBannerEnabled)
+    Q_PROPERTY(bool gAnalyticsEnabled READ GAnalyticsEnabled WRITE setGAnalyticsEnabled)
 
     //AdMob width and height
-    Q_PROPERTY(int AdMobBannerHeight READ AdMobBannerHeight NOTIFY AdMobBannerHeightChanged)
-    Q_PROPERTY(int AdMobBannerWidth READ AdMobBannerWidth NOTIFY AdMobBannerWidthChanged)
+    Q_PROPERTY(int adMobBannerHeight READ AdMobBannerHeight NOTIFY adMobBannerHeightChanged)
+    Q_PROPERTY(int adMobBannerWidth READ AdMobBannerWidth NOTIFY adMobBannerWidthChanged)
 
     //StartAd width and height
-    Q_PROPERTY(int StartAdBannerHeight READ StartAdBannerHeight NOTIFY StartAdBannerHeightChanged)
-    Q_PROPERTY(int StartAdBannerWidth READ StartAdBannerWidth NOTIFY StartAdBannerWidthChanged)
+    Q_PROPERTY(int startAdBannerHeight READ StartAdBannerHeight NOTIFY startAdBannerHeightChanged)
+    Q_PROPERTY(int startAdBannerWidth READ StartAdBannerWidth NOTIFY startAdBannerWidthChanged)
 
     //AdMob position
-    Q_PROPERTY(QPoint AdMobBannerPosition READ AdMobBannerPosition WRITE setAdMobBannerPosition)
+    Q_PROPERTY(QPoint adMobBannerPosition READ AdMobBannerPosition WRITE setAdMobBannerPosition)
 
     //StartAd position
-    Q_PROPERTY(QPoint StartAdBannerPosition READ StartAdBannerPosition WRITE setStartAdBannerPosition)
+    Q_PROPERTY(QPoint startAdBannerPosition READ StartAdBannerPosition WRITE setStartAdBannerPosition)
+
+    //Get real positions
+    Q_PROPERTY(int adMobBannerRealX READ adMobBannerRealX)
+    Q_PROPERTY(int AdMobBannerRealY READ adMobBannerRealY)
+    Q_PROPERTY(int startAdBannerRealX READ startAdBannerRealX)
+    Q_PROPERTY(int startAdBannerRealY READ startAdBannerRealY)
 
     //ids
-    Q_PROPERTY(QString AdMobId WRITE setAdMobId)
-    Q_PROPERTY(QString StartAdId WRITE setStartAdId)
+    Q_PROPERTY(QString adMobId WRITE setAdMobId)
+    Q_PROPERTY(QString startAdId WRITE setStartAdId)
+    Q_PROPERTY(QString gAnalyticsId WRITE setGAnalyticsId)
 
 public:
     explicit AdCtl(QObject *parent = 0);
     ~AdCtl();
 
 signals:
-    void showed();
-    void  AdMobBannerHeightChanged(int height);
-    void  AdMobBannerWidthChanged(int width);
-    void  StartAdBannerHeightChanged(int height);
-    void  StartAdBannerWidthChanged(int width);
+    void  adMobBannerShowed();
+    void  startAdBannerShowed();
+    void  adMobBannerHeightChanged(int height);
+    void  adMobBannerWidthChanged(int width);
+    void  startAdBannerHeightChanged(int height);
+    void  startAdBannerWidthChanged(int width);
 
 public slots:
-
     //init library with ids and bool flags
     void init();
 
@@ -66,6 +76,10 @@ public slots:
     void setStartAdBannerEnabled(const bool StartAdBannerEnabled);
     bool StartAdBannerEnabled() const;
 
+    //GAnalytics banner enabled
+    void setGAnalyticsEnabled(const bool GAnalyticsEnabled);
+    bool GAnalyticsEnabled() const;
+
     //AdMob width and height
     int AdMobBannerHeight() const;
     int AdMobBannerWidth() const;
@@ -74,39 +88,59 @@ public slots:
     int StartAdBannerHeight() const;
     int StartAdBannerWidth() const;
 
-    //AdMob position
+    //AdMob set position
     void setAdMobBannerPosition(const QPoint AdMobBannerPosition);
     QPoint AdMobBannerPosition() const;
 
-    //StartAd position
+    //StartAd set position
     void setStartAdBannerPosition(const QPoint StartAdBannerPosition);
     QPoint StartAdBannerPosition() const;
+
+    //Get Real Positions
+    int adMobBannerRealX();
+    int adMobBannerRealY();
+    int startAdBannerRealX();
+    int startAdBannerRealY();
 
     //ids
     void setAdMobId(const QString &AdMobId);
     void setStartAdId(const QString &StartAdId);
+    void setGAnalyticsId(const QString &GAnalyticsId);
 
     //ctl methods
     void showAdMobBanner();
     void hideAdMobBanner();
     void showAdMobInterstitial();
+    void showStartAdBanner();
+    void hideStartAdBanner();
 
-private:
+    //Google Analytics
+    void sendGaAppView(const QString &screenName = QString());
+    void sendGaEvent(const QString &category = QString(),
+                   const QString &action = QString(),
+                   const QString &label = QString(),
+                   const QVariant &value = QVariant());
+    void endGaSession();
+
+protected:
     //Timer for control, update and emit properties changes for banners
     QTimer *adctlTimer;
 
-    //Pointers for AdMob
+    //Pointers
     IQtAdMobBanner *m_AdMobBanner;
     IQtAdMobInterstitial *m_AdMobInterstitial;
+    GAnalytics *gAnalytics;
 
     //Enabled control vars
-    bool m_AdMobBannerEnabled;
-    bool m_AdMobInterstitialEnabled;
-    bool m_StartAdBannerEnabled;
+    bool m_AdMobBannerEnabled = false;
+    bool m_AdMobInterstitialEnabled = false;
+    bool m_StartAdBannerEnabled = false;
+    bool m_GAnalyticsEnabled = false;
 
     //ids
     QString m_AdMobId;
     QString m_StartAdId;
+    QString m_GAnalyticsId;
 
     //initialized
     bool m_AdInitialized = false;
@@ -124,6 +158,13 @@ private:
     QPoint m_AdMobBannerPosition;
     QPoint m_StartAdBannerPosition;
 
+    //is banners showed
+    bool m_isAdMobBannerShowed = false;
+    bool m_isStartAdBannerShowed = false;
+
+    //banners alredy visible bools
+    bool m_AdMobWidthAlredyGreatThanZero = false;
+    bool m_StartAdWidthAlredyGreatThanZero = false;
 };
 
 #endif // ADMOBBANNERCTL_H
