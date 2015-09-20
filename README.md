@@ -1,27 +1,27 @@
 # adctl
-Qt for Google Analytics, Google AdMob, Google Play services (auth and achievements) and StartAd.mobi framework
+Qt for Google Analytics, Google AdMob, Google Play services (auth and achievements) and StartAd.mobi framework.
 
-Completed library features:
+**Completed library features**
 - Qt and Google AdMob (based on yevgeniy-logachev/QtAdMob https://github.com/yevgeniy-logachev/QtAdMob). Work on Android/iOS
 - Qt and StartAd.mobi (based on https://github.com/kafeg/SDK-Android). Work only Android
 - Qt and Google Analytics (based on StartAD/SDK-Android https://github.com/HSAnet/qt-google-analytics). Work on Android/iOS/Desktop
 
 All functions tested on 3 Android devices, but it not tested on iOS! Library give you C++ and QML interfaces for using.
 
-In my feature plan:
+**In my feature plan**
 - Add more cross-promoutin Ads;
 - Add Google Play authorization from VoltAir (https://github.com/google/VoltAir);
 - Add Google Play Achievements from VoltAir (https://github.com/google/VoltAir);
 - Add support StartAd.mobi on iOS.
 
-Known issues:
+**Known issues**
 - need add StartAd.mobi iOS integration
 - need to refactor copy data functions in AdCtl.pri for copy data into build folder (now its auto copy to project folder)
 - need to refactor copy data funiction in AdCtl.pri for copy data only once time (now its copy on every build)
 
-Howto integrate library to project:
+**Howto integrate library to project**
 
-1. Add submodule to your project:
+Add submodule to your project:
 ```
     - mkdir $$PROJECT_ROOT/mobile
     - cd $$PROJECT_ROOT/mobile
@@ -29,9 +29,9 @@ Howto integrate library to project:
     - git submodule update --init --recursive
 ```
 
-2. Move your 'android' folder to $$PROJECT_ROOT/mobile/android (for example, it's not required)
+Move your 'android' folder to $$PROJECT_ROOT/mobile/android (for example, it's not required)
 
-3. Include .pri in your project:
+Include .pri in your project:
 
 ```
     #AdCtl: Google Analytics, AdMob, StartAD.mobi
@@ -42,9 +42,9 @@ Howto integrate library to project:
         $$PWD/mobile/android/AndroidManifest.xml
     }
 ```
-4. That's all!
+That's all!
 
-Howto using library from C++
+**Howto using library from C++**
 
 1. in main.cpp (for example) add:
 ```
@@ -60,7 +60,7 @@ adCtl->setAdMobBannerEnabled(true);
 ...see example for setting variables in QML section and in adctl.h...
 adCtl->init();
 ```
-Howto using library from Qml
+**Howto using library from Qml**
 
 1. In main.cpp add:
 ```
@@ -123,12 +123,11 @@ Howto using library from Qml
     }
 ```
 
-Developer:
-kafeg aka Vitaliy Petrov
-Skype: kafik-fafik
-EMail: v31337[at]gmail.com
+**Developer kafeg aka Vitaliy Petrov**
+- Skype: kafik-fafik
+- EMail: v31337[at]gmail.com
 
-My projects:
+**My projects**
 - http://forsk.ru - адекватная автоматизация бизнес процессов.
 - http://skid.kz - автоматический агрегатор скидок Республики Казахстан.
 - http://kellot.ru - онлайн табель учёта рабочего времени по формам Т-12 и Т-13.
