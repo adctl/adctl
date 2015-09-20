@@ -123,6 +123,10 @@ For example, interact with AdCtl:
     }
 ```
 
+**Example application**
+
+https://play.google.com/store/apps/details?id=ru.forsk.darkstories
+
 **Developer kafeg aka Vitaliy Petrov**
 - Skype: kafik-fafik
 - EMail: v31337[at]gmail.com
