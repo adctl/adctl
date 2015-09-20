@@ -46,7 +46,7 @@ That's all!
 
 **Howto using library from C++**
 
-1. in main.cpp (for example) add:
+In main.cpp (for example) add:
 ```
 #include <mobile/adctl/adctl.h>
 
@@ -62,7 +62,7 @@ adCtl->init();
 ```
 **Howto using library from Qml**
 
-1. In main.cpp add:
+In main.cpp add:
 ```
     #include <mobile/adctl/adctl.h>
     
@@ -73,7 +73,7 @@ adCtl->init();
     QApplication::setApplicationVersion("1.1");
     qmlRegisterType<AdCtl>("ru.forsk.adctl", 1, 0, "AdCtl");
 ```
-2. In main.qml add:
+In main.qml add:
 ```
     AdCtl {
         id: adCtl
@@ -112,14 +112,14 @@ adCtl->init();
         Component.onCompleted: { adCtl.init(); adCtl.showAdMobInterstitial(); }
     }
 ```
-3. For example, interact with AdCtl:
+For example, interact with AdCtl:
 ```
     Rectangle {
         id: root
     
         anchors.fill: parent
         anchors.bottomMargin: adCtl.startAdBannerHeight
-    
+        Component.onCompleted: { adCtl.sendGaAppView("MainWindow"); }
     }
 ```
 
