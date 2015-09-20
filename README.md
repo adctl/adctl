@@ -22,16 +22,18 @@ Known issues:
 Howto integrate library to project:
 
 1. Add submodule to your project:
-
+```
     - mkdir $$PROJECT_ROOT/mobile
     - cd $$PROJECT_ROOT/mobile
     - git submodule add https://github.com/kafeg/adctl.git
     - git submodule update --init --recursive
+```
 
 2. Move your 'android' folder to $$PROJECT_ROOT/mobile/android (for example, it's not required)
 
 3. Include .pri in your project:
 
+```
     #AdCtl: Google Analytics, AdMob, StartAD.mobi
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/mobile/android
     include(mobile/adctl/AdCtl.pri)
@@ -39,13 +41,13 @@ Howto integrate library to project:
       OTHER_FILES += \
         $$PWD/mobile/android/AndroidManifest.xml
     }
-
+```
 4. That's all!
 
 Howto using library from C++
 
 1. in main.cpp (for example) add:
-
+```
 #include <mobile/adctl/adctl.h>
 
 ...
@@ -57,68 +59,69 @@ AdCtl *adCtl = new AdCtl();
 adCtl->setAdMobBannerEnabled(true);
 ...see example for setting variables in QML section and in adctl.h...
 adCtl->init();
-
+```
 Howto using library from Qml
 
 1. In main.cpp add:
-
-#include <mobile/adctl/adctl.h>
-
-...
-
-//AdCtl
-QApplication::setApplicationName("Darkstories");
-QApplication::setApplicationVersion("1.1");
-qmlRegisterType<AdCtl>("ru.forsk.adctl", 1, 0, "AdCtl");
-
+```
+    #include <mobile/adctl/adctl.h>
+    
+    ...
+    
+    //AdCtl
+    QApplication::setApplicationName("Darkstories");
+    QApplication::setApplicationVersion("1.1");
+    qmlRegisterType<AdCtl>("ru.forsk.adctl", 1, 0, "AdCtl");
+```
 2. In main.qml add:
-
-AdCtl {
-    id: adCtl
-
-    //manage enabled components
-    adMobBannerEnabled: true
-    adMobIinterstitialEnabled: true
-    startAdBannerEnabled: true
-    gAnalyticsEnabled: true
-
-    //set ids
-    adMobId: "YOUR_ADMOB_UNIT_ID"
-    startAdId: "YOUR_STARTADMOBI_ID"
-    gAnalyticsId: "YOUR_GANALYTICS_TRACKING_ID"
-
-    //Start positions for banners.
-    adMobBannerPosition: Qt.point(0,-500)
-    startAdBannerPosition: Qt.point(0,-500)
-
-    //when StartAd.mobi baners is showed we can to reposition it
-    onStartAdBannerShowed: {
-        console.log("onStartAdBannerShowed");
-        startAdBannerPosition = Qt.point(0,
-                                 (appWindow.height - adCtl.startAdBannerHeight * 1.3))
+```
+    AdCtl {
+        id: adCtl
+    
+        //manage enabled components
+        adMobBannerEnabled: true
+        adMobIinterstitialEnabled: true
+        startAdBannerEnabled: true
+        gAnalyticsEnabled: true
+    
+        //set ids
+        adMobId: "YOUR_ADMOB_UNIT_ID"
+        startAdId: "YOUR_STARTADMOBI_ID"
+        gAnalyticsId: "YOUR_GANALYTICS_TRACKING_ID"
+    
+        //Start positions for banners.
+        adMobBannerPosition: Qt.point(0,-500)
+        startAdBannerPosition: Qt.point(0,-500)
+    
+        //when StartAd.mobi baners is showed we can to reposition it
+        onStartAdBannerShowed: {
+            console.log("onStartAdBannerShowed");
+            startAdBannerPosition = Qt.point(0,
+                                     (appWindow.height - adCtl.startAdBannerHeight * 1.3))
+        }
+    
+        //when AdMob baners is showed we can to reposition it
+        onAdMobBannerShowed: {
+            console.log("onAdMobBannerShowed");
+            adMobBannerPosition = Qt.point((appWindow.width - adCtl.adMobBannerWidth) * 0.5,
+                                     (appWindow.height - adCtl.adMobBannerHeight * 1.5 - 200))
+            adCtl.showAdMobInterstitial();
+        }
+    
+        //When all variables are setted, we can to initialize our code
+        Component.onCompleted: { adCtl.init(); adCtl.showAdMobInterstitial(); }
     }
-
-    //when AdMob baners is showed we can to reposition it
-    onAdMobBannerShowed: {
-        console.log("onAdMobBannerShowed");
-        adMobBannerPosition = Qt.point((appWindow.width - adCtl.adMobBannerWidth) * 0.5,
-                                 (appWindow.height - adCtl.adMobBannerHeight * 1.5 - 200))
-        adCtl.showAdMobInterstitial();
-    }
-
-    //When all variables are setted, we can to initialize our code
-    Component.onCompleted: { adCtl.init(); adCtl.showAdMobInterstitial(); }
-}
-
+```
 3. For example, interact with AdCtl:
-Rectangle {
-    id: root
-
-    anchors.fill: parent
-    anchors.bottomMargin: adCtl.startAdBannerHeight
-
-}
-
+```
+    Rectangle {
+        id: root
+    
+        anchors.fill: parent
+        anchors.bottomMargin: adCtl.startAdBannerHeight
+    
+    }
+```
 
 Developer:
 kafeg aka Vitaliy Petrov
@@ -126,12 +129,9 @@ Skype: kafik-fafik
 EMail: v31337[at]gmail.com
 
 My projects:
-http://forsk.ru - адекватная автоматизация бизнес процессов.
-
-http://skid.kz - автоматический агрегатор скидок Республики Казахстан.
-
-http://kellot.ru - онлайн табель учёта рабочего времени по формам Т-12 и Т-13.
-
-https://github.com/kafeg
+- http://forsk.ru - адекватная автоматизация бизнес процессов.
+- http://skid.kz - автоматический агрегатор скидок Республики Казахстан.
+- http://kellot.ru - онлайн табель учёта рабочего времени по формам Т-12 и Т-13.
+- https://github.com/kafeg
 
 Details of using this library in Russian: TODO
