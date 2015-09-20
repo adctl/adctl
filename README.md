@@ -10,8 +10,8 @@ All functions tested on 3 Android devices, but it not tested on iOS!
 
 In my feature plan:
 - Add more cross-promoutin Ads;
-- Add Google Play authorization;
-- Add Google Play Achievements;
+- Add Google Play authorization from VoltAir (https://github.com/google/VoltAir);
+- Add Google Play Achievements from VoltAir (https://github.com/google/VoltAir);
 - Add support StartAd.mobi on iOS.
 
 Library give you C++ and QML interfaces for using.

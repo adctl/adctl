@@ -64,7 +64,9 @@ void AdCtl::init()
     }
 
     if (m_StartAdBannerEnabled) {
+#if (__ANDROID_API__ >= 9)
         m_Activity->callMethod<void>("InitializeStartAdBanner");
+#endif
     }
 
     if (m_GAnalyticsEnabled) {
@@ -185,13 +187,17 @@ int AdCtl::AdMobBannerHeight() const
 int AdCtl::StartAdBannerWidth() const
 {
     if (!m_AdInitialized || !m_StartAdBannerEnabled) { return 0; }
+#if (__ANDROID_API__ >= 9)
     return m_Activity->callMethod<int>("GetStartAdBannerWidth");
+#endif
 }
 
 int AdCtl::StartAdBannerHeight() const
 {
     if (!m_AdInitialized || !m_StartAdBannerEnabled) { return 0; }
+#if (__ANDROID_API__ >= 9)
     return m_Activity->callMethod<int>("GetStartAdBannerHeight");
+#endif
 }
 
 //AdMob banner position
@@ -215,30 +221,39 @@ QPoint AdCtl::StartAdBannerPosition() const
 
 int AdCtl::adMobBannerRealX()
 {
+#if (__ANDROID_API__ >= 9)
     return m_Activity->callMethod<int>("GetAdMobBannerX");
+#endif
 }
 
 int AdCtl::adMobBannerRealY()
 {
+#if (__ANDROID_API__ >= 9)
     return m_Activity->callMethod<int>("GetAdMobBannerY");
+#endif
 }
 
 int AdCtl::startAdBannerRealX()
 {
+#if (__ANDROID_API__ >= 9)
     return m_Activity->callMethod<int>("GetStartAdBannerX");
+#endif
 }
 
 int AdCtl::startAdBannerRealY()
 {
+#if (__ANDROID_API__ >= 9)
     return m_Activity->callMethod<int>("GetStartAdBannerY");
+#endif
 }
 
 void AdCtl::setStartAdBannerPosition(const QPoint position)
 {
     m_StartAdBannerPosition = position;
     if (!m_AdInitialized || !m_StartAdBannerEnabled) { return; }
-
+#if (__ANDROID_API__ >= 9)
     m_Activity->callMethod<void>("SetStartAdBannerPosition", "(II)V", position.x(), position.y());
+#endif
 }
 
 //set ids
@@ -272,12 +287,16 @@ void AdCtl::hideAdMobBanner()
 
 void AdCtl::showStartAdBanner()
 {
+#if (__ANDROID_API__ >= 9)
     m_Activity->callMethod<void>("ShowStartAdBanner");
+#endif
 }
 
 void AdCtl::hideStartAdBanner()
 {
+#if (__ANDROID_API__ >= 9)
     m_Activity->callMethod<void>("HideStartAdBanner");
+#endif
 }
 
 void AdCtl::sendGaAppView(const QString &screenName)
