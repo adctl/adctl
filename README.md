@@ -3,18 +3,16 @@ Qt for Google Analytics, Google AdMob, Google Play services (auth and achievemen
 
 Completed library features:
 - Qt and Google AdMob (based on yevgeniy-logachev/QtAdMob https://github.com/yevgeniy-logachev/QtAdMob). Work on Android/iOS
-- Qt and StartAd.mobi (based on HSAnet/qt-google-analytics https://github.com/kafeg/SDK-Android). Work only Android
+- Qt and StartAd.mobi (based on https://github.com/kafeg/SDK-Android). Work only Android
 - Qt and Google Analytics (based on StartAD/SDK-Android https://github.com/HSAnet/qt-google-analytics). Work on Android/iOS/Desktop
 
-All functions tested on 3 Android devices, but it not tested on iOS!
+All functions tested on 3 Android devices, but it not tested on iOS! Library give you C++ and QML interfaces for using.
 
 In my feature plan:
 - Add more cross-promoutin Ads;
 - Add Google Play authorization from VoltAir (https://github.com/google/VoltAir);
 - Add Google Play Achievements from VoltAir (https://github.com/google/VoltAir);
 - Add support StartAd.mobi on iOS.
-
-Library give you C++ and QML interfaces for using.
 
 Known issues:
 - need add StartAd.mobi iOS integration
@@ -25,22 +23,22 @@ Howto integrate library to project:
 
 1. Add submodule to your project:
 
-mkdir $$PROJECT_ROOT/mobile
-cd $$PROJECT_ROOT/mobile
-git submodule add https://github.com/kafeg/adctl.git
-git submodule update --init --recursive
+    - mkdir $$PROJECT_ROOT/mobile
+    - cd $$PROJECT_ROOT/mobile
+    - git submodule add https://github.com/kafeg/adctl.git
+    - git submodule update --init --recursive
 
 2. Move your 'android' folder to $$PROJECT_ROOT/mobile/android (for example, it's not required)
 
-3. include .pri in your project:
+3. Include .pri in your project:
 
-#AdCtl: Google Analytics, AdMob, StartAD.mobi
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/mobile/android
-include(mobile/adctl/AdCtl.pri)
-android {
-  OTHER_FILES += \
-    $$PWD/mobile/android/AndroidManifest.xml
-}
+    #AdCtl: Google Analytics, AdMob, StartAD.mobi
+    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/mobile/android
+    include(mobile/adctl/AdCtl.pri)
+    android {
+      OTHER_FILES += \
+        $$PWD/mobile/android/AndroidManifest.xml
+    }
 
 4. That's all!
 
