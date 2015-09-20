@@ -42,6 +42,30 @@ Include .pri in your project:
         $$PWD/mobile/android/AndroidManifest.xml
     }
 ```
+
+Include in your AndroidMainifest.xml lines (as described at this https://github.com/yevgeniy-logachev/QtAdMob or https://raw.githubusercontent.com/yevgeniy-logachev/QtAdMob/master/AndroidManifest.png)
+```
+After 'application' tag:
+<!--This meta-data tag is required to use Google Play Services.-->
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+```
+In main activity:
+```
+<activity android:configChanges="..." android:name="ru.forsk.AdCtl.AdCtlActivity" android:label="..." android:screenOrientation="portrait" android:launchMode="singleTop">
+```
+After first activity:
+```
+        <!--Include the AdActivity configChanges and theme. -->
+        <activity android:name="com.google.android.gms.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" android:theme="@android:style/Theme.Translucent" android:label="Тёмные истории">
+            <meta-data android:name="android.app.lib_name" android:value="darkstories"/>
+        </activity>
+```
+Before </manifest>:
+```
+        <uses-permission android:name="android.permission.INTERNET"/>
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+```
 That's all!
 
 **Howto using library from C++**
