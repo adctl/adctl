@@ -161,4 +161,4 @@ For example, interact with AdCtl:
 - http://kellot.ru - онлайн табель учёта рабочего времени по формам Т-12 и Т-13.
 - https://github.com/kafeg
 
-Details of using this library in Russian: TODO
+Details of using this library in Russian: http://habrahabr.ru/post/267275/
