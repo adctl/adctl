@@ -7,8 +7,15 @@ import android.util.Log;
 import com.startad.lib.SADView;
 import com.google.android.gms.ads.AdView;
 import android.widget.FrameLayout;
+import com.google.example.games.basegameutils.BaseGameUtils;
+import com.google.example.games.basegameutils.GameHelper;
+import android.os.Bundle;
+import android.content.Intent;
+//import com.google.android.gms.common.api.GoogleApiClient;
+//import android.support.v4.app.FragmentActivity;
+import com.google.android.gms.games.Games;
 
-public class AdCtlActivity extends QtAdMobActivity
+public class AdCtlActivity extends QtAdMobActivity implements GameHelper.GameHelperListener
 {
     protected String m_StartAdId;
     protected SADView m_StartAdBannerView;
@@ -16,7 +23,9 @@ public class AdCtlActivity extends QtAdMobActivity
     protected int m_StatusBarHeight = 0;
     protected ViewGroup m_ViewGroup;
     protected AdView m_AdBannerView;
+    private GameHelper gameHelper;
 
+    //StartAd and AdMob
     protected int GetStatusBarHeight()
     {
         int result = 0;
@@ -195,5 +204,78 @@ public class AdCtlActivity extends QtAdMobActivity
         m_StartAdBannerView.destroy();
       }
       super.onDestroy();
+    }
+
+    //Google Play Game services
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        gameHelper = new GameHelper(this, GameHelper.CLIENT_ALL);
+        gameHelper.setConnectOnStart(false);
+        gameHelper.enableDebugLog(true);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        gameHelper.setup(this);
+    }
+
+    protected void onStart() {
+        super.onStart();
+        gameHelper.onStart(this);
+    }
+
+    protected void onStop() {
+        super.onStop();
+        gameHelper.onStop();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // здесь gameHelper принимает решение о подключении, переподключении или
+        // отключении от игровых сервисов, в зависимости от кода результата
+        // Activity
+        gameHelper.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public boolean getSignedInGPGS() {
+        // статус подключения
+        return gameHelper.isSignedIn();
+    }
+
+    public void loginGPGS() {
+        try {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    gameHelper.beginUserInitiatedSignIn();
+                }
+            });
+        } catch (Exception e) {
+                e.printStackTrace();
+        }
+    }
+
+    public void submitScoreGPGS(final String leaderBoardId, int score) {
+        Games.Leaderboards.submitScore(gameHelper.getApiClient(),
+            leaderBoardId, score);
+    }
+
+    public void unlockAchievementGPGS(String achievementId) {
+        Games.Achievements.unlock(gameHelper.getApiClient(), achievementId);
+    }
+
+    public void getLeaderboardGPGS() {
+        startActivityForResult(
+            Games.Leaderboards.getAllLeaderboardsIntent(gameHelper.getApiClient()), 100);
+    }
+
+    public void getAchievementsGPGS() {
+        startActivityForResult(
+            Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), 101);
+    }
+
+    @Override
+    public void onSignInSucceeded() {
+    }
+
+    @Override
+    public void onSignInFailed() {
     }
 }

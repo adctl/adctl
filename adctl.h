@@ -50,6 +50,7 @@ public:
     ~AdCtl();
 
 signals:
+    //StartAd and AdMob
     void  adMobBannerShowed();
     void  startAdBannerShowed();
     void  adMobBannerHeightChanged(int height);
@@ -121,6 +122,14 @@ public slots:
                    const QString &label = QString(),
                    const QVariant &value = QVariant());
     void endGaSession();
+
+    //Google Play Game Services
+    bool isGPGSSignedIn() const;
+    void signInGPGS();
+    void submitScoreGPGS(QString leaderBoardId, int score);
+    void unlockAchievementGPGS(QString achievementId);
+    void showLeaderboardGPGS();
+    void showAchievementsGPGS();
 
 protected:
     //Timer for control, update and emit properties changes for banners

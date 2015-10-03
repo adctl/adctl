@@ -93,6 +93,7 @@ adCtl->init();
 In main.cpp add:
 ```
     #include <mobile/adctl/adctl.h>
+    #include <QApplication>
     
     ...
     
@@ -103,6 +104,10 @@ In main.cpp add:
 ```
 In main.qml add:
 ```
+    import ru.forsk.adctl 1.0
+
+    ...
+
     AdCtl {
         id: adCtl
     

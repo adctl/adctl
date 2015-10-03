@@ -320,6 +320,52 @@ void AdCtl::endGaSession()
     }
 }
 
+bool AdCtl::isGPGSSignedIn() const
+{
+#if (__ANDROID_API__ >= 9)
+    return m_Activity->callMethod<jboolean>("getSignedInGPGS");
+    //QAndroidJniObject param1 = QAndroidJniObject::fromString(m_StartAdId);
+    //m_Activity->callMethod<void>("SetStartAdId", "(Ljava/lang/String;)V", param1.object<jstring>());
+#endif
+}
+
+void AdCtl::signInGPGS()
+{
+#if (__ANDROID_API__ >= 9)
+    m_Activity->callMethod<void>("loginGPGS");
+#endif
+}
+
+void AdCtl::submitScoreGPGS(QString leaderBoardId, int score)
+{
+#if (__ANDROID_API__ >= 9)
+    QAndroidJniObject param1 = QAndroidJniObject::fromString(leaderBoardId);
+    m_Activity->callMethod<void>("submitScoreGPGS", "(Ljava/lang/String;I)V", param1.object<jstring>(), score);
+#endif
+}
+
+void AdCtl::unlockAchievementGPGS(QString achievementId)
+{
+#if (__ANDROID_API__ >= 9)
+    QAndroidJniObject param1 = QAndroidJniObject::fromString(achievementId);
+    m_Activity->callMethod<void>("unlockAchievementGPGS", "(Ljava/lang/String;)V", param1.object<jstring>());
+#endif
+}
+
+void AdCtl::showLeaderboardGPGS()
+{
+#if (__ANDROID_API__ >= 9)
+    m_Activity->callMethod<void>("getLeaderboardGPGS");
+#endif
+}
+
+void AdCtl::showAchievementsGPGS()
+{
+#if (__ANDROID_API__ >= 9)
+    m_Activity->callMethod<void>("getAchievementsGPGS");
+#endif
+}
+
 void AdCtl::showAdMobInterstitial()
 {
     m_AdMobInterstitial->Show();
