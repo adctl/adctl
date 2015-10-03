@@ -222,7 +222,8 @@ QPoint AdCtl::StartAdBannerPosition() const
 void AdCtl::setStartAdBannerSize(const QSize StartAdBannerSize)
 {
     m_StartAdBannerSize = StartAdBannerSize;
-    if (!m_AdInitialized || !m_StartAdBannerEnabled) { return; }
+    qDebug() << "StartAdBannerSize C++" << m_StartAdBannerSize;
+    //if (!m_AdInitialized || !m_StartAdBannerEnabled) { return; }
 #if (__ANDROID_API__ >= 9)
     m_Activity->callMethod<void>("SetStartAdBannerSize", "(II)V", StartAdBannerSize.width(), StartAdBannerSize.height());
 #endif

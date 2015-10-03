@@ -9,6 +9,8 @@ https://play.google.com/store/apps/details?id=ru.forsk.darkstories
 - Qt and Google AdMob (based on yevgeniy-logachev/QtAdMob https://github.com/yevgeniy-logachev/QtAdMob). Work on Android/iOS
 - Qt and StartAd.mobi (based on https://github.com/kafeg/SDK-Android). Work only Android
 - Qt and Google Analytics (based on StartAD/SDK-Android https://github.com/HSAnet/qt-google-analytics). Work on Android/iOS/Desktop
+- Qt and Google Play Game Services (based on https://github.com/playgameservices/android-basic-samples)
+- Android support library (based on https://github.com/danielesegato/android-support-library-archive)
 
 All functions tested on 3 Android devices, but it not tested on iOS! Library give you C++ and QML interfaces for using.
 

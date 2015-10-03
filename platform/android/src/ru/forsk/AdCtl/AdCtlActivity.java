@@ -66,6 +66,7 @@ public class AdCtlActivity extends QtAdMobActivity implements GameHelper.GameHel
 
     public void SetStartAdBannerPosition(final int x, final int y)
     {
+        Log.d("SetStartAdBannerPosition", ""+m_startAdWidth);
         runOnUiThread(new Runnable()
         {
             public void run()
@@ -81,17 +82,20 @@ public class AdCtlActivity extends QtAdMobActivity implements GameHelper.GameHel
 
     public void SetStartAdBannerSize(final int width, final int height)
     {
-        runOnUiThread(new Runnable()
-        {
-            public void run()
-            {
-                m_startAdWidth = width;
-                m_startAdHeight = height;
-                FrameLayout.LayoutParams layoutParams = getLayoutParams();
+        m_startAdWidth = width;
+        m_startAdHeight = height;
+        Log.d("SetStartAdBannerSize", ""+m_startAdWidth);
+//        runOnUiThread(new Runnable()
+//        {
+//            public void run()
+//            {
+//                m_startAdWidth = width;
+//                m_startAdHeight = height;
+//                FrameLayout.LayoutParams layoutParams = getLayoutParams();
 
-                m_StartAdBannerView.setLayoutParams(layoutParams);
-            }
-        });
+//                m_StartAdBannerView.setLayoutParams(layoutParams);
+//            }
+//        });
     }
 
     public boolean IsStartAdBannerShowed()
