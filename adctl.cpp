@@ -219,6 +219,20 @@ QPoint AdCtl::StartAdBannerPosition() const
     return m_StartAdBannerPosition;
 }
 
+void AdCtl::setStartAdBannerSize(const QSize StartAdBannerSize)
+{
+    m_StartAdBannerSize = StartAdBannerSize;
+    if (!m_AdInitialized || !m_StartAdBannerEnabled) { return; }
+#if (__ANDROID_API__ >= 9)
+    m_Activity->callMethod<void>("SetStartAdBannerSize", "(II)V", StartAdBannerSize.width(), StartAdBannerSize.height());
+#endif
+}
+
+QSize AdCtl::StartAdBannerSize() const
+{
+    return m_StartAdBannerSize;
+}
+
 int AdCtl::adMobBannerRealX()
 {
 #if (__ANDROID_API__ >= 9)

@@ -64,7 +64,7 @@ After first activity:
             <meta-data android:name="android.app.lib_name" android:value="darkstories"/>
         </activity>
 ```
-Before </manifest>:
+Before < / manifest >:
 ```
         <uses-permission android:name="android.permission.INTERNET"/>
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -125,6 +125,7 @@ In main.qml add:
         //Start positions for banners.
         adMobBannerPosition: Qt.point(0,-500)
         startAdBannerPosition: Qt.point(0,-500)
+        startAdBannerSize: Qt.size(250, 50)
     
         //when StartAd.mobi baners is showed we can to reposition it
         onStartAdBannerShowed: {
@@ -142,7 +143,11 @@ In main.qml add:
         }
     
         //When all variables are setted, we can to initialize our code
-        Component.onCompleted: { adCtl.init(); adCtl.showAdMobInterstitial(); }
+        Component.onCompleted: {
+            adCtl.init();
+            adCtl.showAdMobInterstitial();
+            adCtl.signInGPGS();
+        }
     }
 ```
 For example, interact with AdCtl:

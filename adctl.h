@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QPoint>
 #include <QVariant>
+#include <QSize>
 
 class IQtAdMobBanner;
 class IQtAdMobInterstitial;
@@ -33,6 +34,8 @@ class AdCtl : public QObject
 
     //StartAd position
     Q_PROPERTY(QPoint startAdBannerPosition READ StartAdBannerPosition WRITE setStartAdBannerPosition)
+    //StartAd size
+    Q_PROPERTY(QSize startAdBannerSize READ StartAdBannerSize WRITE setStartAdBannerSize)
 
     //Get real positions
     Q_PROPERTY(int adMobBannerRealX READ adMobBannerRealX)
@@ -96,6 +99,10 @@ public slots:
     //StartAd set position
     void setStartAdBannerPosition(const QPoint StartAdBannerPosition);
     QPoint StartAdBannerPosition() const;
+
+    //StartAd set size
+    void setStartAdBannerSize(const QSize StartAdBannerSize);
+    QSize StartAdBannerSize() const;
 
     //Get Real Positions
     int adMobBannerRealX();
@@ -163,9 +170,10 @@ protected:
     int cacheStartAdBannerHeight;
     int cacheStartAdBannerWidth;
 
-    //poritions
+    //positions and sizes
     QPoint m_AdMobBannerPosition;
     QPoint m_StartAdBannerPosition;
+    QSize m_StartAdBannerSize;
 
     //is banners showed
     bool m_isAdMobBannerShowed = false;

@@ -25,6 +25,9 @@ public class AdCtlActivity extends QtAdMobActivity implements GameHelper.GameHel
     protected AdView m_AdBannerView;
     private GameHelper gameHelper;
 
+    protected int m_startAdWidth = 0;
+    protected int m_startAdHeight = 0;
+
     //StartAd and AdMob
     protected int GetStatusBarHeight()
     {
@@ -47,18 +50,46 @@ public class AdCtlActivity extends QtAdMobActivity implements GameHelper.GameHel
         });
     }
 
+    protected FrameLayout.LayoutParams getLayoutParams()
+    {
+        Log.d("getLayoutParams", ""+m_startAdWidth);
+        FrameLayout.LayoutParams layoutParams;
+        if (m_startAdWidth == 0) {
+            layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
+                                                        FrameLayout.LayoutParams.WRAP_CONTENT);
+        } else {
+            layoutParams = new FrameLayout.LayoutParams(m_startAdWidth,
+                                                        FrameLayout.LayoutParams.WRAP_CONTENT);
+        }
+        return layoutParams;
+    }
+
     public void SetStartAdBannerPosition(final int x, final int y)
     {
         runOnUiThread(new Runnable()
         {
             public void run()
             {
-               FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
-                                                                                    FrameLayout.LayoutParams.WRAP_CONTENT);
+               FrameLayout.LayoutParams layoutParams = getLayoutParams();
 
                m_StartAdBannerView.setLayoutParams(layoutParams);
                m_StartAdBannerView.setX(x);
-               m_StartAdBannerView.setY(y + m_StatusBarHeight);
+               m_StartAdBannerView.setY(y);
+            }
+        });
+    }
+
+    public void SetStartAdBannerSize(final int width, final int height)
+    {
+        runOnUiThread(new Runnable()
+        {
+            public void run()
+            {
+                m_startAdWidth = width;
+                m_startAdHeight = height;
+                FrameLayout.LayoutParams layoutParams = getLayoutParams();
+
+                m_StartAdBannerView.setLayoutParams(layoutParams);
             }
         });
     }
@@ -99,8 +130,7 @@ public class AdCtlActivity extends QtAdMobActivity implements GameHelper.GameHel
                 {
                     m_ViewGroup = (ViewGroup) view;
 
-                    FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
-                                                                                         FrameLayout.LayoutParams.WRAP_CONTENT);
+                    FrameLayout.LayoutParams layoutParams = getLayoutParams();
 
                     m_StartAdBannerView.setLayoutParams(layoutParams);
                     m_StartAdBannerView.setX(0);
