@@ -15,8 +15,7 @@ android {
   QT += androidextras gui-private
   OTHER_FILES += $$PWD/platform/android/src/ru/forsk/AdCtl/AdCtlActivity.java
   #AdMob
-  DISTFILES += $$PWD/3rd/QtAdMob/QtAdMob/platform/android/src/org/dreamdev/QtAdMob/QtAdMobActivity.java \
-    $$PWD/3rd/GATutorial-QML/android_data/src/com/lasconic/QGoogleAnalytics.java
+  DISTFILES += $$PWD/3rd/QtAdMob/QtAdMob/platform/android/src/org/dreamdev/QtAdMob/QtAdMobActivity.java
 
   copydata.commands += $(COPY_DIR) $$PWD/3rd/QtAdMob/QtAdMob/platform/android/google-play-services_lib $$ANDROID_PACKAGE_SOURCE_DIR;
   copydata.commands += $(COPY_DIR) $$PWD/3rd/SDK-Android/lib/StartADLib-1.0.1.jar $$ANDROID_PACKAGE_SOURCE_DIR/libs/;
