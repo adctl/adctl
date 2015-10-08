@@ -138,6 +138,11 @@ public slots:
     void showLeaderboardGPGS();
     void showAchievementsGPGS();
 
+    //dp, pt and mm
+    float dp();
+    float mm();
+    float pt();
+
 protected:
     //Timer for control, update and emit properties changes for banners
     QTimer *adctlTimer;
@@ -182,6 +187,10 @@ protected:
     //banners alredy visible bools
     bool m_AdMobWidthAlredyGreatThanZero = false;
     bool m_StartAdWidthAlredyGreatThanZero = false;
+
+    float m_dp;
+    float m_pt;
+    float m_mm;
 };
 
 #endif // ADMOBBANNERCTL_H

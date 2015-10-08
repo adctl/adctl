@@ -5,13 +5,15 @@
 #include <QDebug>
 #include <QTimer>
 #include "3rd/qt-google-analytics/ganalytics.h"
+#include <QScreen>
+#include <QApplication>
 
 #if (__ANDROID_API__ >= 9)
 
 #include <android/api-level.h>
 #include <QAndroidJniObject>
 #include <QPA/QPlatformNativeInterface.h>
-#include <QApplication>
+
 
 #endif
 
@@ -30,6 +32,31 @@ AdCtl::AdCtl(QObject *parent) : QObject(parent)
     }
 
 #endif
+
+    //mm and dp
+#ifdef Q_OS_ANDROID
+    //  BUG with dpi on some androids: https://bugreports.qt-project.org/browse/QTBUG-35701
+    //  Workaround:
+    QAndroidJniObject qtActivity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
+    QAndroidJniObject resources = qtActivity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
+    QAndroidJniObject displayMetrics = resources.callObjectMethod("getDisplayMetrics", "()Landroid/util/DisplayMetrics;");
+    int density = displayMetrics.getField<int>("densityDpi");
+#else
+    QScreen *screen = qApp->primaryScreen();
+    float density = screen->physicalDotsPerInch();
+#endif
+    m_mm = density / 25.4;
+    m_pt =  1;
+
+    //engine.rootContext()->setContextProperty("adctlMM",density / 25.4);
+    //engine.rootContext()->setContextProperty("adctlPT", 1);
+
+    double scale = density < 180 ? 1 :
+                   density < 270 ? 1.5 :
+                   density < 360 ? 2 : 3;
+
+    m_dp = scale;
+    //engine.rootContext()->setContextProperty("adctlDP", scale);
 }
 
 AdCtl::~AdCtl()
@@ -78,6 +105,19 @@ void AdCtl::init()
     adctlTimer->start(500);
 
     m_AdInitialized = true;
+}
+
+float AdCtl::dp()
+{
+    return m_dp;
+}
+float AdCtl::mm()
+{
+    return m_mm;
+}
+float AdCtl::pt()
+{
+    return m_pt;
 }
 
 void AdCtl::adctlTimerSlot()
