@@ -21,16 +21,19 @@ All functions tested on 3 Android devices, but it not tested on iOS! Library giv
 - Add support StartAd.mobi on iOS.
 
 **Known issues**
-- need add StartAd.mobi iOS integration
-- need to refactor copy data functions in AdCtl.pri for copy data into build folder (now its auto copy to project folder)
-- need to refactor copy data funiction in AdCtl.pri for copy data only once time (now its copy on every build)
+
+https://github.com/kafeg/adctl/wiki/%D0%9F%D0%B5%D1%80%D0%B5%D1%87%D0%B5%D0%BD%D1%8C-%D0%B4%D0%BE%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BE%D0%BA
 
 **Howto integrate library to project**
+
 https://github.com/kafeg/adctl/wiki/Integration-with-project
 
 **Howto using library from C++**
+
 See https://github.com/kafeg/adctl/wiki/C---API-Reference
+
 **Howto using library from Qml**
+
 See https://github.com/kafeg/adctl/wiki/QML-API-Reference
 
 **Developer kafeg aka Vitaliy Petrov**
