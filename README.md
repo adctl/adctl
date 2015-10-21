@@ -1,4 +1,4 @@
-# adctl
+# AdCtl
 Qt for Google Analytics, Google AdMob, Google Play services (auth and achievements) and StartAd.mobi framework.
 
 **Example application**
@@ -36,11 +36,15 @@ See https://github.com/kafeg/adctl/wiki/C---API-Reference
 
 See https://github.com/kafeg/adctl/wiki/QML-API-Reference
 
+**Examples**
+- Dark Stories (https://play.google.com/store/apps/details?id=ru.forsk.darkstories)
+- ...
+
 **Developer kafeg aka Vitaliy Petrov**
 - Skype: kafik-fafik
 - EMail: v31337[at]gmail.com
 
-**My projects**
+**My other projects**
 - http://forsk.ru - адекватная автоматизация бизнес процессов.
 - http://skid.kz - автоматический агрегатор скидок Республики Казахстан.
 - http://kellot.ru - онлайн табель учёта рабочего времени по формам Т-12 и Т-13.
