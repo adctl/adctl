@@ -48,6 +48,9 @@ class AdCtl : public QObject
     Q_PROPERTY(QString startAdId WRITE setStartAdId)
     Q_PROPERTY(QString gAnalyticsId WRITE setGAnalyticsId)
 
+    //gpgs
+    Q_PROPERTY(bool gpgsSignedIn READ isGPGSSignedIn WRITE setGPGSSignedIn NOTIFY gpgsSignedInChanged)
+
 public:
     explicit AdCtl(QObject *parent = 0);
     ~AdCtl();
@@ -60,6 +63,7 @@ signals:
     void  adMobBannerWidthChanged(int width);
     void  startAdBannerHeightChanged(int height);
     void  startAdBannerWidthChanged(int width);
+    void  gpgsSignedInChanged(bool gpgsSignedIn);
 
 public slots:
     //init library with ids and bool flags
@@ -131,7 +135,9 @@ public slots:
     void endGaSession();
 
     //Google Play Game Services
-    bool isGPGSSignedIn() const;
+    bool isGPGSSignedIn();
+    void setGPGSSignedIn(bool gpgsSignedIn);
+
     void signInGPGS();
     void submitScoreGPGS(QString leaderBoardId, int score);
     void unlockAchievementGPGS(QString achievementId);
@@ -187,6 +193,10 @@ protected:
     //banners alredy visible bools
     bool m_AdMobWidthAlredyGreatThanZero = false;
     bool m_StartAdWidthAlredyGreatThanZero = false;
+
+    //Google Play Game Services
+    bool m_gpgsSignedIn;
+    QTimer *gpgsTimer;
 
     float m_dp;
     float m_pt;

@@ -21,6 +21,12 @@ AdCtl::AdCtl(QObject *parent) : QObject(parent)
 {
     m_AdMobBanner = CreateQtAdMobBanner();
     m_AdMobInterstitial = CreateQtAdMobInterstitial();
+    m_gpgsSignedIn = false;
+
+    gpgsTimer = new QTimer(this);
+    gpgsTimer->setInterval(1000);
+    connect(gpgsTimer,SIGNAL(timeout()), this, SLOT(isGPGSSignedIn()));
+    gpgsTimer->start();
 
 #if (__ANDROID_API__ >= 9)
 
@@ -52,8 +58,8 @@ AdCtl::AdCtl(QObject *parent) : QObject(parent)
     //engine.rootContext()->setContextProperty("adctlPT", 1);
 
     double scale = density < 180 ? 1 :
-                   density < 270 ? 1.5 :
-                   density < 360 ? 2 : 3;
+                                   density < 270 ? 1.5 :
+                                                   density < 360 ? 2 : 3;
 
     m_dp = scale;
     //engine.rootContext()->setContextProperty("adctlDP", scale);
@@ -375,13 +381,26 @@ void AdCtl::endGaSession()
     }
 }
 
-bool AdCtl::isGPGSSignedIn() const
+bool AdCtl::isGPGSSignedIn()
 {
 #if (__ANDROID_API__ >= 9)
-    return m_Activity->callMethod<jboolean>("getSignedInGPGS");
+    bool checkGpgsSignedIn = m_Activity->callMethod<jboolean>("getSignedInGPGS");
+    qDebug() << "GPGS SIGNED IN" << checkGpgsSignedIn << m_gpgsSignedIn;
+    if (checkGpgsSignedIn != m_gpgsSignedIn) {
+        setGPGSSignedIn(checkGpgsSignedIn);
+        gpgsTimer->stop();
+    }
+    return m_gpgsSignedIn;
     //QAndroidJniObject param1 = QAndroidJniObject::fromString(m_StartAdId);
     //m_Activity->callMethod<void>("SetStartAdId", "(Ljava/lang/String;)V", param1.object<jstring>());
 #endif
+}
+
+void AdCtl::setGPGSSignedIn(bool gpgsSignedIn)
+{
+    qDebug() << "Set GPGS Signed IN" << gpgsSignedIn << m_gpgsSignedIn;
+    m_gpgsSignedIn = gpgsSignedIn;
+    emit gpgsSignedInChanged(gpgsSignedIn);
 }
 
 void AdCtl::signInGPGS()
