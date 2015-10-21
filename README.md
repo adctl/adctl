@@ -1,10 +1,6 @@
 # AdCtl
 Qt for Google Analytics, Google AdMob, Google Play services (auth and achievements) and StartAd.mobi framework.
 
-**Example application**
-
-https://play.google.com/store/apps/details?id=ru.forsk.darkstories
-
 **Completed library features**
 - Qt and Google AdMob (based on yevgeniy-logachev/QtAdMob https://github.com/yevgeniy-logachev/QtAdMob). Work on Android/iOS
 - Qt and StartAd.mobi (based on https://github.com/kafeg/SDK-Android). Work only Android
