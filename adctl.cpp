@@ -4,7 +4,7 @@
 #include <QtQml>
 #include <QDebug>
 #include <QTimer>
-#include "3rd/qt-google-analytics/ganalytics.h"
+#include "ganalytics.h"
 #include <QScreen>
 #include <QApplication>
 

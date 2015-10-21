@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.IntentSender;
 import android.util.Log;
-import ru.forsk.anyway.R;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -120,16 +119,10 @@ public class BaseGameUtils {
 
         switch (actResp) {
             case GamesActivityResultCodes.RESULT_APP_MISCONFIGURED:
-                errorDialog = makeSimpleDialog(activity,
-                        activity.getString(R.string.app_misconfigured));
                 break;
             case GamesActivityResultCodes.RESULT_SIGN_IN_FAILED:
-                errorDialog = makeSimpleDialog(activity,
-                        activity.getString(R.string.sign_in_failed));
                 break;
             case GamesActivityResultCodes.RESULT_LICENSE_FAILED:
-                errorDialog = makeSimpleDialog(activity,
-                        activity.getString(R.string.license_failed));
                 break;
             default:
                 // No meaningful Activity response code, so generate default Google
@@ -145,7 +138,7 @@ public class BaseGameUtils {
                 }
         }
 
-        errorDialog.show();
+        //errorDialog.show();
     }
 
     /**
