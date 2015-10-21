@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.content.res.Resources;
 import android.util.Log;
-import ru.forsk.anyway.R;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.games.GamesActivityResultCodes;
@@ -31,8 +30,6 @@ class GameHelperUtils {
     };
 
     private final static int[] RES_IDS = {
-            R.string.gamehelper_unknown_error, R.string.gamehelper_sign_in_failed,
-            R.string.gamehelper_app_misconfigured, R.string.gamehelper_license_failed
     };
 
     static String activityResponseCodeToString(int respCode) {
