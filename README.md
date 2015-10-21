@@ -5,15 +5,18 @@ Qt for Google Analytics, Google AdMob, Google Play services (auth and achievemen
 - Qt and Google AdMob (based on yevgeniy-logachev/QtAdMob https://github.com/yevgeniy-logachev/QtAdMob). Work on Android/iOS
 - Qt and StartAd.mobi (based on https://github.com/kafeg/SDK-Android). Work only Android
 - Qt and Google Analytics (based on StartAD/SDK-Android https://github.com/HSAnet/qt-google-analytics). Work on Android/iOS/Desktop
-- Qt and Google Play Game Services (based on https://github.com/playgameservices/android-basic-samples)
-- Android support library (based on https://github.com/danielesegato/android-support-library-archive)
+- Qt and Google Play Game Services / Authorization (based on https://github.com/playgameservices/android-basic-samples);
+- Qt and Google Play Game Services / LeaderBoards;
+- Qt and Google Play Game Services / Achievements;
+- Android support library (based on https://github.com/danielesegato/android-support-library-archive).
 
 All functions tested on 3 Android devices, but it not tested on iOS! Library give you C++ and QML interfaces for using.
 
 **In my feature plan**
 - Add more cross-promoutin Ads;
-- Add Google Play authorization from VoltAir (https://github.com/google/VoltAir);
-- Add Google Play Achievements from VoltAir (https://github.com/google/VoltAir);
+- Add iOS support for Google Play Game Services / Authorization;
+- Add iOS support for Google Play Game Services / LeaderBoards;
+- Add iOS support for Google Play Game Services / Achievements;
 - Add support StartAd.mobi on iOS.
 
 **Known issues**
