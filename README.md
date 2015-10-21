@@ -37,8 +37,9 @@ See https://github.com/kafeg/adctl/wiki/C---API-Reference
 See https://github.com/kafeg/adctl/wiki/QML-API-Reference
 
 **Examples**
-- Dark Stories (https://play.google.com/store/apps/details?id=ru.forsk.darkstories)
-- ...
+- Example Application (https://github.com/kafeg/adctl-example);
+- Dark Stories (https://play.google.com/store/apps/details?id=ru.forsk.darkstories);
+- Comming soon...
 
 **Developer kafeg aka Vitaliy Petrov**
 - Skype: kafik-fafik
