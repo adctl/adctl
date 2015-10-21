@@ -23,7 +23,6 @@ android
                          $$ANDROID_PACKAGE_SOURCE_DIR/src/com/google/example/games/basegameutils/GameHelperUtils.java \
                          $$ANDROID_PACKAGE_SOURCE_DIR/src/ru/forsk/AdCtl/AdCtlActivity.java \
                          $$ANDROID_PACKAGE_SOURCE_DIR/res/values/strings.xml \
-                         $$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml \
                          $$ANDROID_PACKAGE_SOURCE_DIR/project.properties \
                          $$ANDROID_PACKAGE_SOURCE_DIR/libs/*
 
