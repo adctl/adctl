@@ -179,6 +179,15 @@ bool AdCtl::AdMobBannerEnabled() const
     return m_AdMobBannerEnabled;
 }
 
+bool AdCtl::AdMobBannerIsLoaded() const
+{
+    if (m_AdMobBannerEnabled) {
+        m_AdMobBanner->IsLoaded();
+    } else {
+        return false;
+    }
+}
+
 void AdCtl::setAdMobBannerEnabled(const bool AdMobBannerEnabled)
 {
     m_AdMobBannerEnabled = AdMobBannerEnabled;
@@ -193,6 +202,15 @@ bool AdCtl::AdMobIinterstitialEnabled() const
 void AdCtl::setAdMobIinterstitialEnabled(bool AdMobIinterstitialEnabled)
 {
     m_AdMobInterstitialEnabled = AdMobIinterstitialEnabled;
+}
+
+bool AdCtl::AdMobIinterstitialIsLoaded() const
+{
+    if (m_AdMobInterstitialEnabled) {
+        m_AdMobInterstitial->IsLoaded();
+    } else {
+        return false;
+    }
 }
 
 //StartAd banner enabled

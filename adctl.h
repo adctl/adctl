@@ -75,10 +75,12 @@ public slots:
     //AdMob banner enabled
     void setAdMobBannerEnabled(const bool AdMobBannerEnabled);
     bool AdMobBannerEnabled() const;
+    bool AdMobBannerIsLoaded() const;
 
     //AdMob interstitial enabled
     bool AdMobIinterstitialEnabled() const;
     void setAdMobIinterstitialEnabled(bool AdMobIinterstitialEnabled);
+    bool AdMobIinterstitialIsLoaded() const;
 
     //StartAd banner enabled
     void setStartAdBannerEnabled(const bool StartAdBannerEnabled);
