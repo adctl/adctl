@@ -189,6 +189,8 @@ protected:
     //is banners showed
     bool m_isAdMobBannerShowed = false;
     bool m_isStartAdBannerShowed = false;
+    bool m_AdMobBannerShowHideTrigger = false;
+    bool m_StartAdBannerShowHideTrigger = false;
 
     //banners alredy visible bools
     bool m_AdMobWidthAlredyGreatThanZero = false;

@@ -155,12 +155,13 @@ void AdCtl::adctlTimerSlot()
     //signal for firsttime reposition of banners
     if ((AdMobBannerWidth() > 0) && !m_AdMobWidthAlredyGreatThanZero) {
         m_isAdMobBannerShowed = true;
+        m_AdMobBannerShowHideTrigger = true;
         m_AdMobWidthAlredyGreatThanZero = true;
         emit adMobBannerShowed();
     }
-
     if ((StartAdBannerWidth() > 0) && !m_StartAdWidthAlredyGreatThanZero) {
         m_isStartAdBannerShowed = true;
+        m_StartAdBannerShowHideTrigger = true;
         m_StartAdWidthAlredyGreatThanZero = true;
         emit startAdBannerShowed();
     }
@@ -338,26 +339,46 @@ void AdCtl::setGAnalyticsId(const QString &GAnalyticsId)
 
 void AdCtl::showAdMobBanner()
 {
-    m_AdMobBanner->Show();
+    if (!m_AdInitialized || !m_AdMobBannerEnabled) { return; }
+
+    if (!m_AdMobBannerShowHideTrigger) {
+        m_AdMobBanner->Show();
+        m_AdMobBannerShowHideTrigger = true;
+    }
 }
 
 void AdCtl::hideAdMobBanner()
 {
-    m_AdMobBanner->Hide();
+    if (!m_AdInitialized || !m_AdMobBannerEnabled) { return; }
+
+    if (m_AdMobBannerShowHideTrigger) {
+        m_AdMobBanner->Hide();
+        m_AdMobBannerShowHideTrigger = false;
+    }
 }
 
 void AdCtl::showStartAdBanner()
 {
+    if (!m_AdInitialized || !m_StartAdBannerEnabled) { return; }
+
+    if (!m_StartAdBannerShowHideTrigger) {
 #if (__ANDROID_API__ >= 9)
-    m_Activity->callMethod<void>("ShowStartAdBanner");
+        m_Activity->callMethod<void>("ShowStartAdBanner");
 #endif
+        m_StartAdBannerShowHideTrigger = true;
+    }
 }
 
 void AdCtl::hideStartAdBanner()
 {
+    if (!m_AdInitialized || !m_StartAdBannerEnabled) { return; }
+
+    if (m_StartAdBannerShowHideTrigger) {
 #if (__ANDROID_API__ >= 9)
-    m_Activity->callMethod<void>("HideStartAdBanner");
+        m_Activity->callMethod<void>("HideStartAdBanner");
 #endif
+        m_StartAdBannerShowHideTrigger = false;
+    }
 }
 
 void AdCtl::sendGaAppView(const QString &screenName)
