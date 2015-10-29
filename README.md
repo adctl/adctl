@@ -1,20 +1,20 @@
 # AdCtl
-Qt for Google Analytics, Google AdMob, Google Play services (auth and achievements) and StartAd.mobi framework.
+AdCtl - library adds support of Google Analytics, Google AdMob, Google Play Services, StartAd.mobi, Google Cloud Messaging, and online purchase of Stripe.com and Cloudpayments.ru for your Qt/C++ or Qt Quick/QML project.
 
 **Library features status**
 
 Feature | Android  | iOS
 --------|----------|-----
-Google AdMob | yes | planned
-StartAd.mobi | yes | no
-Google Analytics | yes | yes
-Google Play Game Services Authorization | yes | planned
-Google Play Game Services LeaderBoards | yes | planned
-Google Play Game Services Achievements | yes | planned
-Android support library | yes | no
-Stripe.com | planned | planned
-Cloudpayments.ru | planned | planned
-Google Cloud Messaging via parse.com | planned | no
+Qt and Google AdMob | yes | yes
+Qt and StartAd.mobi | yes | no
+Qt and Google Analytics | yes | yes
+Qt and Google Play Game Services Authorization | yes | processing
+Qt and Google Play Game Services LeaderBoards | yes | processing
+Qt and Google Play Game Services Achievements | yes | processing
+Qt and Android support library | yes | no
+Qt and Online purchase via Stripe.com | planned | planned
+Qt and Online purchase via Cloudpayments.ru | planned | planned
+Qt and Google Cloud Messaging via parse.com | planned | no
 
 Details: https://github.com/kafeg/adctl/wiki/Feature-details
 
