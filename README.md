@@ -26,11 +26,11 @@ https://github.com/kafeg/adctl/wiki/%D0%9F%D0%B5%D1%80%D0%B5%D1%87%D0%B5%D0%BD%D
 
 https://github.com/kafeg/adctl/wiki/Integration-with-project
 
-**Howto using library from C++**
+**Howto using library from C++ / C++ API Reference**
 
 See https://github.com/kafeg/adctl/wiki/C---API-Reference
 
-**Howto using library from Qml**
+**Howto using library from Qml / Qt Quick API Reference**
 
 See https://github.com/kafeg/adctl/wiki/QML-API-Reference
 
