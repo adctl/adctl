@@ -287,7 +287,7 @@ QPoint AdCtl::StartAdBannerPosition() const
 void AdCtl::setStartAdBannerSize(const QSize StartAdBannerSize)
 {
     m_StartAdBannerSize = StartAdBannerSize;
-    qDebug() << "StartAdBannerSize C++" << m_StartAdBannerSize;
+    //qDebug() << "StartAdBannerSize C++" << m_StartAdBannerSize;
     //if (!m_AdInitialized || !m_StartAdBannerEnabled) { return; }
 #if (__ANDROID_API__ >= 9)
     m_Activity->callMethod<void>("SetStartAdBannerSize", "(II)V", StartAdBannerSize.width(), StartAdBannerSize.height());
@@ -433,6 +433,7 @@ bool AdCtl::isGPGSSignedIn()
     //QAndroidJniObject param1 = QAndroidJniObject::fromString(m_StartAdId);
     //m_Activity->callMethod<void>("SetStartAdId", "(Ljava/lang/String;)V", param1.object<jstring>());
 #endif
+    return m_gpgsSignedIn;
 }
 
 void AdCtl::setGPGSSignedIn(bool gpgsSignedIn)
