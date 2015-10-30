@@ -1,4 +1,4 @@
-ADMOB_PATH = $$PWD/3rd/QtAdMob/QtAdMob
+ADMOB_PATH = $$PWD/3rd/QtAdMob
 GOOGLE_ANALITICS_PATH = $$PWD/3rd/qt-google-analytics
 
 include($$ADMOB_PATH/QtAdMob.pri)
@@ -65,23 +65,4 @@ android
     export(first.depends)
     export(copydata.commands)
     android:QMAKE_EXTRA_TARGETS += first copydata
-}
-
-ios {
-  ios:QMAKE_CXXFLAGS += -fobjc-arc
-  ios:QMAKE_LFLAGS += -ObjC
-  ios:QT += gui_private
-  ios:LIBS += -F $$PWD/QtAdMob/platform/ios/GoogleMobileAds \
-    -framework GoogleMobileAds \
-    -framework AVFoundation \
-    -framework AudioToolbox \
-    -framework CoreTelephony \
-    -framework MessageUI \
-    -framework SystemConfiguration \
-    -framework CoreGraphics \
-    -framework AdSupport \
-    -framework StoreKit \
-    -framework EventKit \
-    -framework EventKitUI \
-    -framework CoreMedia
 }
