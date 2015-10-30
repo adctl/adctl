@@ -26,7 +26,7 @@ See https://github.com/kafeg/adctl/wiki/Howto-C-plus-plus
 
 **Howto using library from Qml**
 
-See https://github.com/kafeg/adctl/wiki/Howto-QML---Qt-Quick
+See https://github.com/kafeg/adctl/wiki/Howto-QML-and-Qt-Quick
 
 **Full API Reference**
 
