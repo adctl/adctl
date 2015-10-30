@@ -20,7 +20,7 @@ Details: https://github.com/kafeg/adctl/wiki/Feature-details
 
 **Known issues**
 
-https://github.com/kafeg/adctl/wiki/%D0%9F%D0%B5%D1%80%D0%B5%D1%87%D0%B5%D0%BD%D1%8C-%D0%B4%D0%BE%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BE%D0%BA
+https://github.com/kafeg/adctl/wiki/Issues
 
 **Howto integrate library to project**
 
