@@ -5,7 +5,7 @@ AdCtl - library adds support of Google Analytics, Google AdMob, Google Play Serv
 
 Feature | Android  | iOS
 --------|----------|-----
-Qt and Google AdMob | yes | yes
+Qt and Google AdMob (Banner and Interstitial) | yes | yes
 Qt and StartAd.mobi | yes | no
 Qt and Google Analytics | yes | yes
 Qt and Google Play Game Services Authorization | yes | processing
