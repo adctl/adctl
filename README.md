@@ -16,23 +16,21 @@ Qt and Online purchase via Stripe.com | planned | planned
 Qt and Online purchase via Cloudpayments.ru | planned | planned
 Qt and Google Cloud Messaging via parse.com | planned | no
 
-Details: https://github.com/kafeg/adctl/wiki/Feature-details
-
-**Known issues**
-
-https://github.com/kafeg/adctl/wiki/Issues
-
 **Howto integrate library to project**
 
-https://github.com/kafeg/adctl/wiki/Integration-with-project
+https://github.com/kafeg/adctl/wiki/Howto-integrate-to-project
 
-**Howto using library from C++ / C++ API Reference**
+**Howto using library from C++**
 
-See https://github.com/kafeg/adctl/wiki/C---API-Reference
+See https://github.com/kafeg/adctl/wiki/Howto-C-plus-plus
 
-**Howto using library from Qml / Qt Quick API Reference**
+**Howto using library from Qml**
 
-See https://github.com/kafeg/adctl/wiki/QML-API-Reference
+See https://github.com/kafeg/adctl/wiki/Howto-QML---Qt-Quick
+
+**Full API Reference**
+
+See https://github.com/kafeg/adctl/wiki/API-Reference
 
 **Examples**
 - Example Application (https://github.com/kafeg/adctl-example);
