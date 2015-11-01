@@ -1,39 +1,36 @@
 # AdCtl
-Qt for Google Analytics, Google AdMob, Google Play services (auth and achievements) and StartAd.mobi framework.
+AdCtl - library adds support of Google Analytics, Google AdMob, Google Play Services, StartAd.mobi, Google Cloud Messaging, and online purchase of Stripe.com and Cloudpayments.ru for your Qt/C++ or Qt Quick/QML project.
 
-**Completed library features**
-- Qt and Google AdMob (based on yevgeniy-logachev/QtAdMob https://github.com/yevgeniy-logachev/QtAdMob). Work on Android/iOS
-- Qt and StartAd.mobi (based on https://github.com/kafeg/SDK-Android). Work only Android
-- Qt and Google Analytics (based on StartAD/SDK-Android https://github.com/HSAnet/qt-google-analytics). Work on Android/iOS/Desktop
-- Qt and Google Play Game Services / Authorization (based on https://github.com/playgameservices/android-basic-samples);
-- Qt and Google Play Game Services / LeaderBoards;
-- Qt and Google Play Game Services / Achievements;
-- Android support library (based on https://github.com/danielesegato/android-support-library-archive).
+**Library features support status**
 
-All functions tested on 3 Android devices, but it not tested on iOS! Library give you C++ and QML interfaces for using.
-
-**In my feature plan**
-- Add more cross-promoutin Ads;
-- Add iOS support for Google Play Game Services / Authorization;
-- Add iOS support for Google Play Game Services / LeaderBoards;
-- Add iOS support for Google Play Game Services / Achievements;
-- Add support StartAd.mobi on iOS.
-
-**Known issues**
-
-https://github.com/kafeg/adctl/wiki/%D0%9F%D0%B5%D1%80%D0%B5%D1%87%D0%B5%D0%BD%D1%8C-%D0%B4%D0%BE%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BE%D0%BA
+Feature | Android  | iOS
+--------|----------|-----
+Qt and Google AdMob (Banner and Interstitial) | yes | yes
+Qt and StartAd.mobi | yes | no
+Qt and Google Analytics | yes | yes
+Qt and Google Play Game Services Authorization | yes | processing
+Qt and Google Play Game Services LeaderBoards | yes | processing
+Qt and Google Play Game Services Achievements | yes | processing
+Qt and Android support library | yes | no
+Qt and Online purchase via Stripe.com | planned | planned
+Qt and Online purchase via Cloudpayments.ru | planned | planned
+Qt and Google Cloud Messaging via parse.com | planned | no
 
 **Howto integrate library to project**
 
-https://github.com/kafeg/adctl/wiki/Integration-with-project
+https://github.com/kafeg/adctl/wiki/Howto-integrate-to-project
 
 **Howto using library from C++**
 
-See https://github.com/kafeg/adctl/wiki/C---API-Reference
+See https://github.com/kafeg/adctl/wiki/Howto-C-plus-plus
 
 **Howto using library from Qml**
 
-See https://github.com/kafeg/adctl/wiki/QML-API-Reference
+See https://github.com/kafeg/adctl/wiki/Howto-QML-and-Qt-Quick
+
+**Full API Reference**
+
+See https://github.com/kafeg/adctl/wiki/API-Reference
 
 **Examples**
 - Example Application (https://github.com/kafeg/adctl-example);
