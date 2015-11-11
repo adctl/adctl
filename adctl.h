@@ -9,7 +9,9 @@
 class IQtAdMobBanner;
 class IQtAdMobInterstitial;
 class QTimer;
+#ifdef Q_OS_ANDROID
 class QAndroidJniObject;
+#endif
 class GAnalytics;
 
 class AdCtl : public QObject
@@ -131,9 +133,9 @@ public slots:
     //Google Analytics
     void sendGaAppView(const QString &screenName = QString());
     void sendGaEvent(const QString &category = QString(),
-                   const QString &action = QString(),
-                   const QString &label = QString(),
-                   const QVariant &value = QVariant());
+                     const QString &action = QString(),
+                     const QString &label = QString(),
+                     const QVariant &value = QVariant());
     void endGaSession();
 
     //Google Play Game Services
@@ -175,7 +177,9 @@ protected:
     bool m_AdInitialized = false;
 
     //jni
+#ifdef Q_OS_ANDROID
     QAndroidJniObject *m_Activity;
+#endif
 
     //cache
     int cacheAdMobBannerHeight;

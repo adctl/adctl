@@ -69,7 +69,9 @@ AdCtl::~AdCtl()
 {
     delete m_AdMobBanner;
     delete m_AdMobInterstitial;
+#ifdef Q_OS_ANDROID
     delete m_Activity;
+#endif
 }
 
 void AdCtl::init()
@@ -186,6 +188,7 @@ bool AdCtl::AdMobBannerIsLoaded() const
     } else {
         return false;
     }
+    return false;
 }
 
 void AdCtl::setAdMobBannerEnabled(const bool AdMobBannerEnabled)
@@ -211,6 +214,7 @@ bool AdCtl::AdMobIinterstitialIsLoaded() const
     } else {
         return false;
     }
+    return false;
 }
 
 //StartAd banner enabled
@@ -255,6 +259,7 @@ int AdCtl::StartAdBannerWidth() const
 #if (__ANDROID_API__ >= 9)
     return m_Activity->callMethod<int>("GetStartAdBannerWidth");
 #endif
+    return 0;
 }
 
 int AdCtl::StartAdBannerHeight() const
@@ -263,6 +268,7 @@ int AdCtl::StartAdBannerHeight() const
 #if (__ANDROID_API__ >= 9)
     return m_Activity->callMethod<int>("GetStartAdBannerHeight");
 #endif
+    return 0;
 }
 
 //AdMob banner position
@@ -304,6 +310,7 @@ int AdCtl::adMobBannerRealX()
 #if (__ANDROID_API__ >= 9)
     return m_Activity->callMethod<int>("GetAdMobBannerX");
 #endif
+    return 0;
 }
 
 int AdCtl::adMobBannerRealY()
@@ -311,6 +318,7 @@ int AdCtl::adMobBannerRealY()
 #if (__ANDROID_API__ >= 9)
     return m_Activity->callMethod<int>("GetAdMobBannerY");
 #endif
+        return 0;
 }
 
 int AdCtl::startAdBannerRealX()
@@ -318,6 +326,7 @@ int AdCtl::startAdBannerRealX()
 #if (__ANDROID_API__ >= 9)
     return m_Activity->callMethod<int>("GetStartAdBannerX");
 #endif
+        return 0;
 }
 
 int AdCtl::startAdBannerRealY()
@@ -325,6 +334,7 @@ int AdCtl::startAdBannerRealY()
 #if (__ANDROID_API__ >= 9)
     return m_Activity->callMethod<int>("GetStartAdBannerY");
 #endif
+        return 0;
 }
 
 void AdCtl::setStartAdBannerPosition(const QPoint position)
@@ -455,6 +465,9 @@ void AdCtl::submitScoreGPGS(QString leaderBoardId, int score)
 #if (__ANDROID_API__ >= 9)
     QAndroidJniObject param1 = QAndroidJniObject::fromString(leaderBoardId);
     m_Activity->callMethod<void>("submitScoreGPGS", "(Ljava/lang/String;I)V", param1.object<jstring>(), score);
+#else
+    Q_UNUSED(leaderBoardId)
+    Q_UNUSED(score)
 #endif
 }
 
@@ -463,6 +476,8 @@ void AdCtl::unlockAchievementGPGS(QString achievementId)
 #if (__ANDROID_API__ >= 9)
     QAndroidJniObject param1 = QAndroidJniObject::fromString(achievementId);
     m_Activity->callMethod<void>("unlockAchievementGPGS", "(Ljava/lang/String;)V", param1.object<jstring>());
+#else
+    Q_UNUSED(achievementId)
 #endif
 }
 
