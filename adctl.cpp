@@ -14,7 +14,6 @@
 #include <QAndroidJniObject>
 #include <qpa/qplatformnativeinterface.h>
 
-
 #endif
 
 AdCtl::AdCtl(QObject *parent) : QObject(parent)
