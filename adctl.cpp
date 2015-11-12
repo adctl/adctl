@@ -12,7 +12,7 @@
 
 #include <android/api-level.h>
 #include <QAndroidJniObject>
-#include <QPA/QPlatformNativeInterface.h>
+#include <qpa/qplatformnativeinterface.h>
 
 
 #endif
