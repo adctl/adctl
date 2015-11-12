@@ -12,7 +12,7 @@
 
 #include <android/api-level.h>
 #include <QAndroidJniObject>
-#include <QPA/QPlatformNativeInterface.h>
+#include <qpa/qplatformnativeinterface.h>
 
 
 #endif
@@ -26,7 +26,7 @@ AdCtl::AdCtl(QObject *parent) : QObject(parent)
     gpgsTimer = new QTimer(this);
     gpgsTimer->setInterval(1000);
     connect(gpgsTimer,SIGNAL(timeout()), this, SLOT(isGPGSSignedIn()));
-    gpgsTimer->start();
+    //gpgsTimer->start();
 
 #if (__ANDROID_API__ >= 9)
 
