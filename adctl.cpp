@@ -79,10 +79,8 @@ void AdCtl::init()
     if (m_AdInitialized) { qDebug() << "AdMob alredy initialized!"; return; }
 
 #if (__ANDROID_API__ >= 9)
-
     QAndroidJniObject param1 = QAndroidJniObject::fromString(m_StartAdId);
     m_Activity->callMethod<void>("SetStartAdId", "(Ljava/lang/String;)V", param1.object<jstring>());
-
 #endif
 
     if (m_AdMobBannerEnabled) {
@@ -108,9 +106,10 @@ void AdCtl::init()
         gAnalytics = new GAnalytics(m_GAnalyticsId);
     }
 
+    //this timer is needed by Google Play Game Services!!!
+    //It's will start if you call signInGPGS() function
     adctlTimer = new QTimer(this);
     connect(adctlTimer, SIGNAL(timeout()), this, SLOT(adctlTimerSlot()));
-    adctlTimer->start(500);
 
     m_AdInitialized = true;
 }
@@ -458,6 +457,7 @@ void AdCtl::signInGPGS()
 #if (__ANDROID_API__ >= 9)
     m_Activity->callMethod<void>("loginGPGS");
 #endif
+    adctlTimer->start(500);
 }
 
 void AdCtl::submitScoreGPGS(QString leaderBoardId, int score)
