@@ -105,10 +105,10 @@ void AdCtl::init()
         gAnalytics = new GAnalytics(m_GAnalyticsId);
     }
 
-    //this timer is needed by Google Play Game Services!!!
-    //It's will start if you call signInGPGS() function
+    //this timer is required!
     adctlTimer = new QTimer(this);
     connect(adctlTimer, SIGNAL(timeout()), this, SLOT(adctlTimerSlot()));
+    adctlTimer->start();
 
     m_AdInitialized = true;
 }
@@ -456,7 +456,6 @@ void AdCtl::signInGPGS()
 #if (__ANDROID_API__ >= 9)
     m_Activity->callMethod<void>("loginGPGS");
 #endif
-    adctlTimer->start(500);
 }
 
 void AdCtl::submitScoreGPGS(QString leaderBoardId, int score)
