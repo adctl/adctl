@@ -434,7 +434,7 @@ bool AdCtl::isGPGSSignedIn()
 {
 #if (__ANDROID_API__ >= 9)
     bool checkGpgsSignedIn = m_Activity->callMethod<jboolean>("getSignedInGPGS");
-    qDebug() << "GPGS SIGNED IN" << checkGpgsSignedIn << m_gpgsSignedIn;
+    //qDebug() << "GPGS SIGNED IN" << checkGpgsSignedIn << m_gpgsSignedIn;
     if (checkGpgsSignedIn != m_gpgsSignedIn) {
         setGPGSSignedIn(checkGpgsSignedIn);
         gpgsTimer->stop();
