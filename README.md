@@ -37,14 +37,19 @@ See https://github.com/kafeg/adctl/wiki/API-Reference
 - Dark Stories (https://play.google.com/store/apps/details?id=ru.forsk.darkstories);
 - Comming soon...
 
-**Developer kafeg aka Vitaliy Petrov**
+**Developers**
+1) Vitaliy Petrov
 - Skype: kafik-fafik
 - EMail: v31337[at]gmail.com
+2) Yevgeniy Logachev
+- Skype: ---
+- EMail: ---
 
-**My other projects**
-- http://forsk.ru - адекватная автоматизация бизнес процессов.
-- http://skid.kz - автоматический агрегатор скидок Республики Казахстан.
-- http://kellot.ru - онлайн табель учёта рабочего времени по формам Т-12 и Т-13.
+**Wiki**
+Please see our Wiki for more information: https://github.com/kafeg/adctl/wiki
+
+**Other projects**
 - https://github.com/kafeg
+- https://github.com/yevgeniy-logachev
 
 Details of using this library in Russian: http://habrahabr.ru/post/267275/
