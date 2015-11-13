@@ -38,9 +38,11 @@ See https://github.com/kafeg/adctl/wiki/API-Reference
 - Comming soon...
 
 **Developers**
+
 1) Vitaliy Petrov
 - Skype: kafik-fafik
 - EMail: v31337[at]gmail.com
+
 2) Yevgeniy Logachev
 - Skype: ---
 - EMail: ---
