@@ -85,13 +85,13 @@ void AdCtl::init()
     if (m_AdMobBannerEnabled) {
         m_AdMobBanner->Initialize();
         m_AdMobBanner->SetSize(IQtAdMobBanner::Banner);
-        m_AdMobBanner->SetUnitId(m_AdMobId);
+        m_AdMobBanner->SetUnitId(m_BannerAdMobId);
         m_AdMobBanner->AddTestDevice("DCE0DB737EC089D97AB4EFCBA2F9B322");
         m_AdMobBanner->Show();
     }
 
     if (m_AdMobInterstitialEnabled) {
-        m_AdMobInterstitial->LoadWithUnitId(m_AdMobId);
+        m_AdMobInterstitial->LoadWithUnitId(m_InterstitialAdMobId);
         m_AdMobInterstitial->AddTestDevice("DCE0DB737EC089D97AB4EFCBA2F9B322");
     }
 
@@ -345,10 +345,16 @@ void AdCtl::setStartAdBannerPosition(const QPoint position)
 }
 
 //set ids
-void AdCtl::setAdMobId(const QString &AdMobId)
+void AdCtl::setBannerAdMobId(const QString &BannerAdMobId)
 {
-    if (!m_AdMobId.isEmpty()) { qDebug() << "AdMob ID alredy set!"; return; }
-    m_AdMobId = AdMobId;
+    if (!m_BannerAdMobId.isEmpty()) { qDebug() << "BannerAdMob ID alredy set!"; return; }
+    m_BannerAdMobId = BannerAdMobId;
+}
+
+void AdCtl::setInterstitialAdMobId(const QString &InterstitialAdMobId)
+{
+    if (!m_InterstitialAdMobId.isEmpty()) { qDebug() << "InterstitialAdMob ID alredy set!"; return; }
+    m_InterstitialAdMobId = InterstitialAdMobId;
 }
 
 void AdCtl::setStartAdId(const QString &StartAdId)

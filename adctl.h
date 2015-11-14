@@ -46,7 +46,8 @@ class AdCtl : public QObject
     Q_PROPERTY(int startAdBannerRealY READ startAdBannerRealY)
 
     //ids
-    Q_PROPERTY(QString adMobId WRITE setAdMobId)
+    Q_PROPERTY(QString bannerAdMobId WRITE setBannerAdMobId)
+    Q_PROPERTY(QString interstitialAdMobId WRITE setInterstitialAdMobId)
     Q_PROPERTY(QString startAdId WRITE setStartAdId)
     Q_PROPERTY(QString gAnalyticsId WRITE setGAnalyticsId)
 
@@ -119,7 +120,8 @@ public slots:
     int startAdBannerRealY();
 
     //ids
-    void setAdMobId(const QString &AdMobId);
+    void setBannerAdMobId(const QString &BannerAdMobId);
+    void setInterstitialAdMobId(const QString &InterstitialAdMobId);
     void setStartAdId(const QString &StartAdId);
     void setGAnalyticsId(const QString &GAnalyticsId);
 
@@ -169,7 +171,8 @@ protected:
     bool m_GAnalyticsEnabled = false;
 
     //ids
-    QString m_AdMobId;
+    QString m_BannerAdMobId;
+    QString m_InterstitialAdMobId;
     QString m_StartAdId;
     QString m_GAnalyticsId;
 
