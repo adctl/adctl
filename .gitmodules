@@ -1,6 +1,6 @@
 [submodule "3rd/QtAdMob"]
 	path = 3rd/QtAdMob
-	url = https://github.com/yevgeniy-logachev/QtAdMob.git
+	url = https://github.com/gilmanov-ildar/QtAdMob.git
 [submodule "3rd/SDK-Android"]
 	path = 3rd/SDK-Android
 	url = https://github.com/StartAD/SDK-Android.git
