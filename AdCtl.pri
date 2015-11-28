@@ -1,4 +1,4 @@
-ADMOB_PATH = $$PWD/3rd/QtAdMob/QtAdMob
+ADMOB_PATH = $$PWD/3rd/QtAdMob
 GOOGLE_ANALITICS_PATH = $$PWD/3rd/qt-google-analytics
 
 include($$ADMOB_PATH/QtAdMob.pri)
