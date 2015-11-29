@@ -27,6 +27,12 @@ AdCtl::AdCtl(QObject *parent) : QObject(parent)
     connect(gpgsTimer,SIGNAL(timeout()), this, SLOT(isGPGSSignedIn()));
     //gpgsTimer->start();
 
+    cacheAdMobBannerHeight = 0;
+    cacheAdMobBannerWidth = 0;
+
+    cacheStartAdBannerHeight = 0;
+    cacheStartAdBannerWidth = 0;
+
 #if (__ANDROID_API__ >= 9)
 
     QPlatformNativeInterface* interface = QApplication::platformNativeInterface();
