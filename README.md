@@ -33,7 +33,7 @@ See https://github.com/kafeg/adctl/wiki/Howto-QML-and-Qt-Quick
 See https://github.com/kafeg/adctl/wiki/API-Reference
 
 **Examples**
-- Фтфпкфьы пфьу (https://github.com/kafeg/anagrams);
+- Anagram android game (https://github.com/kafeg/anagrams);
 - Example Application (https://github.com/kafeg/adctl-example);
 - Dark Stories (https://play.google.com/store/apps/details?id=ru.forsk.darkstories);
 - Comming soon...
