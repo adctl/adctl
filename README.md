@@ -16,7 +16,7 @@ Qt and Online purchase via Stripe.com | planned | planned
 Qt and Online purchase via Cloudpayments.ru | planned | planned
 Qt and Google Cloud Messaging via parse.com | planned | no
 
-**Howto integrate library to project**
+**Howto integrate library to your project**
 
 https://github.com/kafeg/adctl/wiki/Howto-integrate-to-project
 
@@ -35,7 +35,8 @@ See https://github.com/kafeg/adctl/wiki/API-Reference
 **Examples**
 - Anagram android game (https://github.com/kafeg/anagrams);
 - Example Application (https://github.com/kafeg/adctl-example);
-- Dark Stories (https://play.google.com/store/apps/details?id=ru.forsk.darkstories);
+- Dark Stories android game (https://play.google.com/store/apps/details?id=ru.forsk.darkstories);
+- Anyway android game (https://play.google.com/store/apps/details?id=ru.forsk.anyway);
 - Comming soon...
 
 **Developers**
@@ -45,6 +46,10 @@ See https://github.com/kafeg/adctl/wiki/API-Reference
 - EMail: v31337[at]gmail.com
 
 2) Yevgeniy Logachev
+- Skype: ---
+- EMail: ---
+
+3) Gilmanov Ildar
 - Skype: ---
 - EMail: ---
 
