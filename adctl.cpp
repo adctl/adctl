@@ -1,20 +1,11 @@
 #include "adctl.h"
 #include "QtAdMobBanner.h"
 #include "QtAdMobInterstitial.h"
-#include <QtQml>
 #include <QDebug>
 #include <QTimer>
 #include "ganalytics.h"
-#include <QScreen>
-#include <QApplication>
 
-#if (__ANDROID_API__ >= 9)
-
-#include <android/api-level.h>
-#include <QAndroidJniObject>
-#include <qpa/qplatformnativeinterface.h>
-
-#endif
+#include "AdCtl_platform.h"
 
 AdCtl::AdCtl(QObject *parent) : QObject(parent)
 {
@@ -27,29 +18,10 @@ AdCtl::AdCtl(QObject *parent) : QObject(parent)
     connect(gpgsTimer,SIGNAL(timeout()), this, SLOT(isGPGSSignedIn()));
     //gpgsTimer->start();
 
-#if (__ANDROID_API__ >= 9)
-
-    QPlatformNativeInterface* interface = QApplication::platformNativeInterface();
-    jobject activity = (jobject)interface->nativeResourceForIntegration("QtActivity");
-    if (activity)
-    {
-        m_Activity = new QAndroidJniObject(activity);
-    }
-
-#endif
+    m_platform = new AdCtl_platform;
 
     //mm and dp
-#ifdef Q_OS_ANDROID
-    //  BUG with dpi on some androids: https://bugreports.qt-project.org/browse/QTBUG-35701
-    //  Workaround:
-    QAndroidJniObject qtActivity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
-    QAndroidJniObject resources = qtActivity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
-    QAndroidJniObject displayMetrics = resources.callObjectMethod("getDisplayMetrics", "()Landroid/util/DisplayMetrics;");
-    int density = displayMetrics.getField<int>("densityDpi");
-#else
-    QScreen *screen = qApp->primaryScreen();
-    float density = screen->physicalDotsPerInch();
-#endif
+    float density = m_platform->getDensity();
     m_mm = density / 25.4;
     m_pt =  1;
 
@@ -68,19 +40,14 @@ AdCtl::~AdCtl()
 {
     delete m_AdMobBanner;
     delete m_AdMobInterstitial;
-#ifdef Q_OS_ANDROID
-    delete m_Activity;
-#endif
+    delete m_platform;
 }
 
 void AdCtl::init()
 {
     if (m_AdInitialized) { qDebug() << "AdMob alredy initialized!"; return; }
 
-#if (__ANDROID_API__ >= 9)
-    QAndroidJniObject param1 = QAndroidJniObject::fromString(m_StartAdId);
-    m_Activity->callMethod<void>("SetStartAdId", "(Ljava/lang/String;)V", param1.object<jstring>());
-#endif
+    m_platform->setStartAdId(m_StartAdId);
 
     if (m_AdMobBannerEnabled) {
         m_AdMobBanner->Initialize();
@@ -96,9 +63,7 @@ void AdCtl::init()
     }
 
     if (m_StartAdBannerEnabled) {
-#if (__ANDROID_API__ >= 9)
-        m_Activity->callMethod<void>("InitializeStartAdBanner");
-#endif
+        m_platform->initStartAd();
     }
 
     if (m_GAnalyticsEnabled) {
@@ -254,19 +219,13 @@ int AdCtl::AdMobBannerHeight() const
 int AdCtl::StartAdBannerWidth() const
 {
     if (!m_AdInitialized || !m_StartAdBannerEnabled) { return 0; }
-#if (__ANDROID_API__ >= 9)
-    return m_Activity->callMethod<int>("GetStartAdBannerWidth");
-#endif
-    return 0;
+    return m_platform->startAdBannerWidth();
 }
 
 int AdCtl::StartAdBannerHeight() const
 {
     if (!m_AdInitialized || !m_StartAdBannerEnabled) { return 0; }
-#if (__ANDROID_API__ >= 9)
-    return m_Activity->callMethod<int>("GetStartAdBannerHeight");
-#endif
-    return 0;
+    return m_platform->startAdBannerHeight();
 }
 
 //AdMob banner position
@@ -293,9 +252,7 @@ void AdCtl::setStartAdBannerSize(const QSize StartAdBannerSize)
     m_StartAdBannerSize = StartAdBannerSize;
     //qDebug() << "StartAdBannerSize C++" << m_StartAdBannerSize;
     //if (!m_AdInitialized || !m_StartAdBannerEnabled) { return; }
-#if (__ANDROID_API__ >= 9)
-    m_Activity->callMethod<void>("SetStartAdBannerSize", "(II)V", StartAdBannerSize.width(), StartAdBannerSize.height());
-#endif
+    m_platform->setStartAdBannerSize(StartAdBannerSize.width(),StartAdBannerSize.height());
 }
 
 QSize AdCtl::StartAdBannerSize() const
@@ -305,43 +262,29 @@ QSize AdCtl::StartAdBannerSize() const
 
 int AdCtl::adMobBannerRealX()
 {
-#if (__ANDROID_API__ >= 9)
-    return m_Activity->callMethod<int>("GetAdMobBannerX");
-#endif
-    return 0;
+    return m_platform->adMobBannerX();
 }
 
 int AdCtl::adMobBannerRealY()
 {
-#if (__ANDROID_API__ >= 9)
-    return m_Activity->callMethod<int>("GetAdMobBannerY");
-#endif
-        return 0;
+    return m_platform->adMobBannerY();
 }
 
 int AdCtl::startAdBannerRealX()
 {
-#if (__ANDROID_API__ >= 9)
-    return m_Activity->callMethod<int>("GetStartAdBannerX");
-#endif
-        return 0;
+    return m_platform->startAdBannerX();
 }
 
 int AdCtl::startAdBannerRealY()
 {
-#if (__ANDROID_API__ >= 9)
-    return m_Activity->callMethod<int>("GetStartAdBannerY");
-#endif
-        return 0;
+    return m_platform->startAdBannerY();
 }
 
 void AdCtl::setStartAdBannerPosition(const QPoint position)
 {
     m_StartAdBannerPosition = position;
     if (!m_AdInitialized || !m_StartAdBannerEnabled) { return; }
-#if (__ANDROID_API__ >= 9)
-    m_Activity->callMethod<void>("SetStartAdBannerPosition", "(II)V", position.x(), position.y());
-#endif
+    m_platform->setStartAdBannerPosition(position.x(),position.y());
 }
 
 //set ids
@@ -349,18 +292,85 @@ void AdCtl::setAdMobId(const QString &AdMobId)
 {
     if (!m_AdMobId.isEmpty()) { qDebug() << "AdMob ID alredy set!"; return; }
     m_AdMobId = AdMobId;
+    emit adMobIdChanged();
 }
 
 void AdCtl::setStartAdId(const QString &StartAdId)
 {
     if (!m_StartAdId.isEmpty()) { qDebug() << "StartAd ID alredy set!"; return; }
     m_StartAdId = StartAdId;
+    emit startAdIdChanged();
 }
 
 void AdCtl::setGAnalyticsId(const QString &GAnalyticsId)
 {
     if (!m_GAnalyticsId.isEmpty()) { qDebug() << "GAnalytics ID alredy set!"; return; }
     m_GAnalyticsId = GAnalyticsId;
+    emit gAnalyticsIdChanged();
+}
+
+QString AdCtl::getAdMobId() const
+{
+    return m_AdMobId;
+}
+
+QString AdCtl::getStartAdId() const
+{
+    return m_StartAdId;
+}
+
+QString AdCtl::getGAnaliticsId() const
+{
+    return m_GAnalyticsId;
+}
+
+void AdCtl::setAdMobBannerVisible(const bool visible)
+{
+    if(m_AdMobBannerVisible!=visible){
+        m_AdMobBannerVisible=visible;
+        if(visible)
+            showAdMobBanner();
+        else
+            hideAdMobBanner();
+        emit adMobBannerVisibleChanged();
+    }
+}
+
+void AdCtl::setAdMobIinterstitialVisible(const bool visible)
+{
+    if(m_AdMobInterstitialVisible!=visible){
+        m_AdMobInterstitialVisible=visible;
+        if(visible)
+            showAdMobInterstitial();
+        emit adMobIinterstitialVisibleChanged();
+    }
+}
+
+void AdCtl::setStartAdBannerVisible(const bool visible)
+{
+    if(m_StartAdBannerVisible!=visible){
+        m_StartAdBannerVisible=visible;
+        if(visible)
+            showStartAdBanner();
+        else
+            hideStartAdBanner();
+        emit startAdBannerVisibleChanged();
+    }
+}
+
+bool AdCtl::AdMobBannerVisible() const
+{
+    return m_AdMobBannerVisible;
+}
+
+bool AdCtl::AdMobIinterstitialVisible() const
+{
+    return m_AdMobInterstitialVisible;
+}
+
+bool AdCtl::StartAdBannerVisible() const
+{
+    return m_StartAdBannerVisible;
 }
 
 void AdCtl::showAdMobBanner()
@@ -388,9 +398,7 @@ void AdCtl::showStartAdBanner()
     if (!m_AdInitialized || !m_StartAdBannerEnabled) { return; }
 
     if (!m_StartAdBannerShowHideTrigger) {
-#if (__ANDROID_API__ >= 9)
-        m_Activity->callMethod<void>("ShowStartAdBanner");
-#endif
+        m_platform->showStartAd();
         m_StartAdBannerShowHideTrigger = true;
     }
 }
@@ -400,9 +408,7 @@ void AdCtl::hideStartAdBanner()
     if (!m_AdInitialized || !m_StartAdBannerEnabled) { return; }
 
     if (m_StartAdBannerShowHideTrigger) {
-#if (__ANDROID_API__ >= 9)
-        m_Activity->callMethod<void>("HideStartAdBanner");
-#endif
+        m_platform->hideStartAd();
         m_StartAdBannerShowHideTrigger = false;
     }
 }
@@ -430,17 +436,12 @@ void AdCtl::endGaSession()
 
 bool AdCtl::isGPGSSignedIn()
 {
-#if (__ANDROID_API__ >= 9)
-    bool checkGpgsSignedIn = m_Activity->callMethod<jboolean>("getSignedInGPGS");
+    bool checkGpgsSignedIn = m_platform->isGPGSSignedIn();
     //qDebug() << "GPGS SIGNED IN" << checkGpgsSignedIn << m_gpgsSignedIn;
     if (checkGpgsSignedIn != m_gpgsSignedIn) {
         setGPGSSignedIn(checkGpgsSignedIn);
         gpgsTimer->stop();
     }
-    return m_gpgsSignedIn;
-    //QAndroidJniObject param1 = QAndroidJniObject::fromString(m_StartAdId);
-    //m_Activity->callMethod<void>("SetStartAdId", "(Ljava/lang/String;)V", param1.object<jstring>());
-#endif
     return m_gpgsSignedIn;
 }
 
@@ -453,44 +454,27 @@ void AdCtl::setGPGSSignedIn(bool gpgsSignedIn)
 
 void AdCtl::signInGPGS()
 {
-#if (__ANDROID_API__ >= 9)
-    m_Activity->callMethod<void>("loginGPGS");
-#endif
+    m_platform->signInGPGS();
 }
 
 void AdCtl::submitScoreGPGS(QString leaderBoardId, int score)
 {
-#if (__ANDROID_API__ >= 9)
-    QAndroidJniObject param1 = QAndroidJniObject::fromString(leaderBoardId);
-    m_Activity->callMethod<void>("submitScoreGPGS", "(Ljava/lang/String;I)V", param1.object<jstring>(), score);
-#else
-    Q_UNUSED(leaderBoardId)
-    Q_UNUSED(score)
-#endif
+    m_platform->submitScoreGPGS(leaderBoardId,score);
 }
 
 void AdCtl::unlockAchievementGPGS(QString achievementId)
 {
-#if (__ANDROID_API__ >= 9)
-    QAndroidJniObject param1 = QAndroidJniObject::fromString(achievementId);
-    m_Activity->callMethod<void>("unlockAchievementGPGS", "(Ljava/lang/String;)V", param1.object<jstring>());
-#else
-    Q_UNUSED(achievementId)
-#endif
+    m_platform->unlockAchievementGPGS(achievementId);
 }
 
 void AdCtl::showLeaderboardGPGS()
 {
-#if (__ANDROID_API__ >= 9)
-    m_Activity->callMethod<void>("getLeaderboardGPGS");
-#endif
+    m_platform->showLeaderboardGPGS();
 }
 
 void AdCtl::showAchievementsGPGS()
 {
-#if (__ANDROID_API__ >= 9)
-    m_Activity->callMethod<void>("getAchievementsGPGS");
-#endif
+    m_platform->showAchievementsGPGS();
 }
 
 void AdCtl::showAdMobInterstitial()

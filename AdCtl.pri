@@ -6,16 +6,32 @@ include($$GOOGLE_ANALITICS_PATH/qt-google-analytics.pri)
 
 QT += qml quick widgets
 
-HEADERS += $$PWD/adctl.h
-SOURCES += $$PWD/adctl.cpp
+HEADERS += $$PWD/adctl.h $$PWD/AdCtl_platform_interface.h
+SOURCES += $$PWD/adctl.cpp $$PWD/AdCtl_platform_interface.cpp
+RESOURCES += $$PWD/adctl.qrc
 
 INCLUDEPATH += $$ADMOB_PATH
 INCLUDEPATH += $$GOOGLE_ANALITICS_PATH
 
 OTHER_FILES += README.md
 
-android
-{
+!ios{
+    !android{
+        INCLUDEPATH += $$PWD/platform/other
+        HEADERS += $$PWD/platform/other/AdCtl_platform.h
+    }
+}
+
+ios{
+    INCLUDEPATH += $$PWD/platform/ios
+    HEADERS += $$PWD/platform/ios/AdCtl_platform.h
+    OBJECTIVE_SOURCES += $$PWD/platform/ios/AdCtl_platform.mm
+}
+
+android{
+    INCLUDEPATH += $$PWD/platform/andriod
+    HEADERS += $$PWD/platform/android/AdCtl_platform.h
+    SOURCES += $$PWD/platform/android/AdCtl_platform.cpp
     android:QT += androidextras gui-private
     android:DISTFILES += $$ANDROID_PACKAGE_SOURCE_DIR/src/org/dreamdev/QtAdMob/QtAdMobActivity.java \
                          $$ANDROID_PACKAGE_SOURCE_DIR/src/com/google/example/games/basegameutils/BaseGameUtils.java \
@@ -66,3 +82,4 @@ android
     export(copydata.commands)
     android:QMAKE_EXTRA_TARGETS += first copydata
 }
+
