@@ -92,13 +92,20 @@ void AdCtl::init()
         m_AdMobBanner->Initialize();
         m_AdMobBanner->SetSize(IQtAdMobBanner::Banner);
         m_AdMobBanner->SetUnitId(m_BannerAdMobId);
-        m_AdMobBanner->AddTestDevice("DCE0DB737EC089D97AB4EFCBA2F9B322");
+
+        if(m_testDeviceEnabled) {
+            m_AdMobBanner->AddTestDevice("DCE0DB737EC089D97AB4EFCBA2F9B322");
+        }
+
         m_AdMobBanner->Show();
     }
 
     if (m_AdMobInterstitialEnabled) {
         m_AdMobInterstitial->LoadWithUnitId(m_InterstitialAdMobId);
-        m_AdMobInterstitial->AddTestDevice("DCE0DB737EC089D97AB4EFCBA2F9B322");
+
+        if(m_testDeviceEnabled) {
+            m_AdMobInterstitial->AddTestDevice("DCE0DB737EC089D97AB4EFCBA2F9B322");
+        }
     }
 
     if (m_StartAdBannerEnabled) {
@@ -236,6 +243,16 @@ void AdCtl::setStartAdBannerEnabled(bool StartAdBannerEnabled)
 bool AdCtl::GAnalyticsEnabled() const
 {
     return m_GAnalyticsEnabled;
+}
+
+void AdCtl::setTestDeviceEnabled(const bool testDeviceEnabled)
+{
+    m_testDeviceEnabled = testDeviceEnabled;
+}
+
+bool AdCtl::testDeviceEnabled() const
+{
+    return m_testDeviceEnabled;
 }
 
 void AdCtl::setGAnalyticsEnabled(bool GAnalyticsEnabled)
