@@ -22,7 +22,6 @@ class AdCtl : public QObject
     Q_PROPERTY(bool adMobIinterstitialEnabled READ AdMobIinterstitialEnabled WRITE setAdMobIinterstitialEnabled)
     Q_PROPERTY(bool startAdBannerEnabled READ StartAdBannerEnabled WRITE setStartAdBannerEnabled)
     Q_PROPERTY(bool gAnalyticsEnabled READ GAnalyticsEnabled WRITE setGAnalyticsEnabled)
-    Q_PROPERTY(bool testDeviceEnabled READ testDeviceEnabled WRITE setTestDeviceEnabled)
 
     //AdMob width and height
     Q_PROPERTY(int adMobBannerHeight READ AdMobBannerHeight NOTIFY adMobBannerHeightChanged)
@@ -93,10 +92,6 @@ public slots:
     //GAnalytics banner enabled
     void setGAnalyticsEnabled(const bool GAnalyticsEnabled);
     bool GAnalyticsEnabled() const;
-
-    //Test device enabled
-    void setTestDeviceEnabled(const bool testDeviceEnabled);
-    bool testDeviceEnabled() const;
 
     //AdMob width and height
     int AdMobBannerHeight() const;
@@ -174,7 +169,6 @@ protected:
     bool m_AdMobInterstitialEnabled = false;
     bool m_StartAdBannerEnabled = false;
     bool m_GAnalyticsEnabled = false;
-    bool m_testDeviceEnabled = true;
 
     //ids
     QString m_BannerAdMobId;
