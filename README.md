@@ -61,6 +61,10 @@ See https://github.com/kafeg/adctl/wiki/API-Reference
 **Wiki**
 Please see our Wiki for more information: https://github.com/kafeg/adctl/wiki
 
+**GitHub page**
+
+http://kafeg.github.io/adctl/
+
 **Other projects**
 - https://github.com/kafeg
 - https://github.com/yevgeniy-logachev
