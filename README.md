@@ -37,6 +37,7 @@ See https://github.com/kafeg/adctl/wiki/API-Reference
 - Example Application (https://github.com/kafeg/adctl-example);
 - Dark Stories android game (https://play.google.com/store/apps/details?id=ru.forsk.darkstories);
 - Anyway android game (https://play.google.com/store/apps/details?id=ru.forsk.anyway);
+- Tic Tac Toe (https://play.google.com/store/apps/details?id=org.ddwarf.ttt, https://vk.com/ddwarftictactoe, https://github.com/gilmanov-ildar/QtVkontakte);
 - Comming soon...
 
 **Developers**
