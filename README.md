@@ -1,6 +1,10 @@
 # AdCtl
 AdCtl - library adds support of Google Analytics, Google AdMob, Google Play Services, StartAd.mobi, Google Cloud Messaging, and online purchase of Stripe.com and Cloudpayments.ru for your Qt/C++ or Qt Quick/QML project.
 
+**License**
+
+Modified BSD
+
 **Library features support status**
 
 Feature | Android  | iOS
@@ -16,7 +20,7 @@ Qt and Online purchase via Stripe.com | planned | planned
 Qt and Online purchase via Cloudpayments.ru | planned | planned
 Qt and Google Cloud Messaging via parse.com | planned | no
 
-**Howto integrate library to project**
+**Howto integrate library to your project**
 
 https://github.com/kafeg/adctl/wiki/Howto-integrate-to-project
 
@@ -33,8 +37,11 @@ See https://github.com/kafeg/adctl/wiki/Howto-QML-and-Qt-Quick
 See https://github.com/kafeg/adctl/wiki/API-Reference
 
 **Examples**
+- Anagram android game (https://github.com/kafeg/anagrams);
 - Example Application (https://github.com/kafeg/adctl-example);
-- Dark Stories (https://play.google.com/store/apps/details?id=ru.forsk.darkstories);
+- Dark Stories android game (https://play.google.com/store/apps/details?id=ru.forsk.darkstories);
+- Anyway android game (https://play.google.com/store/apps/details?id=ru.forsk.anyway);
+- Tic Tac Toe (https://play.google.com/store/apps/details?id=org.ddwarf.ttt, https://vk.com/ddwarftictactoe, https://github.com/gilmanov-ildar/QtVkontakte);
 - Comming soon...
 
 **Developers**
@@ -47,8 +54,16 @@ See https://github.com/kafeg/adctl/wiki/API-Reference
 - Skype: ---
 - EMail: ---
 
+3) Gilmanov Ildar
+- Skype: ---
+- EMail: ---
+
 **Wiki**
 Please see our Wiki for more information: https://github.com/kafeg/adctl/wiki
+
+**GitHub page**
+
+http://kafeg.github.io/adctl/
 
 **Other projects**
 - https://github.com/kafeg

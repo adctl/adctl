@@ -188,7 +188,7 @@ bool AdCtl::AdMobBannerEnabled() const
 bool AdCtl::AdMobBannerIsLoaded() const
 {
     if (m_AdMobBannerEnabled) {
-        m_AdMobBanner->IsLoaded();
+        return m_AdMobBanner->IsLoaded();
     } else {
         return false;
     }
@@ -214,7 +214,7 @@ void AdCtl::setAdMobIinterstitialEnabled(bool AdMobIinterstitialEnabled)
 bool AdCtl::AdMobIinterstitialIsLoaded() const
 {
     if (m_AdMobInterstitialEnabled) {
-        m_AdMobInterstitial->IsLoaded();
+        return m_AdMobInterstitial->IsLoaded();
     } else {
         return false;
     }
