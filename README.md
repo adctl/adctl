@@ -41,7 +41,7 @@ See https://github.com/kafeg/adctl/wiki/API-Reference
 - Example Application (https://github.com/kafeg/adctl-example);
 - Dark Stories android game (https://play.google.com/store/apps/details?id=ru.forsk.darkstories);
 - Anyway android game (https://play.google.com/store/apps/details?id=ru.forsk.anyway);
-- Tic Tac Toe (https://play.google.com/store/apps/details?id=org.ddwarf.ttt, https://vk.com/ddwarftictactoe, https://github.com/gilmanov-ildar/QtVkontakte);
+- Tic Tac Toe (https://play.google.com/store/apps/details?id=org.ddwarf.ttt, https://facebook.com/DDwarfTicTacToe, https://vk.com/DDwarfTicTacToe, https://github.com/gilmanov-ildar/QtVkontakte);
 - Comming soon...
 
 **Developers**
@@ -55,8 +55,8 @@ See https://github.com/kafeg/adctl/wiki/API-Reference
 - EMail: ---
 
 3) Gilmanov Ildar
-- Skype: ---
-- EMail: ---
+- Skype: gilmanov.ildar
+- EMail: dev[at]ddwarf.org
 
 **Wiki**
 Please see our Wiki for more information: https://github.com/kafeg/adctl/wiki
@@ -68,5 +68,6 @@ http://kafeg.github.io/adctl/
 **Other projects**
 - https://github.com/kafeg
 - https://github.com/yevgeniy-logachev
+- https://github.com/gilmanov-ildar
 
 Details of using this library in Russian: http://habrahabr.ru/post/267275/
