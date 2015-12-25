@@ -92,13 +92,20 @@ void AdCtl::init()
         m_AdMobBanner->Initialize();
         m_AdMobBanner->SetSize(IQtAdMobBanner::Banner);
         m_AdMobBanner->SetUnitId(m_BannerAdMobId);
-        m_AdMobBanner->AddTestDevice("DCE0DB737EC089D97AB4EFCBA2F9B322");
+
+        foreach(const QString &testDevice, m_testDevices) {
+            m_AdMobBanner->AddTestDevice(testDevice);
+        }
+
         m_AdMobBanner->Show();
     }
 
     if (m_AdMobInterstitialEnabled) {
         m_AdMobInterstitial->LoadWithUnitId(m_InterstitialAdMobId);
-        m_AdMobInterstitial->AddTestDevice("DCE0DB737EC089D97AB4EFCBA2F9B322");
+
+        foreach(const QString &testDevice, m_testDevices) {
+            m_AdMobInterstitial->AddTestDevice(testDevice);
+        }
     }
 
     if (m_StartAdBannerEnabled) {
@@ -373,6 +380,11 @@ void AdCtl::setGAnalyticsId(const QString &GAnalyticsId)
 {
     if (!m_GAnalyticsId.isEmpty()) { qDebug() << "GAnalytics ID alredy set!"; return; }
     m_GAnalyticsId = GAnalyticsId;
+}
+
+void AdCtl::setTestDevices(const QStringList &testDevices)
+{
+    m_testDevices = testDevices;
 }
 
 void AdCtl::showAdMobBanner()

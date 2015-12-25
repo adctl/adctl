@@ -51,6 +51,9 @@ class AdCtl : public QObject
     Q_PROPERTY(QString startAdId WRITE setStartAdId)
     Q_PROPERTY(QString gAnalyticsId WRITE setGAnalyticsId)
 
+    //list of test devices
+    Q_PROPERTY(QStringList testDevices WRITE setTestDevices)
+
     //gpgs
     Q_PROPERTY(bool gpgsSignedIn READ isGPGSSignedIn WRITE setGPGSSignedIn NOTIFY gpgsSignedInChanged)
 
@@ -125,6 +128,9 @@ public slots:
     void setStartAdId(const QString &StartAdId);
     void setGAnalyticsId(const QString &GAnalyticsId);
 
+    //test devices
+    void setTestDevices(const QStringList &testDevices);
+
     //ctl methods
     void showAdMobBanner();
     void hideAdMobBanner();
@@ -175,6 +181,9 @@ protected:
     QString m_InterstitialAdMobId;
     QString m_StartAdId;
     QString m_GAnalyticsId;
+
+    //test devices
+    QStringList m_testDevices;
 
     //initialized
     bool m_AdInitialized = false;
