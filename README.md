@@ -56,6 +56,8 @@ See https://github.com/kafeg/adctl/wiki/API-Reference
 
 3) Gilmanov Ildar
 - Skype: gilmanov.ildar
+- Facebook: https://www.facebook.com/gilmanov.ildar
+- Vk: https://vk.com/gilmanov_ildar
 - EMail: dev[at]ddwarf.org
 
 **Wiki**
