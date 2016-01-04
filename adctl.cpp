@@ -36,7 +36,9 @@ AdCtl::~AdCtl()
 {
     delete m_AdMobBanner;
     delete m_AdMobInterstitial;
+#if (__ANDROID_API__ >= 9)
     delete m_Activity;
+#endif
 }
 
 void AdCtl::init()
