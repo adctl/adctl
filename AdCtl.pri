@@ -36,8 +36,8 @@ android
 
     #AdMob
     !exists ($$ANDROID_PACKAGE_SOURCE_DIR/google-play-services_lib) {
-        copydata.commands += $(COPY_DIR) $$PWD/3rd/QtAdMob/QtAdMob/platform/android/google-play-services_lib $$ANDROID_PACKAGE_SOURCE_DIR;
-        copydata.commands += $(COPY_DIR) $$PWD/3rd/QtAdMob/QtAdMob/platform/android/src $$ANDROID_PACKAGE_SOURCE_DIR;
+        copydata.commands += $(COPY_DIR) $$PWD/3rd/QtAdMob/platform/android/google-play-services_lib $$ANDROID_PACKAGE_SOURCE_DIR;
+        copydata.commands += $(COPY_DIR) $$PWD/3rd/QtAdMob/platform/android/src $$ANDROID_PACKAGE_SOURCE_DIR;
     }
 
     #StartAd
