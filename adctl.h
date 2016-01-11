@@ -19,10 +19,10 @@ class AdCtl : public QObject
 {
     Q_OBJECT
     //enabled properties
-    Q_PROPERTY(bool adMobBannerEnabled READ AdMobBannerEnabled WRITE setAdMobBannerEnabled)
-    Q_PROPERTY(bool adMobIinterstitialEnabled READ AdMobIinterstitialEnabled WRITE setAdMobIinterstitialEnabled)
-    Q_PROPERTY(bool startAdBannerEnabled READ StartAdBannerEnabled WRITE setStartAdBannerEnabled)
-    Q_PROPERTY(bool gAnalyticsEnabled READ GAnalyticsEnabled WRITE setGAnalyticsEnabled)
+    Q_PROPERTY(bool adMobBannerEnabled READ AdMobBannerEnabled WRITE setAdMobBannerEnabled NOTIFY adMobBannerEnabledChnged)
+    Q_PROPERTY(bool adMobIinterstitialEnabled READ AdMobIinterstitialEnabled WRITE setAdMobIinterstitialEnabled NOTIFY adMobIinterstitialEnabledChanged)
+    Q_PROPERTY(bool startAdBannerEnabled READ StartAdBannerEnabled WRITE setStartAdBannerEnabled NOTIFY startAdBannerEnabledChanged)
+    Q_PROPERTY(bool gAnalyticsEnabled READ GAnalyticsEnabled WRITE setGAnalyticsEnabled NOTIFY gAnalyticsEnabledChanged)
 
     //AdMob width and height
     Q_PROPERTY(int adMobBannerHeight READ AdMobBannerHeight NOTIFY adMobBannerHeightChanged)
@@ -79,6 +79,11 @@ signals:
     void adMobBannerVisibleChanged();
     void adMobIinterstitialVisibleChanged();
     void startAdBannerVisibleChanged();
+
+    void adMobBannerEnabledChnged();
+    void adMobIinterstitialEnabledChanged();
+    void startAdBannerEnabledChanged();
+    void gAnalyticsEnabledChanged();
 public slots:
     //init library with ids and bool flags
     void init();

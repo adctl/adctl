@@ -156,7 +156,11 @@ bool AdCtl::AdMobBannerIsLoaded() const
 
 void AdCtl::setAdMobBannerEnabled(const bool AdMobBannerEnabled)
 {
-    m_AdMobBannerEnabled = AdMobBannerEnabled;
+    if(m_AdMobBannerEnabled != AdMobBannerEnabled)
+    {
+        m_AdMobBannerEnabled = AdMobBannerEnabled;
+        emit adMobBannerEnabledChnged();
+    }
 }
 
 //AdMob interstitial enabled
@@ -167,7 +171,11 @@ bool AdCtl::AdMobIinterstitialEnabled() const
 
 void AdCtl::setAdMobIinterstitialEnabled(bool AdMobIinterstitialEnabled)
 {
-    m_AdMobInterstitialEnabled = AdMobIinterstitialEnabled;
+    if(m_AdMobInterstitialEnabled != AdMobIinterstitialEnabled)
+    {
+        m_AdMobInterstitialEnabled = AdMobIinterstitialEnabled;
+        emit adMobIinterstitialEnabledChanged();
+    }
 }
 
 bool AdCtl::AdMobIinterstitialIsLoaded() const
@@ -188,7 +196,11 @@ bool AdCtl::StartAdBannerEnabled() const
 
 void AdCtl::setStartAdBannerEnabled(bool StartAdBannerEnabled)
 {
-    m_StartAdBannerEnabled = StartAdBannerEnabled;
+    if(m_StartAdBannerEnabled != StartAdBannerEnabled)
+    {
+        m_StartAdBannerEnabled = StartAdBannerEnabled;
+        emit startAdBannerEnabledChanged();
+    }
 }
 
 //GAnalytics enabled
@@ -199,7 +211,11 @@ bool AdCtl::GAnalyticsEnabled() const
 
 void AdCtl::setGAnalyticsEnabled(bool GAnalyticsEnabled)
 {
-    m_GAnalyticsEnabled = GAnalyticsEnabled;
+    if(m_GAnalyticsEnabled != GAnalyticsEnabled)
+    {
+        m_GAnalyticsEnabled = GAnalyticsEnabled;
+        emit gAnalyticsEnabledChanged();
+    }
 }
 
 //AdMob width and height

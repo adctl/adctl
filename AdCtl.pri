@@ -15,6 +15,13 @@ INCLUDEPATH += $$GOOGLE_ANALITICS_PATH
 
 OTHER_FILES += README.md
 
+system(ver){
+#windows build environment
+    COMMAND_SEPARATOR = ' &'
+}else{
+    COMMAND_SEPARATOR = ';'
+}
+
 !ios{
     !android{
         INCLUDEPATH += $$PWD/platform/other
@@ -26,6 +33,7 @@ ios{
     INCLUDEPATH += $$PWD/platform/ios
     HEADERS += $$PWD/platform/ios/AdCtl_platform.h
     OBJECTIVE_SOURCES += $$PWD/platform/ios/AdCtl_platform.mm
+    DIRS = $$IOS_PACKAGE_DIR/libs
 }
 
 android{
@@ -42,11 +50,7 @@ android{
                          $$ANDROID_PACKAGE_SOURCE_DIR/project.properties \
                          $$ANDROID_PACKAGE_SOURCE_DIR/libs/*
 
-    # make required directories
     DIRS = $$ANDROID_PACKAGE_SOURCE_DIR/libs
-    createDirs.commands = $(MKDIR) $$DIRS
-    first.depends += createDirs
-    android:QMAKE_EXTRA_TARGETS += createDirs
 
     #copy platform specific data
 
@@ -73,6 +77,13 @@ android{
     !exists ($$ANDROID_PACKAGE_SOURCE_DIR/src/ru/forsk) {
         copydata.commands += $(COPY_DIR) $$PWD/platform/android/src $$ANDROID_PACKAGE_SOURCE_DIR;
     }
+}
+
+android|ios{
+    # make required directories
+    createDirs.commands = $(MKDIR) $$DIRS
+    first.depends += createDirs
+    QMAKE_EXTRA_TARGETS += createDirs
     copydata.CONFIG += no_link target_predeps
 
     #Run data copy and dirs creation
@@ -80,6 +91,5 @@ android{
     first.CONFIG += no_link target_predeps
     export(first.depends)
     export(copydata.commands)
-    android:QMAKE_EXTRA_TARGETS += first copydata
+    QMAKE_EXTRA_TARGETS += first copydata
 }
-
