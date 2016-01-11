@@ -1,5 +1,6 @@
 #include "AdCtl_platform.h"
 #include <QString>
+#include <QGuiApplication>
 
 #include <android/api-level.h>
 #include <QAndroidJniObject>
@@ -8,7 +9,7 @@
 AdCtl_platform::AdCtl_platform(){
     m_Activity=0;
 #if (__ANDROID_API__ >= 9)
-    QPlatformNativeInterface* interface = QApplication::platformNativeInterface();
+    QPlatformNativeInterface* interface = QGuiApplication::platformNativeInterface();
     jobject activity = (jobject)interface->nativeResourceForIntegration("QtActivity");
     if (activity)
     {
@@ -28,16 +29,16 @@ void AdCtl_platform::initStartAd(){
 }
 
 void AdCtl_platform::setStartAdId(const QString& id){
-    QAndroidJniObject param1 = QAndroidJniObject::fromString(m_StartAdId);
+    QAndroidJniObject param1 = QAndroidJniObject::fromString(id);
     m_Activity->callMethod<void>("SetStartAdId", "(Ljava/lang/String;)V", param1.object<jstring>());
 }
 
 void AdCtl_platform::setStartAdBannerSize(const int width, const int height){
-    m_Activity->callMethod<void>("SetStartAdBannerSize", "(II)V", StartAdBannerSize.width(), StartAdBannerSize.height());
+    m_Activity->callMethod<void>("SetStartAdBannerSize", "(II)V", width, height);
 }
 
 void AdCtl_platform::setStartAdBannerPosition(const int x, const int y){
-    m_Activity->callMethod<void>("SetStartAdBannerPosition", "(II)V", position.x(), position.y());
+    m_Activity->callMethod<void>("SetStartAdBannerPosition", "(II)V", x, y);
 }
 
 int AdCtl_platform::startAdBannerHeight() const{
