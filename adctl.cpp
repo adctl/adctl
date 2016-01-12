@@ -108,7 +108,10 @@ float AdCtl::pt()
 
 void AdCtl::setTestDevices(const QStringList &testDevices)
 {
-    m_testDevices = testDevices;
+    if(testDevices!=m_testDevices){
+        m_testDevices = testDevices;
+        emit testDevicesChanged();
+    }
 }
 
 void AdCtl::adctlTimerSlot()
@@ -419,6 +422,11 @@ bool AdCtl::AdMobIinterstitialVisible() const
 bool AdCtl::StartAdBannerVisible() const
 {
     return m_StartAdBannerVisible;
+}
+
+QStringList AdCtl::getTestDevices() const
+{
+    return m_testDevices;
 }
 
 void AdCtl::showAdMobBanner()

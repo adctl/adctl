@@ -57,7 +57,7 @@ class AdCtl : public QObject
     Q_PROPERTY(QString gAnalyticsId READ getGAnaliticsId WRITE setGAnalyticsId NOTIFY gAnalyticsIdChanged)
 
     //list of test devices
-    Q_PROPERTY(QStringList testDevices WRITE setTestDevices)
+    Q_PROPERTY(QStringList testDevices READ getTestDevices WRITE setTestDevices NOTIFY testDevicesChanged)
 
     //gpgs
     Q_PROPERTY(bool gpgsSignedIn READ isGPGSSignedIn WRITE setGPGSSignedIn NOTIFY gpgsSignedInChanged)
@@ -89,6 +89,8 @@ signals:
     void adMobIinterstitialEnabledChanged();
     void startAdBannerEnabledChanged();
     void gAnalyticsEnabledChanged();
+
+    void testDevicesChanged();
 public slots:
     //init library with ids and bool flags
     void init();
@@ -158,6 +160,7 @@ public slots:
     bool StartAdBannerVisible()const;
 
     //test devices
+    QStringList getTestDevices()const;
     void setTestDevices(const QStringList &testDevices);
 
     //ctl methods
