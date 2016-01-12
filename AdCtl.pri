@@ -41,7 +41,7 @@ android{
     HEADERS += $$PWD/platform/android/AdCtl_platform.h
     SOURCES += $$PWD/platform/android/AdCtl_platform.cpp
     android:QT += androidextras gui-private
-    android:DISTFILES += $$ANDROID_PACKAGE_SOURCE_DIR/src/org/dreamdev/QtAdMob/QtAdMobActivity.java \
+    android:FILES += $$ANDROID_PACKAGE_SOURCE_DIR/src/org/dreamdev/QtAdMob/QtAdMobActivity.java \
                          $$ANDROID_PACKAGE_SOURCE_DIR/src/com/google/example/games/basegameutils/BaseGameUtils.java \
                          $$ANDROID_PACKAGE_SOURCE_DIR/src/com/google/example/games/basegameutils/GameHelper.java \
                          $$ANDROID_PACKAGE_SOURCE_DIR/src/com/google/example/games/basegameutils/GameHelperUtils.java \
@@ -52,38 +52,50 @@ android{
 
     DIRS = $$ANDROID_PACKAGE_SOURCE_DIR/libs
 
+    COPYDIR_SUFFIX =
+
+    # make required directories
+    !exists ($$DIRS){
+        copydata.commands = $(MKDIR) $$shell_path($$DIRS);
+    }
+
     #AdMob
     !exists ($$ANDROID_PACKAGE_SOURCE_DIR/google-play-services_lib) {
-        copydata.commands += $(COPY_DIR) $$shell_path($$PWD/3rd/QtAdMob/platform/android/google-play-services_lib) $$shell_path($$ANDROID_PACKAGE_SOURCE_DIR);
-        copydata.commands += $(COPY_DIR) $$shell_path($$PWD/3rd/QtAdMob/platform/android/src) $$shell_path($$ANDROID_PACKAGE_SOURCE_DIR);
+        system(ver){
+            COPYDIR_SUFFIX = google-play-services_lib
+        }
+        copydata.commands += $(COPY_DIR) $$shell_path($$PWD/3rd/QtAdMob/platform/android/google-play-services_lib) $$shell_path($$ANDROID_PACKAGE_SOURCE_DIR/$$COPYDIR_SUFFIX);
+        system(ver){
+            COPYDIR_SUFFIX = src
+        }
+        copydata.commands += $(COPY_DIR) $$shell_path($$PWD/3rd/QtAdMob/platform/android/src) $$shell_path($$ANDROID_PACKAGE_SOURCE_DIR/$$COPYDIR_SUFFIX);
     }
 
     #StartAd
     !exists ($$ANDROID_PACKAGE_SOURCE_DIR/libs/StartADLib-1.0.1.jar) {
-        copydata.commands += $(COPY_DIR) $$shell_path($$PWD/3rd/SDK-Android/lib/StartADLib-1.0.1.jar) $$shell_path($$ANDROID_PACKAGE_SOURCE_DIR/libs/);
+        copydata.commands += $(COPY) $$shell_path($$PWD/3rd/SDK-Android/lib/StartADLib-1.0.1.jar) $$shell_path($$ANDROID_PACKAGE_SOURCE_DIR/libs/StartADLib-1.0.1.jar);
     }
 
     #PlayServices
     !exists ($$ANDROID_PACKAGE_SOURCE_DIR/libs/android-support-v4.jar) {
-        copydata.commands += $(COPY_DIR) $$shell_path($$PWD/3rd/android-support-library-archive/v4/android-support-v4.jar) $$shell_path($$ANDROID_PACKAGE_SOURCE_DIR/libs/);
+        copydata.commands += $(COPY) $$shell_path($$PWD/3rd/android-support-library-archive/v4/android-support-v4.jar) $$shell_path($$ANDROID_PACKAGE_SOURCE_DIR/libs/android-support-v4.jar);
     }
 
     #AdCtl
     !exists ($$ANDROID_PACKAGE_SOURCE_DIR/project.properties) {
-        copydata.commands += $(COPY_DIR) $$shell_path($$PWD/platform/android/project.properties) $$shell_path($$ANDROID_PACKAGE_SOURCE_DIR);
+        copydata.commands += $(COPY) $$shell_path($$PWD/platform/android/project.properties) $$shell_path($$ANDROID_PACKAGE_SOURCE_DIR/project.properties);
     }
     !exists ($$ANDROID_PACKAGE_SOURCE_DIR/src/ru/forsk) {
-        copydata.commands += $(COPY_DIR) $$shell_path($$PWD/platform/android/src) $$shell_path($$ANDROID_PACKAGE_SOURCE_DIR);
+        system(ver){
+            COPYDIR_SUFFIX = src
+        }
+        copydata.commands += $(COPY_DIR) $$shell_path($$PWD/platform/android/src) $$shell_path($$ANDROID_PACKAGE_SOURCE_DIR/$$COPYDIR_SUFFIX);
     }
 }
 
 android|ios{
-    # make required directories
-    createDirs.commands = $(MKDIR) $$shell_path($$DIRS)
-    first.depends += createDirs
-    QMAKE_EXTRA_TARGETS += createDirs
     copydata.CONFIG += no_link target_predeps
-    copydata.commands = $$replace(copydata.commands,;,' &')
+    copydata.commands = $$replace(copydata.commands,;,$$COMMAND_SEPARATOR)
 
     #Run data copy and dirs creation
     first.depends += $(first) copydata
