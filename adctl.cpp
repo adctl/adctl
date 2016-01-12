@@ -19,6 +19,11 @@ AdCtl::AdCtl(QObject *parent) : QObject(parent)
     //gpgsTimer->start();
 
     m_platform = new AdCtl_platform;
+    cacheAdMobBannerHeight = 0;
+    cacheAdMobBannerWidth = 0;
+
+    cacheStartAdBannerHeight = 0;
+    cacheStartAdBannerWidth = 0;
 
     //mm and dp
     float density = m_platform->getDensity();
@@ -52,14 +57,22 @@ void AdCtl::init()
     if (m_AdMobBannerEnabled) {
         m_AdMobBanner->Initialize();
         m_AdMobBanner->SetSize(IQtAdMobBanner::Banner);
-        m_AdMobBanner->SetUnitId(m_AdMobId);
-        m_AdMobBanner->AddTestDevice("DCE0DB737EC089D97AB4EFCBA2F9B322");
+        m_AdMobBanner->SetUnitId(m_BannerAdMobId);
+
+        foreach(const QString &testDevice, m_testDevices) {
+            m_AdMobBanner->AddTestDevice(testDevice);
+        }
+
         m_AdMobBanner->Show();
     }
 
     if (m_AdMobInterstitialEnabled) {
-        m_AdMobInterstitial->LoadWithUnitId(m_AdMobId);
+        m_AdMobInterstitial->LoadWithUnitId(m_InterstitialAdMobId);
         m_AdMobInterstitial->AddTestDevice("DCE0DB737EC089D97AB4EFCBA2F9B322");
+
+        foreach(const QString &testDevice, m_testDevices) {
+            m_AdMobInterstitial->AddTestDevice(testDevice);
+        }
     }
 
     if (m_StartAdBannerEnabled) {
@@ -82,13 +95,20 @@ float AdCtl::dp()
 {
     return m_dp;
 }
+
 float AdCtl::mm()
 {
     return m_mm;
 }
+
 float AdCtl::pt()
 {
     return m_pt;
+}
+
+void AdCtl::setTestDevices(const QStringList &testDevices)
+{
+    m_testDevices = testDevices;
 }
 
 void AdCtl::adctlTimerSlot()
@@ -124,6 +144,7 @@ void AdCtl::adctlTimerSlot()
         m_AdMobWidthAlredyGreatThanZero = true;
         emit adMobBannerShowed();
     }
+
     if ((StartAdBannerWidth() > 0) && !m_StartAdWidthAlredyGreatThanZero) {
         m_isStartAdBannerShowed = true;
         m_StartAdBannerShowHideTrigger = true;
@@ -304,11 +325,17 @@ void AdCtl::setStartAdBannerPosition(const QPoint position)
 }
 
 //set ids
-void AdCtl::setAdMobId(const QString &AdMobId)
+void AdCtl::setBannerAdMobId(const QString &BannerAdMobId)
 {
-    if (!m_AdMobId.isEmpty()) { qDebug() << "AdMob ID alredy set!"; return; }
-    m_AdMobId = AdMobId;
-    emit adMobIdChanged();
+    if (!m_BannerAdMobId.isEmpty()) { qDebug() << "AdMob ID alredy set!"; return; }
+    m_BannerAdMobId = BannerAdMobId;
+}
+
+//set ids
+void AdCtl::setInterstitialAdMobId(const QString &InterstitialAdMobId)
+{
+    if (!m_InterstitialAdMobId.isEmpty()) { qDebug() << "AdMob ID alredy set!"; return; }
+    m_InterstitialAdMobId = InterstitialAdMobId;
 }
 
 void AdCtl::setStartAdId(const QString &StartAdId)
@@ -325,9 +352,14 @@ void AdCtl::setGAnalyticsId(const QString &GAnalyticsId)
     emit gAnalyticsIdChanged();
 }
 
-QString AdCtl::getAdMobId() const
+QString AdCtl::getInterstitialAdMobId() const
 {
-    return m_AdMobId;
+    return m_InterstitialAdMobId;
+}
+
+QString AdCtl::getBannerAdMobId() const
+{
+    return m_BannerAdMobId;
 }
 
 QString AdCtl::getStartAdId() const

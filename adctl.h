@@ -51,9 +51,13 @@ class AdCtl : public QObject
     Q_PROPERTY(bool startAdBannerVisible READ StartAdBannerVisible WRITE setStartAdBannerVisible NOTIFY startAdBannerVisibleChanged)
 
     //ids
-    Q_PROPERTY(QString adMobId READ getAdMobId WRITE setAdMobId NOTIFY adMobIdChanged)
+    Q_PROPERTY(QString bannerAdMobId READ getBannerAdMobId WRITE setBannerAdMobId NOTIFY bannerAdMobIdChanged)
+    Q_PROPERTY(QString interstitialAdMobId READ getInterstitialAdMobId WRITE setInterstitialAdMobId NOTIFY interstitialAdMobIdChanged)
     Q_PROPERTY(QString startAdId READ getStartAdId WRITE setStartAdId NOTIFY startAdIdChanged)
     Q_PROPERTY(QString gAnalyticsId READ getGAnaliticsId WRITE setGAnalyticsId NOTIFY gAnalyticsIdChanged)
+
+    //list of test devices
+    Q_PROPERTY(QStringList testDevices WRITE setTestDevices)
 
     //gpgs
     Q_PROPERTY(bool gpgsSignedIn READ isGPGSSignedIn WRITE setGPGSSignedIn NOTIFY gpgsSignedInChanged)
@@ -72,7 +76,8 @@ signals:
     void  startAdBannerWidthChanged(int width);
     void  gpgsSignedInChanged(bool gpgsSignedIn);
 
-    void adMobIdChanged();
+    void interstitialAdMobIdChanged();
+    void bannerAdMobIdChanged();
     void startAdIdChanged();
     void gAnalyticsIdChanged();
 
@@ -136,10 +141,12 @@ public slots:
     int startAdBannerRealY();
 
     //ids
-    void setAdMobId(const QString &AdMobId);
+    void setBannerAdMobId(const QString &BannerAdMobId);
+    void setInterstitialAdMobId(const QString &InterstitialAdMobId);
     void setStartAdId(const QString &StartAdId);
     void setGAnalyticsId(const QString &GAnalyticsId);
-    QString getAdMobId()const;
+    QString getInterstitialAdMobId()const;
+    QString getBannerAdMobId()const;
     QString getStartAdId()const;
     QString getGAnaliticsId()const;
 
@@ -149,6 +156,9 @@ public slots:
     bool AdMobBannerVisible()const;
     bool AdMobIinterstitialVisible()const;
     bool StartAdBannerVisible()const;
+
+    //test devices
+    void setTestDevices(const QStringList &testDevices);
 
     //ctl methods
     void showAdMobBanner();
@@ -200,9 +210,13 @@ protected:
     bool m_StartAdBannerVisible = false;
 
     //ids
-    QString m_AdMobId;
+    QString m_BannerAdMobId;
+    QString m_InterstitialAdMobId;
     QString m_StartAdId;
     QString m_GAnalyticsId;
+
+    //test devices
+    QStringList m_testDevices;
 
     //initialized
     bool m_AdInitialized = false;
