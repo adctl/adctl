@@ -18,8 +18,9 @@ class GAnalytics;
 class AdCtl : public QObject
 {
     Q_OBJECT
+
     //enabled properties
-    Q_PROPERTY(bool adMobBannerEnabled READ AdMobBannerEnabled WRITE setAdMobBannerEnabled NOTIFY adMobBannerEnabledChnged)
+    Q_PROPERTY(bool adMobBannerEnabled READ AdMobBannerEnabled WRITE setAdMobBannerEnabled NOTIFY adMobBannerEnabledChanged)
     Q_PROPERTY(bool adMobIinterstitialEnabled READ AdMobIinterstitialEnabled WRITE setAdMobIinterstitialEnabled NOTIFY adMobIinterstitialEnabledChanged)
     Q_PROPERTY(bool startAdBannerEnabled READ StartAdBannerEnabled WRITE setStartAdBannerEnabled NOTIFY startAdBannerEnabledChanged)
     Q_PROPERTY(bool gAnalyticsEnabled READ GAnalyticsEnabled WRITE setGAnalyticsEnabled NOTIFY gAnalyticsEnabledChanged)
@@ -28,12 +29,12 @@ class AdCtl : public QObject
     Q_PROPERTY(int adMobBannerHeight READ AdMobBannerHeight NOTIFY adMobBannerHeightChanged)
     Q_PROPERTY(int adMobBannerWidth READ AdMobBannerWidth NOTIFY adMobBannerWidthChanged)
 
+    //AdMob position
+    Q_PROPERTY(QPoint adMobBannerPosition READ AdMobBannerPosition WRITE setAdMobBannerPosition)
+
     //StartAd width and height
     Q_PROPERTY(int startAdBannerHeight READ StartAdBannerHeight NOTIFY startAdBannerHeightChanged)
     Q_PROPERTY(int startAdBannerWidth READ StartAdBannerWidth NOTIFY startAdBannerWidthChanged)
-
-    //AdMob position
-    Q_PROPERTY(QPoint adMobBannerPosition READ AdMobBannerPosition WRITE setAdMobBannerPosition)
 
     //StartAd position
     Q_PROPERTY(QPoint startAdBannerPosition READ StartAdBannerPosition WRITE setStartAdBannerPosition)
@@ -50,16 +51,16 @@ class AdCtl : public QObject
     Q_PROPERTY(bool adMobIinterstitialVisible READ AdMobIinterstitialVisible WRITE setAdMobIinterstitialVisible NOTIFY adMobIinterstitialVisibleChanged)
     Q_PROPERTY(bool startAdBannerVisible READ StartAdBannerVisible WRITE setStartAdBannerVisible NOTIFY startAdBannerVisibleChanged)
 
-    //ids
-    Q_PROPERTY(QString bannerAdMobId READ getBannerAdMobId WRITE setBannerAdMobId NOTIFY bannerAdMobIdChanged)
-    Q_PROPERTY(QString interstitialAdMobId READ getInterstitialAdMobId WRITE setInterstitialAdMobId NOTIFY interstitialAdMobIdChanged)
+    //ID's for banners and analytics
+    Q_PROPERTY(QString adMobBannerId READ getBannerAdMobId WRITE setAdMobBannerId NOTIFY adMobBannerIdChanged)
+    Q_PROPERTY(QString adMobInterstitialId READ getInterstitialAdMobId WRITE setAdMobInterstitialId NOTIFY adMobInterstitialIdChanged)
     Q_PROPERTY(QString startAdId READ getStartAdId WRITE setStartAdId NOTIFY startAdIdChanged)
     Q_PROPERTY(QString gAnalyticsId READ getGAnaliticsId WRITE setGAnalyticsId NOTIFY gAnalyticsIdChanged)
 
     //list of test devices
     Q_PROPERTY(QStringList testDevices READ getTestDevices WRITE setTestDevices NOTIFY testDevicesChanged)
 
-    //gpgs
+    //Google Play Game Services
     Q_PROPERTY(bool gpgsSignedIn READ isGPGSSignedIn WRITE setGPGSSignedIn NOTIFY gpgsSignedInChanged)
 
 public:
@@ -67,7 +68,8 @@ public:
     ~AdCtl();
 
 signals:
-    //StartAd and AdMob
+
+    //StartAd and AdMob showed and sizes
     void  adMobBannerShowed();
     void  startAdBannerShowed();
     void  adMobBannerHeightChanged(int height);
@@ -76,26 +78,31 @@ signals:
     void  startAdBannerWidthChanged(int width);
     void  gpgsSignedInChanged(bool gpgsSignedIn);
 
-    void interstitialAdMobIdChanged();
-    void bannerAdMobIdChanged();
+    //ids changed
+    void adMobInterstitialIdChanged();
+    void adMobBannerIdChanged();
     void startAdIdChanged();
     void gAnalyticsIdChanged();
 
+    //visibility changed
     void adMobBannerVisibleChanged();
     void adMobIinterstitialVisibleChanged();
     void startAdBannerVisibleChanged();
 
-    void adMobBannerEnabledChnged();
+    //enabled changed
+    void adMobBannerEnabledChanged();
     void adMobIinterstitialEnabledChanged();
     void startAdBannerEnabledChanged();
     void gAnalyticsEnabledChanged();
 
+    //test devices changed
     void testDevicesChanged();
 public slots:
+
     //init library with ids and bool flags
     void init();
 
-    //Timer for control, update and emit properties changes for banners
+    //Timer for control, update and emit properties changes for banners (for first run)
     void adctlTimerSlot();
 
     //AdMob banner enabled
@@ -143,8 +150,8 @@ public slots:
     int startAdBannerRealY();
 
     //ids
-    void setBannerAdMobId(const QString &BannerAdMobId);
-    void setInterstitialAdMobId(const QString &InterstitialAdMobId);
+    void setAdMobBannerId(const QString &BannerAdMobId);
+    void setAdMobInterstitialId(const QString &InterstitialAdMobId);
     void setStartAdId(const QString &StartAdId);
     void setGAnalyticsId(const QString &GAnalyticsId);
     QString getInterstitialAdMobId()const;
@@ -252,6 +259,7 @@ protected:
     bool m_gpgsSignedIn;
     QTimer *gpgsTimer;
 
+    //density (simple Fix Qt android density bug)
     float m_dp;
     float m_pt;
     float m_mm;
