@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/adctl">
+        <file>qml/AdCtlLayer.qml</file>
+        <file>qml/AdCtlBanner.qml</file>
+    </qresource>
+</RCC>

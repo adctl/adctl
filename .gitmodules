@@ -13,3 +13,6 @@
 [submodule "3rd/android-support-library-archive"]
 	path = 3rd/android-support-library-archive
 	url = https://github.com/danielesegato/android-support-library-archive.git
+[submodule "3rd/SDK-iOS"]
+	path = 3rd/SDK-iOS
+	url = git://github.com/StartAD/SDK-iOS

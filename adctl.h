@@ -5,23 +5,24 @@
 #include <QPoint>
 #include <QVariant>
 #include <QSize>
+#include <QtQml> //place here to avoid include for registration
+
+#define REGISTER_ADCTL qmlRegisterType<AdCtl>("adctl",1,0,"AdCtl")
 
 class IQtAdMobBanner;
 class IQtAdMobInterstitial;
 class QTimer;
-#ifdef Q_OS_ANDROID
-class QAndroidJniObject;
-#endif
+class AdCtl_platform_interface;
 class GAnalytics;
 
 class AdCtl : public QObject
 {
     Q_OBJECT
     //enabled properties
-    Q_PROPERTY(bool adMobBannerEnabled READ AdMobBannerEnabled WRITE setAdMobBannerEnabled)
-    Q_PROPERTY(bool adMobIinterstitialEnabled READ AdMobIinterstitialEnabled WRITE setAdMobIinterstitialEnabled)
-    Q_PROPERTY(bool startAdBannerEnabled READ StartAdBannerEnabled WRITE setStartAdBannerEnabled)
-    Q_PROPERTY(bool gAnalyticsEnabled READ GAnalyticsEnabled WRITE setGAnalyticsEnabled)
+    Q_PROPERTY(bool adMobBannerEnabled READ AdMobBannerEnabled WRITE setAdMobBannerEnabled NOTIFY adMobBannerEnabledChnged)
+    Q_PROPERTY(bool adMobIinterstitialEnabled READ AdMobIinterstitialEnabled WRITE setAdMobIinterstitialEnabled NOTIFY adMobIinterstitialEnabledChanged)
+    Q_PROPERTY(bool startAdBannerEnabled READ StartAdBannerEnabled WRITE setStartAdBannerEnabled NOTIFY startAdBannerEnabledChanged)
+    Q_PROPERTY(bool gAnalyticsEnabled READ GAnalyticsEnabled WRITE setGAnalyticsEnabled NOTIFY gAnalyticsEnabledChanged)
 
     //AdMob width and height
     Q_PROPERTY(int adMobBannerHeight READ AdMobBannerHeight NOTIFY adMobBannerHeightChanged)
@@ -45,14 +46,18 @@ class AdCtl : public QObject
     Q_PROPERTY(int startAdBannerRealX READ startAdBannerRealX)
     Q_PROPERTY(int startAdBannerRealY READ startAdBannerRealY)
 
+    Q_PROPERTY(bool adMobBannerVisible READ AdMobBannerVisible WRITE setAdMobBannerVisible NOTIFY adMobBannerVisibleChanged)
+    Q_PROPERTY(bool adMobIinterstitialVisible READ AdMobIinterstitialVisible WRITE setAdMobIinterstitialVisible NOTIFY adMobIinterstitialVisibleChanged)
+    Q_PROPERTY(bool startAdBannerVisible READ StartAdBannerVisible WRITE setStartAdBannerVisible NOTIFY startAdBannerVisibleChanged)
+
     //ids
-    Q_PROPERTY(QString bannerAdMobId WRITE setBannerAdMobId)
-    Q_PROPERTY(QString interstitialAdMobId WRITE setInterstitialAdMobId)
-    Q_PROPERTY(QString startAdId WRITE setStartAdId)
-    Q_PROPERTY(QString gAnalyticsId WRITE setGAnalyticsId)
+    Q_PROPERTY(QString bannerAdMobId READ getBannerAdMobId WRITE setBannerAdMobId NOTIFY bannerAdMobIdChanged)
+    Q_PROPERTY(QString interstitialAdMobId READ getInterstitialAdMobId WRITE setInterstitialAdMobId NOTIFY interstitialAdMobIdChanged)
+    Q_PROPERTY(QString startAdId READ getStartAdId WRITE setStartAdId NOTIFY startAdIdChanged)
+    Q_PROPERTY(QString gAnalyticsId READ getGAnaliticsId WRITE setGAnalyticsId NOTIFY gAnalyticsIdChanged)
 
     //list of test devices
-    Q_PROPERTY(QStringList testDevices WRITE setTestDevices)
+    Q_PROPERTY(QStringList testDevices READ getTestDevices WRITE setTestDevices NOTIFY testDevicesChanged)
 
     //gpgs
     Q_PROPERTY(bool gpgsSignedIn READ isGPGSSignedIn WRITE setGPGSSignedIn NOTIFY gpgsSignedInChanged)
@@ -71,6 +76,21 @@ signals:
     void  startAdBannerWidthChanged(int width);
     void  gpgsSignedInChanged(bool gpgsSignedIn);
 
+    void interstitialAdMobIdChanged();
+    void bannerAdMobIdChanged();
+    void startAdIdChanged();
+    void gAnalyticsIdChanged();
+
+    void adMobBannerVisibleChanged();
+    void adMobIinterstitialVisibleChanged();
+    void startAdBannerVisibleChanged();
+
+    void adMobBannerEnabledChnged();
+    void adMobIinterstitialEnabledChanged();
+    void startAdBannerEnabledChanged();
+    void gAnalyticsEnabledChanged();
+
+    void testDevicesChanged();
 public slots:
     //init library with ids and bool flags
     void init();
@@ -127,8 +147,20 @@ public slots:
     void setInterstitialAdMobId(const QString &InterstitialAdMobId);
     void setStartAdId(const QString &StartAdId);
     void setGAnalyticsId(const QString &GAnalyticsId);
+    QString getInterstitialAdMobId()const;
+    QString getBannerAdMobId()const;
+    QString getStartAdId()const;
+    QString getGAnaliticsId()const;
+
+    void setAdMobBannerVisible(const bool visible);
+    void setAdMobIinterstitialVisible(const bool visible);
+    void setStartAdBannerVisible(const bool visible);
+    bool AdMobBannerVisible()const;
+    bool AdMobIinterstitialVisible()const;
+    bool StartAdBannerVisible()const;
 
     //test devices
+    QStringList getTestDevices()const;
     void setTestDevices(const QStringList &testDevices);
 
     //ctl methods
@@ -176,6 +208,10 @@ protected:
     bool m_StartAdBannerEnabled = false;
     bool m_GAnalyticsEnabled = false;
 
+    bool m_AdMobBannerVisible = false;
+    bool m_AdMobInterstitialVisible = false;
+    bool m_StartAdBannerVisible = false;
+
     //ids
     QString m_BannerAdMobId;
     QString m_InterstitialAdMobId;
@@ -188,10 +224,8 @@ protected:
     //initialized
     bool m_AdInitialized = false;
 
-    //jni
-#ifdef Q_OS_ANDROID
-    QAndroidJniObject *m_Activity;
-#endif
+    //plarform-specific layer
+    AdCtl_platform_interface *m_platform;
 
     //cache
     int cacheAdMobBannerHeight;
