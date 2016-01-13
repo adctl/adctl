@@ -10,7 +10,7 @@ Modified BSD
 Feature | Android  | iOS
 --------|----------|-----
 Qt and Google AdMob (Banner and Interstitial) | yes | yes
-Qt and StartAd.mobi | yes | yes
+Qt and StartAd.mobi | yes | yes (new!)
 Qt and Google Analytics | yes | yes
 Qt and Google Play Game Services Authorization | yes | processing
 Qt and Google Play Game Services LeaderBoards | yes | processing
