@@ -10,7 +10,7 @@ Modified BSD
 Feature | Android  | iOS
 --------|----------|-----
 Qt and Google AdMob (Banner and Interstitial) | yes | yes
-Qt and StartAd.mobi | yes | no
+Qt and StartAd.mobi | yes | yes
 Qt and Google Analytics | yes | yes
 Qt and Google Play Game Services Authorization | yes | processing
 Qt and Google Play Game Services LeaderBoards | yes | processing
@@ -59,6 +59,8 @@ See https://github.com/kafeg/adctl/wiki/API-Reference
 - Facebook: https://www.facebook.com/gilmanov.ildar
 - Vk: https://vk.com/gilmanov_ildar
 - EMail: dev[at]ddwarf.org
+
+4) https://github.com/FajraKatviro
 
 **Wiki**
 Please see our Wiki for more information: https://github.com/kafeg/adctl/wiki
