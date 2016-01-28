@@ -43,7 +43,8 @@ android {
                          $$ANDROID_PACKAGE_SOURCE_DIR/project.properties \
                          $$ANDROID_PACKAGE_SOURCE_DIR/libs/*
 
-    # copy dependencies
+    #SRC direcotory copy rules
+    #=========================
 
     #AdMob
     admob1.files = $$PWD/3rd/QtAdMob/platform/android/google-play-services_lib/*
@@ -51,7 +52,6 @@ android {
 
     admob2.files = $$PWD/3rd/QtAdMob/platform/android/src/*
     admob2.path = /src
-
 
     #StartAd
     startad1.files = $$PWD/3rd/SDK-Android/lib/StartADLib-1.0.1.jar
