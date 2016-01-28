@@ -43,7 +43,7 @@ android {
                          $$ANDROID_PACKAGE_SOURCE_DIR/project.properties \
                          $$ANDROID_PACKAGE_SOURCE_DIR/libs/*
 
-    #SRC direcotory copy rules
+    #SRC direcotory copy rules (Work in Windows and Linux. If this code not work in your project - please check setting or contact author)
     #=========================
 
     #AdMob
