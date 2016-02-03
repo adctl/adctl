@@ -67,6 +67,11 @@ public:
     explicit AdCtl(QObject *parent = 0);
     ~AdCtl();
 
+    // Do not forget to declare your class to the QML system.
+    static void declareQML() {
+        qmlRegisterType<AdCtl>("ru.forsk.adctl", 1, 0, "AdCtl");
+    }
+
 signals:
 
     //StartAd and AdMob showed and sizes
