@@ -114,6 +114,9 @@ void AdCtl::setTestDevices(const QStringList &testDevices)
     }
 }
 
+//This slot called by timer. Why? Because we don't know,
+//when target platform is currently initialize our banners.
+//When banners alredy initialized, we stop this timer and reposition our banners to setted by user positions.
 void AdCtl::adctlTimerSlot()
 {
     //signals AdMob
@@ -183,7 +186,7 @@ void AdCtl::setAdMobBannerEnabled(const bool AdMobBannerEnabled)
     if(m_AdMobBannerEnabled != AdMobBannerEnabled)
     {
         m_AdMobBannerEnabled = AdMobBannerEnabled;
-        emit adMobBannerEnabledChnged();
+        emit adMobBannerEnabledChanged();
     }
 }
 
@@ -328,14 +331,13 @@ void AdCtl::setStartAdBannerPosition(const QPoint position)
 }
 
 //set ids
-void AdCtl::setBannerAdMobId(const QString &BannerAdMobId)
+void AdCtl::setAdMobBannerId(const QString &BannerAdMobId)
 {
     if (!m_BannerAdMobId.isEmpty()) { qDebug() << "AdMob ID alredy set!"; return; }
     m_BannerAdMobId = BannerAdMobId;
 }
 
-//set ids
-void AdCtl::setInterstitialAdMobId(const QString &InterstitialAdMobId)
+void AdCtl::setAdMobInterstitialId(const QString &InterstitialAdMobId)
 {
     if (!m_InterstitialAdMobId.isEmpty()) { qDebug() << "AdMob ID alredy set!"; return; }
     m_InterstitialAdMobId = InterstitialAdMobId;
@@ -345,6 +347,7 @@ void AdCtl::setStartAdId(const QString &StartAdId)
 {
     if (!m_StartAdId.isEmpty()) { qDebug() << "StartAd ID alredy set!"; return; }
     m_StartAdId = StartAdId;
+    m_platform->setStartAdId(StartAdId);
     emit startAdIdChanged();
 }
 
@@ -377,34 +380,37 @@ QString AdCtl::getGAnaliticsId() const
 
 void AdCtl::setAdMobBannerVisible(const bool visible)
 {
-    if(m_AdMobBannerVisible!=visible){
+    if(m_AdMobBannerVisible!=visible) {
         m_AdMobBannerVisible=visible;
-        if(visible)
+        if(visible) {
             showAdMobBanner();
-        else
+        } else {
             hideAdMobBanner();
+        }
         emit adMobBannerVisibleChanged();
     }
 }
 
 void AdCtl::setAdMobIinterstitialVisible(const bool visible)
 {
-    if(m_AdMobInterstitialVisible!=visible){
+    if(m_AdMobInterstitialVisible!=visible) {
         m_AdMobInterstitialVisible=visible;
-        if(visible)
+        if(visible) {
             showAdMobInterstitial();
+        }
         emit adMobIinterstitialVisibleChanged();
     }
 }
 
 void AdCtl::setStartAdBannerVisible(const bool visible)
 {
-    if(m_StartAdBannerVisible!=visible){
+    if(m_StartAdBannerVisible!=visible) {
         m_StartAdBannerVisible=visible;
-        if(visible)
+        if(visible) {
             showStartAdBanner();
-        else
+        } else {
             hideStartAdBanner();
+        }
         emit startAdBannerVisibleChanged();
     }
 }
