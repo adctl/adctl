@@ -15,13 +15,6 @@ INCLUDEPATH += $$GOOGLE_ANALITICS_PATH
 
 OTHER_FILES += README.md
 
-system(ver){
-#windows build environment
-    COMMAND_SEPARATOR = ' &'
-} else {
-    COMMAND_SEPARATOR = ';'
-}
-
 !ios {
     !android {
         INCLUDEPATH += $$PWD/platform/other
@@ -50,51 +43,32 @@ android {
                          $$ANDROID_PACKAGE_SOURCE_DIR/project.properties \
                          $$ANDROID_PACKAGE_SOURCE_DIR/libs/*
 
-    DIRS = $$ANDROID_PACKAGE_SOURCE_DIR/libs
-
-    COPYDIR_SUFFIX =
-
-    # make required directories
-    !exists ($$DIRS) {
-        copydata.commands = $(MKDIR) $$shell_path($$DIRS);
-    }
-
     #SRC direcotory copy rules (Work in Windows and Linux. If this code not work in your project - please check setting or contact author)
     #=========================
 
     #AdMob
-    !exists ($$ANDROID_PACKAGE_SOURCE_DIR/google-play-services_lib) {
-        copydata.commands += $(COPY_DIR) $$PWD/3rd/QtAdMob/platform/android/google-play-services_lib $$ANDROID_PACKAGE_SOURCE_DIR;
-        copydata.commands += $(COPY_DIR) $$PWD/3rd/QtAdMob/platform/android/src $$ANDROID_PACKAGE_SOURCE_DIR;
-    }
+    admob1.files = $$PWD/3rd/QtAdMob/platform/android/google-play-services_lib/*
+    admob1.path = /google-play-services_lib
+
+    admob2.files = $$PWD/3rd/QtAdMob/platform/android/src/*
+    admob2.path = /src
 
     #StartAd
-    !exists ($$ANDROID_PACKAGE_SOURCE_DIR/libs/StartADLib-1.0.1.jar) {
-        copydata.commands += $(COPY_DIR) $$PWD/3rd/SDK-Android/lib/StartADLib-1.0.1.jar $$ANDROID_PACKAGE_SOURCE_DIR/libs/;
-    }
+    startad1.files = $$PWD/3rd/SDK-Android/lib/StartADLib-1.0.1.jar
+    startad1.path = /libs
+
 
     #PlayServices
-    !exists ($$ANDROID_PACKAGE_SOURCE_DIR/libs/android-support-v4.jar) {
-        copydata.commands += $(COPY_DIR) $$PWD/3rd/android-support-library-archive/v4/android-support-v4.jar $$ANDROID_PACKAGE_SOURCE_DIR/libs/;
-    }
+    playservice1.files = $$PWD/3rd/android-support-library-archive/v4/android-support-v4.jar
+    playservice1.path = /libs
+
 
     #AdCtl
-    !exists ($$ANDROID_PACKAGE_SOURCE_DIR/project.properties) {
-        copydata.commands += $(COPY_DIR) $$PWD/platform/android/project.properties $$ANDROID_PACKAGE_SOURCE_DIR;
-    }
-    !exists ($$ANDROID_PACKAGE_SOURCE_DIR/src/ru/forsk) {
-        copydata.commands += $(COPY_DIR) $$PWD/platform/android/src $$ANDROID_PACKAGE_SOURCE_DIR;
-    }
-}
+    adctl1.files = $$PWD/platform/android/project.properties
+    adctl1.path = /
 
-android|ios {
-    copydata.CONFIG += no_link target_predeps
-    copydata.commands = $$replace(copydata.commands,;,$$COMMAND_SEPARATOR)
+    adctl2.files = $$PWD/platform/android/src/*
+    adctl2.path = /src
 
-    #Run data copy and dirs creation
-    first.depends += $(first) copydata
-    first.CONFIG += no_link target_predeps
-    export(first.depends)
-    export(copydata.commands)
-    QMAKE_EXTRA_TARGETS += first copydata
+    INSTALLS += admob1 admob2 startad1 playservice1 adctl1 adctl2
 }
