@@ -10,7 +10,7 @@ Modified BSD
 Feature | Android  | iOS
 --------|----------|-----
 Qt and Google AdMob (Banner and Interstitial) | yes | yes
-Qt and StartAd.mobi | yes | yes (new!)
+Qt and StartAd.mobi | yes | processing
 Qt and Google Analytics | yes | yes
 Qt and Google Play Game Services Authorization | yes | processing
 Qt and Google Play Game Services LeaderBoards | yes | processing
@@ -18,7 +18,7 @@ Qt and Google Play Game Services Achievements | yes | processing
 Qt and Android support library | yes | no
 Qt and Online purchase via Stripe.com | planned | planned
 Qt and Online purchase via Cloudpayments.ru | planned | planned
-Qt and Google Cloud Messaging via parse.com | planned | no
+Qt and Google Cloud Messaging via parse.com | no | no
 
 **Howto integrate library to your project**
 
