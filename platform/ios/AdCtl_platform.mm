@@ -1,7 +1,6 @@
 #include "AdCtl_platform.h"
-#include <QString>
 
-#include "SADWebView.h"
+/*#include "SADWebView.h"
 
 @interface AdctlViewController () <SADWebViewDelegate>
 {
@@ -39,60 +38,62 @@
     qDebug("start ad not found (ios)");
 }
 
-@end
+@end*/
 
 
-AdCtl_platform::AdCtl_platform():m_controller([[AdctlViewController alloc]init]){
+AdCtl_platform::AdCtl_platform()
+    //:m_controller([[AdctlViewController alloc]init])
+{
 
 }
 
 AdCtl_platform::~AdCtl_platform(){
-    [m_controller release];
+    //[m_controller release];
 }
 
 void AdCtl_platform::initStartAd(){
-    if (!m_controller.webView) {
-        m_controller.webView = [[SADWebView alloc]initWithId:NSString////];
-        m_controller.webView.sadDelegate = m_controller;
-    }
-    [m_controller.webView loadAd:m_controller.webView LANGUAGE_RU];
+    //if (!m_controller.webView) {
+    //    m_controller.webView = [[SADWebView alloc]initWithId:NSString////];
+    //    m_controller.webView.sadDelegate = m_controller;
+    //}
+    //[m_controller.webView loadAd:m_controller.webView LANGUAGE_RU];
 }
 
 void AdCtl_platform::setStartAdId(const QString& id){
-    m_startAdId=id;
+    //m_startAdId=id;
 }
 
 void AdCtl_platform::setStartAdBannerSize(const int width, const int height){
-    m_controller.webView.frame.width=width;
-    m_controller.webView.frame.height=height;
+    //m_controller.webView.frame.width=width;
+    //m_controller.webView.frame.height=height;
 }
 
 void AdCtl_platform::setStartAdBannerPosition(const int x, const int y){
-    m_controller.webView.frame.x=x;
-    m_controller.webView.frame.y=y;
+    //m_controller.webView.frame.x=x;
+    //m_controller.webView.frame.y=y;
 }
 
 int AdCtl_platform::startAdBannerHeight() const{
-    return m_controller.webView.frame.height;
+    //return m_controller.webView.frame.height;
 }
 
 int AdCtl_platform::startAdBannerWidth() const{
-    return m_controller.webView.frame.width;
+    //return m_controller.webView.frame.width;
 }
 
 int AdCtl_platform::startAdBannerX() const{
-    return m_controller.webView.frame.x;
+    //return m_controller.webView.frame.x;
 }
 
 int AdCtl_platform::startAdBannerY() const{
-    return m_controller.webView.frame.y;
+    //return m_controller.webView.frame.y;
 }
 
 void AdCtl_platform::showStartAd(){
-    m_controller.webView.visible=true;
+    //m_controller.webView.visible=true;
 }
 
 void AdCtl_platform::hideStartAd(){
-    m_controller.webView.visible=false;
+    //m_controller.webView.visible=false;
 }
 

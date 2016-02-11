@@ -1,6 +1,8 @@
 #ifndef ADCTL_PLATFORM_H
 #define ADCTL_PLATFORM_H
 
+#include <QString>
+
 #include "../AdCtl_platform_interface.h"
 
 class AdctlViewController;
