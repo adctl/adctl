@@ -24,9 +24,10 @@ OTHER_FILES += README.md
 
 ios {
     INCLUDEPATH += $$PWD/platform/ios
+    INCLUDEPATH += $$PWD/3rd/SDK-iOS/libs
+    LIBS += -L$$PWD/3rd/SDK-iOS/libs -lSADView
     HEADERS += $$PWD/platform/ios/AdCtl_platform.h
     OBJECTIVE_SOURCES += $$PWD/platform/ios/AdCtl_platform.mm
-    DIRS = $$IOS_PACKAGE_DIR/libs
 }
 
 android {

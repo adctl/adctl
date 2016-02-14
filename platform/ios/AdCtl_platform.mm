@@ -1,15 +1,21 @@
 #include "AdCtl_platform.h"
 
-/*#include "SADWebView.h"
+#include <UIKit/UIKit.h>
+#include "SADWebView.h"
+
+@interface AdctlViewController : UIViewController
+
+@end
+//@class AdctlViewController;
 
 @interface AdctlViewController () <SADWebViewDelegate>
 {
     SADWebView* webView;
 }
-//-(void)loadData;
+-(void)initStartAd;
 @end
 
-@implementation ContentViewController
+@implementation AdctlViewController
 
 - (IBAction)reloadSADView:(id)sender
 {
@@ -37,63 +43,76 @@
 {
     qDebug("start ad not found (ios)");
 }
+-(void)initStartAd
+{
+    if(!webView) {
+        webView = [[SADWebView alloc]initWithId:@"ddd"];
+        webView.sadDelegate = self;
+    }
+    [webView loadAd:LANGUAGE_RU];
+}
+@end
 
-@end*/
+struct AdCtl_platform_private{
+    AdCtl_platform_private()
+        :m_controller([[AdctlViewController alloc]init]){
 
+    }
+    ~AdCtl_platform_private(){
+        //[m_controller release];
+    }
+    AdctlViewController* m_controller;
+    QString m_startAdId;
+};
 
 AdCtl_platform::AdCtl_platform()
-    //:m_controller([[AdctlViewController alloc]init])
 {
-
+    d=new AdCtl_platform_private;
 }
 
 AdCtl_platform::~AdCtl_platform(){
-    //[m_controller release];
+    delete d;
 }
 
 void AdCtl_platform::initStartAd(){
-    //if (!m_controller.webView) {
-    //    m_controller.webView = [[SADWebView alloc]initWithId:NSString////];
-    //    m_controller.webView.sadDelegate = m_controller;
-    //}
-    //[m_controller.webView loadAd:m_controller.webView LANGUAGE_RU];
+    [d->m_controller initStartAd];
 }
 
 void AdCtl_platform::setStartAdId(const QString& id){
-    //m_startAdId=id;
+    d->m_startAdId=id;
 }
-
+/*
 void AdCtl_platform::setStartAdBannerSize(const int width, const int height){
-    //m_controller.webView.frame.width=width;
-    //m_controller.webView.frame.height=height;
+    m_controller.webView.frame.width=width;
+    m_controller.webView.frame.height=height;
 }
 
 void AdCtl_platform::setStartAdBannerPosition(const int x, const int y){
-    //m_controller.webView.frame.x=x;
-    //m_controller.webView.frame.y=y;
+    m_controller.webView.frame.x=x;
+    m_controller.webView.frame.y=y;
 }
 
 int AdCtl_platform::startAdBannerHeight() const{
-    //return m_controller.webView.frame.height;
+    return m_controller.webView.frame.height;
 }
 
 int AdCtl_platform::startAdBannerWidth() const{
-    //return m_controller.webView.frame.width;
+    return m_controller.webView.frame.width;
 }
 
 int AdCtl_platform::startAdBannerX() const{
-    //return m_controller.webView.frame.x;
+    return m_controller.webView.frame.x;
 }
 
 int AdCtl_platform::startAdBannerY() const{
-    //return m_controller.webView.frame.y;
+    return m_controller.webView.frame.y;
 }
 
 void AdCtl_platform::showStartAd(){
-    //m_controller.webView.visible=true;
+    m_controller.webView.visible=true;
 }
 
 void AdCtl_platform::hideStartAd(){
-    //m_controller.webView.visible=false;
-}
+    m_controller.webView.visible=false;
+}*/
 

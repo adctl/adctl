@@ -5,7 +5,7 @@
 
 #include "../AdCtl_platform_interface.h"
 
-class AdctlViewController;
+struct AdCtl_platform_private;
 
 class AdCtl_platform:public AdCtl_platform_interface{
 public:
@@ -14,7 +14,7 @@ public:
 
     void initStartAd();
     void setStartAdId(const QString& id);
-    void setStartAdBannerSize(const int width,const int height);
+    /*void setStartAdBannerSize(const int width,const int height);
     void setStartAdBannerPosition(const int x,const int y);
 
     int startAdBannerHeight()const;
@@ -23,10 +23,9 @@ public:
     int startAdBannerY()const;
 
     void showStartAd();
-    void hideStartAd();
+    void hideStartAd();*/
 private:
-    AdctlViewController* m_controller;
-    QString m_startAdId;
+    AdCtl_platform_private* d;
 };
 
 #endif
