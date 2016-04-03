@@ -1,0 +1,6 @@
+
+<RCC>
+    <qresource prefix="/com/github/kafeg/adctl">
+        <file>qmldir</file>
+    </qresource>
+</RCC>

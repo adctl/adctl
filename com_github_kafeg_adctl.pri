@@ -10,6 +10,9 @@ HEADERS += $$PWD/adctl.h $$PWD/platform/AdCtl_platform_interface.h
 SOURCES += $$PWD/adctl.cpp $$PWD/platform/AdCtl_platform_interface.cpp
 RESOURCES += $$PWD/adctl.qrc
 
+RESOURCES += \
+    $$PWD/com_github_kafeg_adctl.qrc
+
 INCLUDEPATH += $$ADMOB_PATH
 INCLUDEPATH += $$GOOGLE_ANALITICS_PATH
 
