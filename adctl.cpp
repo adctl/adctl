@@ -6,6 +6,14 @@
 #include "ganalytics.h"
 
 #include "AdCtl_platform.h"
+AdCtl* AdCtl::m_instance = nullptr;
+
+AdCtl* AdCtl::getInstance(){
+    if(!m_instance){
+        m_instance = new AdCtl;
+    }
+    return m_instance;
+}
 
 AdCtl::AdCtl(QObject *parent) : QObject(parent)
 {
@@ -19,6 +27,7 @@ AdCtl::AdCtl(QObject *parent) : QObject(parent)
     //gpgsTimer->start();
 
     m_platform = new AdCtl_platform;
+    m_platform->setAdCtlObject(this);
     cacheAdMobBannerHeight = 0;
     cacheAdMobBannerWidth = 0;
 
@@ -163,6 +172,11 @@ void AdCtl::adctlTimerSlot()
         adctlTimer->stop();
         adctlTimer->start(2000);
     }
+}
+
+bool AdCtl::initialized() const
+{
+    return m_AdInitialized;
 }
 
 //AdMob banner enabled
@@ -519,6 +533,11 @@ void AdCtl::signInGPGS()
     m_platform->signInGPGS();
 }
 
+void AdCtl::getLeaderBoardScoreAsync(QString leaderboard)
+{
+    m_platform->getLeaderBoardScore(leaderboard);
+}
+
 void AdCtl::submitScoreGPGS(QString leaderBoardId, int score)
 {
     m_platform->submitScoreGPGS(leaderBoardId,score);
@@ -534,12 +553,23 @@ void AdCtl::showLeaderboardGPGS()
     m_platform->showLeaderboardGPGS();
 }
 
+void AdCtl::showLeaderboard(QString leaderboardId)
+{
+    m_platform->showLeaderboard(leaderboardId);
+}
+
 void AdCtl::showAchievementsGPGS()
 {
     m_platform->showAchievementsGPGS();
 }
 
+void AdCtl::share(QString url)
+{
+    m_platform->shareImage(url);
+}
+
 void AdCtl::showAdMobInterstitial()
 {
-    m_AdMobInterstitial->Show();
+    if(m_AdMobInterstitialEnabled)
+        m_AdMobInterstitial->Show();
 }

@@ -2,8 +2,11 @@
 #define ADCTL_PLATFORM_H
 
 #include "../AdCtl_platform_interface.h"
+#include <QString>
 
-class AdctlViewController;
+#if defined(__OBJC__)
+@class AdctlViewController;
+#endif
 
 class AdCtl_platform:public AdCtl_platform_interface{
 public:
@@ -22,8 +25,24 @@ public:
 
     void showStartAd();
     void hideStartAd();
+    
+    void init();
+    
+    bool isGPGSSignedIn()const;
+    void signInGPGS();
+    void getLeaderBoardScore(const QString& leaderboardId);
+    void submitScoreGPGS(const QString& leaderBoardId, int score);
+    void unlockAchievementGPGS(const QString& achievementId);
+    void showLeaderboard(const QString& leaderboardId);
+    void showLeaderboardGPGS();
+    void showAchievementsGPGS();
+
+    void shareImage(QString path);
+
 private:
+#if defined(__OBJC__)
     AdctlViewController* m_controller;
+#endif
     QString m_startAdId;
 };
 

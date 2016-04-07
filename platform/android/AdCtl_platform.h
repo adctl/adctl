@@ -4,6 +4,7 @@
 #include "../AdCtl_platform_interface.h"
 
 class QAndroidJniObject;
+class QObject;
 
 class AdCtl_platform:public AdCtl_platform_interface{
 public:
@@ -30,10 +31,16 @@ public:
 
     bool isGPGSSignedIn()const;
     void signInGPGS();
+    uint64_t  getLeaderBoardScoreBlocking(const QString &leaderboardId);
+    void getLeaderBoardScore(const QString &leaderboardId);
     void submitScoreGPGS(const QString& leaderBoardId, int score);
     void unlockAchievementGPGS(const QString& achievementId);
+    void showLeaderboard(const QString& leaderboardId);
     void showLeaderboardGPGS();
     void showAchievementsGPGS();
+
+    //tools
+    void shareImage(QString path);
 private:
     QAndroidJniObject *m_Activity;
 };
