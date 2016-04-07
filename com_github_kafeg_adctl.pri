@@ -67,13 +67,11 @@ ios|android{
 
         }
         ios:{
-            LIBS+= $$PWD/3rd/gpg-cpp-sdk/ios/gpg.bundle
             LIBS+= -F$$PWD/3rd/gpg-cpp-sdk/ios -framework gpg
-            LIBS+= $$PWD/3rd/google_signin_ios/GoogleSignIn.bundle
             LIBS+= -F$$PWD/3rd/google_signin_ios/ -framework GoogleSignIn
-            LIBS+= $$PWD/3rd/google_signin_ios/GooglePlus.bundle
             LIBS+= -F$$PWD/3rd/google_signin_ios/ -framework GooglePlus
             LIBS+= -F$$PWD/3rd/google_signin_ios/ -framework GoogleOpenSource
+
             INCLUDEPATH += $$PWD/3rd/SDK-iOS/libs/
             LIBS+= $$PWD/3rd/SDK-iOS/libs/libSADView.a
 
