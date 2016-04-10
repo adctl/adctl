@@ -105,7 +105,7 @@ void AdCtl::init()
         gAnalytics = new GAnalytics(m_GAnalyticsId);
     }
 
-    //this timer is required!
+    //this timer is required! prepare!
     adctlTimer = new QTimer(this);
     connect(adctlTimer, SIGNAL(timeout()), this, SLOT(adctlTimerSlot()));
     adctlTimer->start();
