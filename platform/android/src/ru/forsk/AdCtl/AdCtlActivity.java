@@ -5,25 +5,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.util.Log;
 
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.games.leaderboard.LeaderboardScore;
-import com.google.android.gms.games.leaderboard.Leaderboards;
+//import com.google.android.gms.common.api.PendingResult;
+//import com.google.android.gms.common.api.ResultCallback;
+//import com.google.android.gms.common.api.Status;
+//import com.google.android.gms.games.leaderboard.LeaderboardScore;
+//import com.google.android.gms.games.leaderboard.Leaderboards;
 
 import com.startad.lib.SADView;
 import com.google.android.gms.ads.AdView;
 import android.widget.FrameLayout;
-import com.google.example.games.basegameutils.BaseGameUtils;
-import com.google.example.games.basegameutils.GameHelper;
+//import com.google.example.games.basegameutils.BaseGameUtils;
+//import com.google.example.games.basegameutils.GameHelper;
 import android.os.Bundle;
 import android.content.Intent;
 import android.app.Activity;
 //import com.google.android.gms.common.api.GoogleApiClient;
 //import android.support.v4.app.FragmentActivity;
-import com.google.android.gms.games.Games;
+//import com.google.android.gms.games.Games;
 
-public class AdCtlActivity extends QtAdMobActivity implements GameHelper.GameHelperListener
+public class AdCtlActivity extends QtAdMobActivity //implements GameHelper.GameHelperListener
 {
     protected String m_StartAdId;
     protected SADView m_StartAdBannerView;
@@ -31,7 +31,7 @@ public class AdCtlActivity extends QtAdMobActivity implements GameHelper.GameHel
     protected int m_StatusBarHeight = 0;
     protected ViewGroup m_ViewGroup;
     protected AdView m_AdBannerView;
-    private GameHelper gameHelper;
+    //private GameHelper gameHelper;
 
     protected int m_startAdWidth = 0;
     protected int m_startAdHeight = 0;
@@ -322,87 +322,87 @@ public class AdCtlActivity extends QtAdMobActivity implements GameHelper.GameHel
         // отключении от игровых сервисов, в зависимости от кода результата
         // Activity
         // Yeah i get all this Russian, VODKA MY FRIEND
-        try{
+//        try{
 //            gameHelper.onActivityResult(requestCode, resultCode, data);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
         nativeOnActivityResult(this, requestCode, resultCode, data);
     }
 
-    public boolean getSignedInGPGS() {
+    //public boolean getSignedInGPGS() {
         // статус подключения
-        return gameHelper.isSignedIn();
-    }
+        //return gameHelper.isSignedIn();
+    //}
 
-    public void loginGPGS() {
-        try {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+//    public void loginGPGS() {
+//        try {
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
 //                    gameHelper.beginUserInitiatedSignIn();
-                }
-            });
-        } catch (Exception e) {
-                e.printStackTrace();
-        }
-    }
-    public int getScoreGPGS(final String leaderboardId){
-           PendingResult<Leaderboards.LoadPlayerScoreResult> l_score =
-                   Games.Leaderboards.loadCurrentPlayerLeaderboardScore(gameHelper.getApiClient(),leaderboardId,0,0);
-           int scorei = 0;
-           l_score.setResultCallback(new ResultCallback<Leaderboards.LoadPlayerScoreResult>() {
-               @Override
-               public void onResult(Leaderboards.LoadPlayerScoreResult loadPlayerScoreResult) {
-                   Status status = loadPlayerScoreResult.getStatus();
-                   LeaderboardScore score = loadPlayerScoreResult.getScore();
-                   Log.d("","sd"+status.getStatusMessage());
-               }
-           });
-           return scorei;
-       }
+//                }
+//            });
+//        } catch (Exception e) {
+//                e.printStackTrace();
+//        }
+//    }
+//    public int getScoreGPGS(final String leaderboardId){
+//           PendingResult<Leaderboards.LoadPlayerScoreResult> l_score =
+//                   Games.Leaderboards.loadCurrentPlayerLeaderboardScore(gameHelper.getApiClient(),leaderboardId,0,0);
+//           int scorei = 0;
+//           l_score.setResultCallback(new ResultCallback<Leaderboards.LoadPlayerScoreResult>() {
+//               @Override
+//               public void onResult(Leaderboards.LoadPlayerScoreResult loadPlayerScoreResult) {
+//                   Status status = loadPlayerScoreResult.getStatus();
+//                   LeaderboardScore score = loadPlayerScoreResult.getScore();
+//                   Log.d("","sd"+status.getStatusMessage());
+//               }
+//           });
+//           return scorei;
+//       }
 
-    public void submitScoreGPGS(final String leaderBoardId, int score) {
-        Games.Leaderboards.submitScore(gameHelper.getApiClient(),
-            leaderBoardId, score);
-    }
+//    public void submitScoreGPGS(final String leaderBoardId, int score) {
+//        Games.Leaderboards.submitScore(gameHelper.getApiClient(),
+//            leaderBoardId, score);
+//    }
 
-    public void unlockAchievementGPGS(String achievementId) {
-        Games.Achievements.unlock(gameHelper.getApiClient(), achievementId);
-    }
+//    public void unlockAchievementGPGS(String achievementId) {
+//        Games.Achievements.unlock(gameHelper.getApiClient(), achievementId);
+//    }
 
-    public void getLeaderboardGPGS() {
-        startActivityForResult(
-            Games.Leaderboards.getAllLeaderboardsIntent(gameHelper.getApiClient()), 100);
-    }
+//    public void getLeaderboardGPGS() {
+//        startActivityForResult(
+//            Games.Leaderboards.getAllLeaderboardsIntent(gameHelper.getApiClient()), 100);
+//    }
 
-    public void getAchievementsGPGS() {
-        startActivityForResult(
-            Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), 101);
-    }
+//    public void getAchievementsGPGS() {
+//        startActivityForResult(
+//            Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), 101);
+//    }
 
-    @Override
-    public void onSignInSucceeded() {
-    }
+//    @Override
+//    public void onSignInSucceeded() {
+//    }
 
-    @Override
-    public void onSignInFailed() {
-    }
+//    @Override
+//    public void onSignInFailed() {
+//    }
 
-    public void onAuthActionFinished(boolean success) {
-            Log.i("TAG", "onAuthActionFinished: " + String.valueOf(success));
-            mIsSignedIn = success;
+//    public void onAuthActionFinished(boolean success) {
+//            Log.i("TAG", "onAuthActionFinished: " + String.valueOf(success));
+//            mIsSignedIn = success;
 
-            // Need to make sure to run this on the UI thread since the C++ SDK may
-            // invoke this
-            // callback from a separate thread.
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    //setButtonState();
-                }
-            });
-        }
+//            // Need to make sure to run this on the UI thread since the C++ SDK may
+//            // invoke this
+//            // callback from a separate thread.
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    //setButtonState();
+//                }
+//            });
+//        }
 
     public native void nativeOnActivityCreated(Activity activity,Bundle savedInstanceState);
 
