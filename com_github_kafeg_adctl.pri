@@ -106,9 +106,6 @@ android {
 
     android:QT += androidextras gui-private
     android:DISTFILES += $$ANDROID_SOURCES/src/org/dreamdev/QtAdMob/QtAdMobActivity.java \
-                         #$$ANDROID_SOURCES/src/com/google/example/games/basegameutils/BaseGameUtils.java \
-                         #$$ANDROID_SOURCES/src/com/google/example/games/basegameutils/GameHelper.java \
-                         #$$ANDROID_SOURCES/src/com/google/example/games/basegameutils/GameHelperUtils.java \
                          $$ANDROID_SOURCES/src/ru/forsk/AdCtl/AdCtlActivity.java \
                          $$ANDROID_SOURCES/res/values/strings.xml \
                          $$ANDROID_SOURCES/project.properties \
@@ -125,23 +122,16 @@ android {
     adMobJavaFilesPath = $$system_path($$PWD/3rd/QtAdMob/platform/android/src/)
     copyAdMobJavaFiles.commands = $(COPY_DIR) $${adMobJavaFilesPath} $${androidBuildOutputDir}
 
-    #admobResFilePath  = $$system_path($$PWD/3rd/QtAdMob/platform/android/google-play-services_lib/src/main/res/)
-    #copyAdMobResFiles.commands = $(COPY_DIR) $${admobResFilePath} $${androidBuildOutputDir}
-
     first.depends = $(first) copyAdctlJavaFiles copyAdMobJavaFiles #copyAdMobResFiles
     export(first.depends)
     export(copyAdctlJavaFiles.commands)
     export(copyAdMobJavaFiles.commands)
-    #export(copyAdMobResFiles.commands)
-    QMAKE_EXTRA_TARGETS += first copyAdctlJavaFiles copyAdMobJavaFiles #copyAdMobResFiles
+    QMAKE_EXTRA_TARGETS += first copyAdctlJavaFiles copyAdMobJavaFiles
 
     #SRC direcotory copy rules (Work in Windows and Linux. If this code not work in your project - please check setting or contact author)
     #=========================
 
     #AdMob
-    #admob1.files = $$PWD/3rd/QtAdMob/platform/android/google-play-services_lib/*
-    #admob1.path = /google-play-services_lib
-
     admob2.files = $$PWD/3rd/QtAdMob/platform/android/src/*
     admob2.path = /src
 
