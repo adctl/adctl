@@ -125,22 +125,22 @@ android {
     adMobJavaFilesPath = $$system_path($$PWD/3rd/QtAdMob/platform/android/src/)
     copyAdMobJavaFiles.commands = $(COPY_DIR) $${adMobJavaFilesPath} $${androidBuildOutputDir}
 
-    admobResFilePath  = $$system_path($$PWD/3rd/QtAdMob/platform/android/google-play-services_lib/src/main/res/)
+    #admobResFilePath  = $$system_path($$PWD/3rd/QtAdMob/platform/android/google-play-services_lib/src/main/res/)
     #copyAdMobResFiles.commands = $(COPY_DIR) $${admobResFilePath} $${androidBuildOutputDir}
 
-    first.depends = $(first) copyAdctlJavaFiles copyAdMobJavaFiles copyAdMobResFiles
+    first.depends = $(first) copyAdctlJavaFiles copyAdMobJavaFiles #copyAdMobResFiles
     export(first.depends)
     export(copyAdctlJavaFiles.commands)
     export(copyAdMobJavaFiles.commands)
-    export(copyAdMobResFiles.commands)
-    QMAKE_EXTRA_TARGETS += first copyAdctlJavaFiles copyAdMobJavaFiles copyAdMobResFiles
+    #export(copyAdMobResFiles.commands)
+    QMAKE_EXTRA_TARGETS += first copyAdctlJavaFiles copyAdMobJavaFiles #copyAdMobResFiles
 
     #SRC direcotory copy rules (Work in Windows and Linux. If this code not work in your project - please check setting or contact author)
     #=========================
 
     #AdMob
-    admob1.files = $$PWD/3rd/QtAdMob/platform/android/google-play-services_lib/*
-    admob1.path = /google-play-services_lib
+    #admob1.files = $$PWD/3rd/QtAdMob/platform/android/google-play-services_lib/*
+    #admob1.path = /google-play-services_lib
 
     admob2.files = $$PWD/3rd/QtAdMob/platform/android/src/*
     admob2.path = /src
