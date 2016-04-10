@@ -42,28 +42,11 @@ See https://github.com/kafeg/adctl/wiki/API-Reference
 
 **Developers**
 
-1) Vitaliy Petrov
-- Skype: kafik-fafik
-- EMail: v31337[at]gmail.com
-
-2) Yevgeniy Logachev
-- Skype: ---
-- EMail: ---
-
-3) Gilmanov Ildar
-- Skype: gilmanov.ildar
-- Facebook: https://www.facebook.com/gilmanov.ildar
-- Vk: https://vk.com/gilmanov_ildar
-- EMail: dev[at]ddwarf.org
-
-4) https://github.com/FajraKatviro
+https://github.com/kafeg, https://github.com/adderly, https://github.com/gilmanov-ildar, https://github.com/yevgeniy-logachev, https://github.com/FajraKatviro
 
 **Wiki**
+
 Please see our Wiki for more information: https://github.com/kafeg/adctl/wiki
-
-**GitHub page**
-
-http://kafeg.github.io/adctl/
 
 **Other projects**
 - https://github.com/kafeg
