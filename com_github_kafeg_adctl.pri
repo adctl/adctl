@@ -123,7 +123,7 @@ android {
     copyAdctlJavaFiles.commands = $(COPY_DIR) $${adctlJavaFilesPath} $${androidBuildOutputDir}
 
     adMobJavaFilesPath = $$system_path($$PWD/3rd/QtAdMob/platform/android/src/)
-    copyAdMobJavaFiles.commands = $(COPY_DIR) $${adMobJavaFilesPath} test/$${androidBuildOutputDir}
+    copyAdMobJavaFiles.commands = $(COPY_DIR) $${adMobJavaFilesPath} $${androidBuildOutputDir}
 
     admobResFilePath  = $$system_path($$PWD/3rd/QtAdMob/platform/android/google-play-services_lib/src/main/res/)
     #copyAdMobResFiles.commands = $(COPY_DIR) $${admobResFilePath} $${androidBuildOutputDir}
