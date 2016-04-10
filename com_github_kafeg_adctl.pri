@@ -106,9 +106,9 @@ android {
 
     android:QT += androidextras gui-private
     android:DISTFILES += $$ANDROID_SOURCES/src/org/dreamdev/QtAdMob/QtAdMobActivity.java \
-                         $$ANDROID_SOURCES/src/com/google/example/games/basegameutils/BaseGameUtils.java \
-                         $$ANDROID_SOURCES/src/com/google/example/games/basegameutils/GameHelper.java \
-                         $$ANDROID_SOURCES/src/com/google/example/games/basegameutils/GameHelperUtils.java \
+                         #$$ANDROID_SOURCES/src/com/google/example/games/basegameutils/BaseGameUtils.java \
+                         #$$ANDROID_SOURCES/src/com/google/example/games/basegameutils/GameHelper.java \
+                         #$$ANDROID_SOURCES/src/com/google/example/games/basegameutils/GameHelperUtils.java \
                          $$ANDROID_SOURCES/src/ru/forsk/AdCtl/AdCtlActivity.java \
                          $$ANDROID_SOURCES/res/values/strings.xml \
                          $$ANDROID_SOURCES/project.properties \
