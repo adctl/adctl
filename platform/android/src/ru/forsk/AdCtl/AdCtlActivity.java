@@ -389,20 +389,20 @@ public class AdCtlActivity extends QtAdMobActivity //implements GameHelper.GameH
 //    public void onSignInFailed() {
 //    }
 
-//    public void onAuthActionFinished(boolean success) {
-//            Log.i("TAG", "onAuthActionFinished: " + String.valueOf(success));
-//            mIsSignedIn = success;
+    public void onAuthActionFinished(boolean success) {
+            Log.i("TAG", "onAuthActionFinished: " + String.valueOf(success));
+            mIsSignedIn = success;
 
-//            // Need to make sure to run this on the UI thread since the C++ SDK may
-//            // invoke this
-//            // callback from a separate thread.
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    //setButtonState();
-//                }
-//            });
-//        }
+            // Need to make sure to run this on the UI thread since the C++ SDK may
+            // invoke this
+            // callback from a separate thread.
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //setButtonState();
+                }
+            });
+        }
 
     public native void nativeOnActivityCreated(Activity activity,Bundle savedInstanceState);
 
