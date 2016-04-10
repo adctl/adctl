@@ -7,9 +7,6 @@
 [submodule "3rd/qt-google-analytics"]
 	path = 3rd/qt-google-analytics
 	url = https://github.com/HSAnet/qt-google-analytics.git
-[submodule "3rd/android-basic-samples"]
-	path = 3rd/android-basic-samples
-	url = https://github.com/playgameservices/android-basic-samples.git
 [submodule "3rd/android-support-library-archive"]
 	path = 3rd/android-support-library-archive
 	url = https://github.com/danielesegato/android-support-library-archive.git
