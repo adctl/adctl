@@ -19,6 +19,7 @@ AdCtl::AdCtl(QObject *parent) : QObject(parent)
 {
     m_AdMobBanner = CreateQtAdMobBanner();
     m_AdMobInterstitial = CreateQtAdMobInterstitial();
+    connect(m_AdMobInterstitial, SIGNAL(OnClosed()), this, SLOT(onInterstitialClosed()));
     m_gpgsSignedIn = false;
 
     gpgsTimer = new QTimer(this);
@@ -227,6 +228,15 @@ bool AdCtl::AdMobIinterstitialIsLoaded() const
         return false;
     }
     return false;
+}
+
+void AdCtl::onInterstitialClosed()
+{
+    if (m_AdInitialized && m_AdMobInterstitialEnabled) {
+        m_AdMobInterstitial->LoadWithUnitId(m_InterstitialAdMobId);
+        //m_AdMobBanner->Show(); //yes or no
+        emit s_InterstitialClosed();
+    }
 }
 
 //StartAd banner enabled

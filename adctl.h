@@ -95,6 +95,9 @@ signals:
     void adMobIinterstitialVisibleChanged();
     void startAdBannerVisibleChanged();
 
+    //Interstitial closed
+    void s_InterstitialClosed();
+
     //enabled changed
     void adMobBannerEnabledChanged();
     void adMobIinterstitialEnabledChanged();
@@ -126,6 +129,9 @@ public slots:
     bool AdMobIinterstitialEnabled() const;
     void setAdMobIinterstitialEnabled(bool AdMobIinterstitialEnabled);
     bool AdMobIinterstitialIsLoaded() const;
+
+    //AdMob interstitial closed
+    void onInterstitialClosed();
 
     //StartAd banner enabled
     void setStartAdBannerEnabled(const bool StartAdBannerEnabled);
