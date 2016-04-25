@@ -1,6 +1,10 @@
 # AdCtl
 AdCtl - library adds support of Google Analytics, Google AdMob, Google Play Services, StartAd.mobi, Google Cloud Messaging, and online purchase of Stripe.com and Cloudpayments.ru for your Qt/C++ or Qt Quick/QML project.
 
+**Important**
+
+Hi! Current master version is broken. Please use git tag 'qpm 0.1.1'
+
 **License**
 
 Modified BSD
