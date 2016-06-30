@@ -70,6 +70,9 @@ void AdCtl_platform_interface::signInGPGS(){
 
 }
 
+void AdCtl_platform_interface::getLeaderBoardScore(const QString &leaderboardId){
+    Q_UNUSED(leaderboardId)
+}
 void AdCtl_platform_interface::submitScoreGPGS(const QString& leaderBoardId, int score){
     Q_UNUSED(leaderBoardId)
     Q_UNUSED(score)
@@ -79,11 +82,26 @@ void AdCtl_platform_interface::unlockAchievementGPGS(const QString& achievementI
     Q_UNUSED(achievementId)
 }
 
+void AdCtl_platform_interface::showLeaderboard(const QString &leaderboardId)
+{
+
+}
+
 void AdCtl_platform_interface::showLeaderboardGPGS(){
 
 }
 
 void AdCtl_platform_interface::showAchievementsGPGS(){
 
+}
+
+void AdCtl_platform_interface::shareImage(QString path)
+{
+
+}
+
+void AdCtl_platform_interface::setAdCtlObject(QObject *obj)
+{
+    m_adctl_obj = obj;
 }
 

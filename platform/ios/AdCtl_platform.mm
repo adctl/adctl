@@ -1,7 +1,16 @@
 #include "AdCtl_platform.h"
-
+#include <QString>
+#include <QVariant>
+#include <QDebug>
+#include "StateManager.h"
+#include "utils.h"
+#include <Foundation/Foundation.h>
 #include <UIKit/UIKit.h>
 #include "SADWebView.h"
+#import <GoogleSignIn/GoogleSignIn.h>
+#import <gpg/GooglePlayGames.h>
+#import <GooglePlus/GooglePlus.h>
+#import <QuartzCore/QuartzCore.h>
 
 #include <QGuiApplication>
 #include <QtGui/qpa/qplatformnativeinterface.h>
@@ -62,6 +71,7 @@
 {
     qDebug("start ad not found (ios)");
 }
+
 -(void)initStartAd:(NSString*)id
 {
     if(!webView) {
@@ -112,6 +122,102 @@
 }
 @end
 
+/**
+ * Workaround to register the delegate methods needed for google authorization.
+ */
+@interface QIOSApplicationDelegate : UIResponder <UIApplicationDelegate>
+    - (void)applicationDidFinishLaunching:(UIApplication *)application;
+    -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
+@end
+
+@interface QAppDelegate
+
+@end
+
+@implementation QIOSApplicationDelegate (QAppDelegate)
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    qDebug("FINALLLYYYY");
+//    [GIDSignIn sharedInstance].uiDelegate = self;
+    return [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation];
+}
+-(void)applicationDidFinishLaunching:(UIApplication *)application{
+    qDebug("FINALLLYYYY");
+}
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // Override point for customization after application launch.
+    return YES;
+}
+@end
+
+/**
+ * Controller for everything specially GoogleGameStuff
+ */
+@interface AdctlController : UIViewController
+
+@end
+
+@interface QIOSViewController : UIViewController<GIDSignInUIDelegate>
+- (void)viewDidLoad;
+//- (void)signIn:(GIDSignIn *)signIn presentViewController:(UIViewController *)viewController;
+
+// If implemented, this method will be invoked when sign in needs to dismiss a view controller.
+// Typically, this should be implemented by calling |dismissViewController| on the passed
+// view controller.
+//- (void)signIn:(GIDSignIn *)signIn dismissViewController:(UIViewController *)viewController;
+@end
+
+
+//static NSString * const kClientID = @"37589320792";
+static NSString * const kClientID = @"37589320792-s3j8h5juha4rl90q8v977c067em88s14.apps.googleusercontent.com";
+@implementation QIOSViewController (AdctlController)
+
+-(void) viewDidLoad
+{
+    [super viewDidLoad];
+    
+    // Configure platform configuration for iOS
+    gpg::IosPlatformConfiguration config;
+    config.SetClientID(std::string([kClientID UTF8String]));
+    config.SetOptionalViewControllerForPopups(self);
+    bool valid = config.Valid();
+    
+    StateManager::InitServices(config,
+                               [self](gpg::AuthOperation op) {
+                                   [self onAuthActionStarted:op];
+                               },
+                               [self](gpg::AuthOperation op, gpg::AuthStatus status) {
+                                   [self onAuthActionFinished:op withStatus:status];
+                               });
+    [GIDSignIn sharedInstance].uiDelegate = self;
+
+    NSLog(@"Looking good QIOSViewController");
+    NSLog(@"ClientID %@",kClientID);
+}
+//- (void)signIn:(GIDSignIn *)signIn presentViewController:(UIViewController *)viewController{}
+
+// If implemented, this method will be invoked when sign in needs to dismiss a view controller.
+// Typically, this should be implemented by calling |dismissViewController| on the passed
+// view controller.
+//- (void)signIn:(GIDSignIn *)signIn dismissViewController:(UIViewController *)viewController{}
+
+
+-(void) onAuthActionStarted:(gpg::AuthOperation) op{
+    NSLog(@"Auth Action Started");
+}
+-(void) onAuthActionFinished:(gpg::AuthOperation)op withStatus:(gpg::AuthStatus) status{
+    NSLog(@"Auth Action finished");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //Something here
+    });
+    if(gpg::IsSuccess(status)){
+        NSLog(@"Status: Success %i",status);
+    }else{
+        NSLog(@"Status: failure %i",status);
+    }
+}
+@end
+
 struct AdCtl_platform_private{
     AdCtl_platform_private()
         :m_controller([[AdctlViewController alloc]init]){
@@ -124,13 +230,17 @@ struct AdCtl_platform_private{
     QString m_startAdId;
 };
 
-AdCtl_platform::AdCtl_platform()
-{
+AdCtl_platform::AdCtl_platform(){
     d=new AdCtl_platform_private;
 }
 
 AdCtl_platform::~AdCtl_platform(){
     delete d;
+}
+
+void AdCtl_platform::init()
+{
+
 }
 
 void AdCtl_platform::initStartAd(){
@@ -172,5 +282,74 @@ void AdCtl_platform::showStartAd(){
 
 void AdCtl_platform::hideStartAd(){
     [d->m_controller setViewVisible:false];
+}
+
+bool AdCtl_platform::isGPGSSignedIn() const {
+    return StateManager::GetGameServices()->IsAuthorized();
+}
+
+void AdCtl_platform::signInGPGS() {
+    StateManager::BeginUserInitiatedSignIn();
+}
+
+void AdCtl_platform::getLeaderBoardScore(const QString& leaderboardId)
+{
+    gpg::LeaderboardManager::FetchScoreSummaryCallback
+            callback = [&](const gpg::LeaderboardManager::FetchScoreSummaryResponse& response)
+    {
+        uint64_t score;
+        QString lID;
+        int status = static_cast<int>(response.status);
+        if(response.status == gpg::ResponseStatus::VALID ||
+                response.status == gpg::ResponseStatus::VALID_BUT_STALE){
+            score = response.data.CurrentPlayerScore().Value();
+            lID = QString(response.data.LeaderboardId().c_str());
+        }
+        if(m_adctl_obj) {
+
+            if(Util::javaScriptFuncExists(m_adctl_obj,"scoreGPG")){
+                QMetaObject::invokeMethod(m_adctl_obj, "scoreGPG", Qt::DirectConnection,
+                           Q_ARG(QVariant, QVariant(lID)),
+                           Q_ARG(QVariant, QVariant(score)),
+                           Q_ARG(QVariant, QVariant(status)));
+            }
+
+        }
+    };
+    StateManager::GetGameServices()->Leaderboards().FetchScoreSummary(leaderboardId.toStdString(),gpg::LeaderboardTimeSpan::ALL_TIME,
+                                                                      gpg::LeaderboardCollection::PUBLIC,callback);
+}
+
+void AdCtl_platform::submitScoreGPGS(const QString& leaderBoardId, int score){
+    StateManager::SubmitHighScore(leaderBoardId.toStdString().c_str(),score);
+}
+
+void AdCtl_platform::unlockAchievementGPGS(const QString& achievementId){
+    StateManager::UnlockAchievement(achievementId.toStdString().c_str());
+}
+
+void AdCtl_platform::showLeaderboard(const QString& leaderboardId){
+    StateManager::GetGameServices()->Leaderboards().ShowUI(leaderboardId.toStdString(),[](gpg::UIStatus const &){});
+}
+
+void AdCtl_platform::showLeaderboardGPGS(){
+    StateManager::ShowLeaderboards();
+}
+void AdCtl_platform::showAchievementsGPGS(){
+    StateManager::GetGameServices()->Achievements().ShowAllUI([](const gpg::UIStatus& status){
+
+    });
+}
+
+void AdCtl_platform::shareImage(QString path){
+//    NSString *textToShare = @"Enter your text to be shared";
+//    UIImage * image = [UIImage imageNamed:@"imagename"];
+
+//    NSArray *objectsToShare = @[textToShare, image];
+
+//    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+
+
+//    [self presentViewController:controller animated:YES completion:nil];
 }
 

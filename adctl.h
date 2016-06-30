@@ -20,6 +20,7 @@ class AdCtl : public QObject
     Q_OBJECT
 
     //enabled properties
+    Q_PROPERTY(bool isInitialized READ initialized)
     Q_PROPERTY(bool adMobBannerEnabled READ AdMobBannerEnabled WRITE setAdMobBannerEnabled NOTIFY adMobBannerEnabledChanged)
     Q_PROPERTY(bool adMobIinterstitialEnabled READ AdMobIinterstitialEnabled WRITE setAdMobIinterstitialEnabled NOTIFY adMobIinterstitialEnabledChanged)
     Q_PROPERTY(bool startAdBannerEnabled READ StartAdBannerEnabled WRITE setStartAdBannerEnabled NOTIFY startAdBannerEnabledChanged)
@@ -66,6 +67,11 @@ public:
     explicit AdCtl(QObject *parent = 0);
     ~AdCtl();
 
+    // Do not forget to declare your class to the QML system.
+    static void declareQML() {
+        qmlRegisterType<AdCtl>("ru.forsk.adctl", 1, 0, "AdCtl");
+    }
+
 signals:
 
     //StartAd and AdMob showed and sizes
@@ -94,6 +100,10 @@ signals:
     void startAdBannerEnabledChanged();
     void gAnalyticsEnabledChanged();
 
+    //Google Play Games
+    //This is used when a score is returned for a leaderboad.(qstring,uint64,int)
+    void scoreGPG(QVariant leaderboardID,QVariant score,QVariant gpgStatus);
+
     //test devices changed
     void testDevicesChanged();
 public slots:
@@ -103,6 +113,8 @@ public slots:
 
     //Timer for control, update and emit properties changes for banners (for first run)
     void adctlTimerSlot();
+
+    bool initialized() const;
 
     //AdMob banner enabled
     void setAdMobBannerEnabled(const bool AdMobBannerEnabled);
@@ -189,17 +201,28 @@ public slots:
     void setGPGSSignedIn(bool gpgsSignedIn);
 
     void signInGPGS();
+    /**
+    * @brief This will request the score of a leaderboard.
+    * @note Thie result will be delivered with the @scoreGPG signal.
+    */
+    void getLeaderBoardScoreAsync(QString leaderboard);
     void submitScoreGPGS(QString leaderBoardId, int score);
     void unlockAchievementGPGS(QString achievementId);
     void showLeaderboardGPGS();
+    void showLeaderboard(QString leaderboardId);
     void showAchievementsGPGS();
+
+    //Util/tool/maybenotneededbutheretheyare
+    void share(QString url);
 
     //dp, pt and mm
     float dp();
     float mm();
     float pt();
+    static AdCtl* getInstance();
 
 protected:
+    static AdCtl* m_instance;
     //Timer for control, update and emit properties changes for banners
     QTimer *adctlTimer;
 

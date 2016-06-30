@@ -1,0 +1,22 @@
+{
+  "name": "com.github.kafeg.adctl",
+  "description": "AdCtl - QML library for Google Analytics, Google AdMob, Google Play Services and StartAd.mobi",
+  "author": {
+    "name": "Vitaliy Petrov",
+    "email": "v31337@gmail.com"
+  },
+  "repository": {
+    "type": "GITHUB",
+    "url": "https://github.com/kafeg/adctl.git"
+  },
+  "version": {
+    "label": "0.1.0",
+    "revision": "",
+    "fingerprint": ""
+  },
+  "dependencies": [
+  ],
+  "license": "BSD_2_CLAUSE",
+  "pri_filename": "com_github_kafeg_adctl.pri",
+  "webpage": "https://github.com/kafeg/adctl"
+}

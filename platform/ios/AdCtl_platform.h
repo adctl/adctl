@@ -4,6 +4,7 @@
 #include <QString>
 
 #include "../AdCtl_platform_interface.h"
+#include <QString>
 
 struct AdCtl_platform_private;
 
@@ -24,6 +25,20 @@ public:
 
     void showStartAd();
     void hideStartAd();
+    
+    void init();
+    
+    bool isGPGSSignedIn()const;
+    void signInGPGS();
+    void getLeaderBoardScore(const QString& leaderboardId);
+    void submitScoreGPGS(const QString& leaderBoardId, int score);
+    void unlockAchievementGPGS(const QString& achievementId);
+    void showLeaderboard(const QString& leaderboardId);
+    void showLeaderboardGPGS();
+    void showAchievementsGPGS();
+
+    void shareImage(QString path);
+
 private:
     AdCtl_platform_private* d;
 };
