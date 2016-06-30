@@ -62,7 +62,6 @@ class AdCtl : public QObject
 
     //Google Play Game Services
     Q_PROPERTY(bool gpgsSignedIn READ isGPGSSignedIn WRITE setGPGSSignedIn NOTIFY gpgsSignedInChanged)
-
 public:
     explicit AdCtl(QObject *parent = 0);
     ~AdCtl();

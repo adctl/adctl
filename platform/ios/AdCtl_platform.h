@@ -14,7 +14,7 @@ public:
 
     void initStartAd();
     void setStartAdId(const QString& id);
-    /*void setStartAdBannerSize(const int width,const int height);
+    void setStartAdBannerSize(const int width,const int height);
     void setStartAdBannerPosition(const int x,const int y);
 
     int startAdBannerHeight()const;
@@ -23,7 +23,7 @@ public:
     int startAdBannerY()const;
 
     void showStartAd();
-    void hideStartAd();*/
+    void hideStartAd();
 private:
     AdCtl_platform_private* d;
 };

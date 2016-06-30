@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Window 2.0
 
 QtObject{
     property Item item:Item{
@@ -13,9 +14,9 @@ QtObject{
     property real y:item.y
     property real width:item.width
     property real height:item.height
-    readonly property rect targetRect:item.mapToItem(null,x-item.x,y-item.y,width,height)
-//    function refreshPosition(){
-//        targetRect=Qt.binding(function(){item.mapToItem(null,x-item.x,y-item.y,width,height)})
-//    }
+    property rect targetRect:item.mapToItem(null,0,0,width,height)
+    function refreshPosition(){
+        targetRect=item.mapToItem(null,0,0,width,height)
+    }
 }
 

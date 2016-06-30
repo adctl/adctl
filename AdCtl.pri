@@ -28,6 +28,7 @@ ios {
     LIBS += -L$$PWD/3rd/SDK-iOS/libs -lSADView
     HEADERS += $$PWD/platform/ios/AdCtl_platform.h
     OBJECTIVE_SOURCES += $$PWD/platform/ios/AdCtl_platform.mm
+    QT += gui-private
 }
 
 android {

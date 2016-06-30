@@ -18,6 +18,15 @@ AdCtl{
     property AdCtlBanner adMobInterstitial
     property AdCtlBanner startAdBanner
 
+    property string startAdIOSId
+    property string startAdAndroidId
+
+    startAdId:Qt.platform.os==="android" ? startAdAndroidId :
+              Qt.platform.os==="ios"     ? startAdIOSId :
+                              /*other*/    ""
+
+    onStartAdBannerShowed: startAdBanner.refreshPosition()
+
     Component.onCompleted:{
         init()
     }
