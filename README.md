@@ -42,6 +42,7 @@ See https://github.com/kafeg/adctl/wiki/API-Reference
 - Dark Stories android game (https://play.google.com/store/apps/details?id=ru.forsk.darkstories);
 - Anyway android game (https://play.google.com/store/apps/details?id=ru.forsk.anyway);
 - Tic Tac Toe (https://play.google.com/store/apps/details?id=org.ddwarf.ttt, https://facebook.com/DDwarfTicTacToe, https://vk.com/DDwarfTicTacToe, https://github.com/gilmanov-ildar/QtVkontakte);
+- Set of minigames for iOS (https://github.com/FajraKatviro/Minigames);
 - Comming soon...
 
 **Developers**

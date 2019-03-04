@@ -32,9 +32,11 @@ OTHER_FILES += README.md
 
 ios {
     INCLUDEPATH += $$PWD/platform/ios
+    INCLUDEPATH += $$PWD/3rd/SDK-iOS/libs
+    LIBS += -L$$PWD/3rd/SDK-iOS/libs -lSADView
     HEADERS += $$PWD/platform/ios/AdCtl_platform.h
     OBJECTIVE_SOURCES += $$PWD/platform/ios/AdCtl_platform.mm
-    DIRS = $$IOS_PACKAGE_DIR/libs
+    QT += gui-private
 }
 ANDROID_SOURCES = $$PWD"/platform/android"
 
@@ -154,10 +156,11 @@ android {
 
     INSTALLS += admob1 admob2 startad1 adctl1 adctl2
 #    INSTALLS += support_lib #removed because using gradle things get autoincluded
+
+    DISTFILES += \
+        $$PWD/platform/android/src/ru/forsk/AdCtl/AdCtlUtil.java
 }
 
-DISTFILES += \
-    $$PWD/platform/android/src/ru/forsk/AdCtl/AdCtlUtil.java
 
 
 

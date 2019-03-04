@@ -7,28 +7,52 @@
 #include <Foundation/Foundation.h>
 #include <UIKit/UIKit.h>
 #include "SADWebView.h"
-#import<GoogleSignIn/GoogleSignIn.h>
+#import <GoogleSignIn/GoogleSignIn.h>
 #import <gpg/GooglePlayGames.h>
 #import <GooglePlus/GooglePlus.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface AdctlViewController //() <SADWebViewDelegate>
+#include <QGuiApplication>
+#include <QtGui/qpa/qplatformnativeinterface.h>
+
+@interface AdctlViewController : UIViewController
+
+@end
+
+@interface AdctlViewController () <SADWebViewDelegate>
 {
     SADWebView* webView;
+
+    int m_height;
+    int m_width;
+    int m_x;
+    int m_y;
 }
-//-(void)loadData;
+-(void)initStartAd:(NSString*)id;
+-(void)setSize:(int)width :(int)height;
+-(void)setPos:(int)x :(int)y;
+
+-(int)getHeight;
+-(int)getWidth;
+-(int)getX;
+-(int)getY;
+
+-(void)setViewVisible:(bool)visible;
 @end
 
 @implementation AdctlViewController
 
 - (IBAction)reloadSADView:(id)sender
 {
+    Q_UNUSED(sender)
     qDebug("reload view (ios)");
-//    [self loadData];
+    //[self loadData];
 }
 
 -(void)onReceivedAd
 {
+    [self setPos:m_x:m_y];
+    [self setSize:m_width:m_height];
     qDebug("start ad recieved (ios)");
 }
 -(void)onShowedAd
@@ -37,7 +61,7 @@
 }
 -(void)onError:(SADVIEW_ERROR)error
 {
-    qDebug("start ad error (ios)");
+    qDebug("start ad error %d (ios)",error);
 }
 -(void)onAdClicked
 {
@@ -47,16 +71,67 @@
 {
     qDebug("start ad not found (ios)");
 }
+
+-(void)initStartAd:(NSString*)id
+{
+    if(!webView) {
+        webView = [[SADWebView alloc]initWithId:id];
+        webView.sadDelegate = self;
+        UIView *mainView = (__bridge UIView *)reinterpret_cast<void *>(QGuiApplication::platformNativeInterface()->nativeResourceForWindow("uiview", qApp->topLevelWindows().at(0)));
+        [mainView addSubview:webView];
+    }
+    [webView loadAd:LANGUAGE_EN];
+}
+-(void)setSize:(int)width :(int)height
+{
+    m_width=width;
+    m_height=height;
+    CGRect frame = webView.frame;
+    frame.size.width=width;
+    frame.size.height=webView.height;
+    webView.frame = frame;
+}
+-(void)setPos:(int)x :(int)y
+{
+    m_x=x;
+    m_y=y;
+    CGRect frame = webView.frame;
+    frame.origin.x=x;
+    frame.origin.y=y;
+    webView.frame = frame;
+}
+-(int)getHeight
+{
+    return webView.frame.size.height;
+}
+-(int)getWidth
+{
+    return webView.frame.size.width;
+}
+-(int)getX
+{
+    return webView.frame.origin.x;
+}
+-(int)getY
+{
+    return webView.frame.origin.y;
+}
+-(void)setViewVisible:(bool)visible
+{
+    webView.hidden=!visible;
+}
 @end
 
 /**
  * Workaround to register the delegate methods needed for google authorization.
  */
 @interface QIOSApplicationDelegate : UIResponder <UIApplicationDelegate>
-- (void)applicationDidFinishLaunching:(UIApplication *)application;
--(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
+    - (void)applicationDidFinishLaunching:(UIApplication *)application;
+    -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 @end
+
 @interface QAppDelegate
+
 @end
 
 @implementation QIOSApplicationDelegate (QAppDelegate)
@@ -64,7 +139,8 @@
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
     qDebug("FINALLLYYYY");
 //    [GIDSignIn sharedInstance].uiDelegate = self;
-return [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation];}
+    return [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation];
+}
 -(void)applicationDidFinishLaunching:(UIApplication *)application{
     qDebug("FINALLLYYYY");
 }
@@ -142,8 +218,24 @@ static NSString * const kClientID = @"37589320792-s3j8h5juha4rl90q8v977c067em88s
 }
 @end
 
+struct AdCtl_platform_private{
+    AdCtl_platform_private()
+        :m_controller([[AdctlViewController alloc]init]){
 
-AdCtl_platform::AdCtl_platform():m_controller(/*[[AdctlViewController alloc]init]*/){
+    }
+    ~AdCtl_platform_private(){
+        //[m_controller release];
+    }
+    AdctlViewController* m_controller;
+    QString m_startAdId;
+};
+
+AdCtl_platform::AdCtl_platform(){
+    d=new AdCtl_platform_private;
+}
+
+AdCtl_platform::~AdCtl_platform(){
+    delete d;
 }
 
 void AdCtl_platform::init()
@@ -151,54 +243,45 @@ void AdCtl_platform::init()
 
 }
 
-AdCtl_platform::~AdCtl_platform(){
-//    [m_controller release];
-}
-
 void AdCtl_platform::initStartAd(){
-
+    NSString* str = [NSString stringWithUTF8String:d->m_startAdId.toUtf8().constData()];
+    [d->m_controller initStartAd:str];
 }
 
 void AdCtl_platform::setStartAdId(const QString& id){
-    m_startAdId=id;
+    d->m_startAdId=id;
 }
 
 void AdCtl_platform::setStartAdBannerSize(const int width, const int height){
-//    m_controller->webView.frame.width=width;
-//    m_controller->webView.frame.height=height;
+    [d->m_controller setSize:width :height];
 }
 
 void AdCtl_platform::setStartAdBannerPosition(const int x, const int y){
-//    m_controller->webView.frame.x=x;
-//    m_controller->webView.frame.y=y;
+    [d->m_controller setPos:x :y];
 }
 
 int AdCtl_platform::startAdBannerHeight() const{
-    //    return m_controller->webView.frame.height;
-    return 0;
+    return [d->m_controller getHeight];
 }
 
 int AdCtl_platform::startAdBannerWidth() const{
-    //    return m_controller->webView.frame.width;
-    return 0;
+    return [d->m_controller getWidth];
 }
 
 int AdCtl_platform::startAdBannerX() const{
-    //    return m_controller->webView.frame.x;
-    return 0;
+    return [d->m_controller getX];
 }
 
 int AdCtl_platform::startAdBannerY() const{
-//   return m_controller.webView.frame.y;
-    return 0;
+    return [d->m_controller getY];
 }
 
 void AdCtl_platform::showStartAd(){
-//    m_controller->webView.visible=true;
+    [d->m_controller setViewVisible:true];
 }
 
 void AdCtl_platform::hideStartAd(){
-//    m_controller->webView.visible=false;
+    [d->m_controller setViewVisible:false];
 }
 
 bool AdCtl_platform::isGPGSSignedIn() const {

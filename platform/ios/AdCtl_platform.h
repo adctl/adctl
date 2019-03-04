@@ -1,12 +1,12 @@
 #ifndef ADCTL_PLATFORM_H
 #define ADCTL_PLATFORM_H
 
+#include <QString>
+
 #include "../AdCtl_platform_interface.h"
 #include <QString>
 
-#if defined(__OBJC__)
-@class AdctlViewController;
-#endif
+struct AdCtl_platform_private;
 
 class AdCtl_platform:public AdCtl_platform_interface{
 public:
@@ -40,10 +40,7 @@ public:
     void shareImage(QString path);
 
 private:
-#if defined(__OBJC__)
-    AdctlViewController* m_controller;
-#endif
-    QString m_startAdId;
+    AdCtl_platform_private* d;
 };
 
 #endif

@@ -78,7 +78,7 @@ void AdCtl::init()
 
     if (m_AdMobInterstitialEnabled) {
         m_AdMobInterstitial->LoadWithUnitId(m_InterstitialAdMobId);
-        m_AdMobInterstitial->AddTestDevice("DCE0DB737EC089D97AB4EFCBA2F9B322");
+        //m_AdMobInterstitial->AddTestDevice("DCE0DB737EC089D97AB4EFCBA2F9B322");
 
         foreach(const QString &testDevice, m_testDevices) {
             m_AdMobInterstitial->AddTestDevice(testDevice);
@@ -350,7 +350,7 @@ int AdCtl::startAdBannerRealY()
 void AdCtl::setStartAdBannerPosition(const QPoint position)
 {
     m_StartAdBannerPosition = position;
-    if (!m_AdInitialized || !m_StartAdBannerEnabled) { return; }
+    //if (!m_AdInitialized || !m_StartAdBannerEnabled) { return; }
     m_platform->setStartAdBannerPosition(position.x(),position.y());
 }
 
